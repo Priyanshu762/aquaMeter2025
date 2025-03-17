@@ -1,16 +1,10 @@
 import { useState } from "react";
-import { FiHome, FiUsers, FiBell, FiSettings, FiMenu } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import sidebarNavItems from '../../Data/global/sidebarNavItems';
+import { FiMenu } from "react-icons/fi";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
-
-  const menuItems = [
-    { title: "Home", icon: <FiHome size={24} />, link: "/" },
-    { title: "Users", icon: <FiUsers size={24} />, link: "/users" },
-    { title: "Alerts", icon: <FiBell size={24} />, link: "/alerts" },
-    { title: "Settings", icon: <FiSettings size={24} />, link: "/settings" },
-  ];
 
   return (
     <div className="flex">
@@ -28,7 +22,7 @@ const Sidebar = () => {
         </div>
 
         <nav className="mt-4 space-y-2">
-          {menuItems.map((item, index) => (
+          {sidebarNavItems.map((item, index) => (
             <div key={index} className="relative group">
               <Link
                 to={item.link}

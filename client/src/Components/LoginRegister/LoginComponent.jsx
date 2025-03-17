@@ -14,7 +14,7 @@ const schema = yup.object().shape({
 });
 
 
-const LoginComponent = () => {
+const SigninForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const loading = useSelector((state) => state.loader.loading);
@@ -32,8 +32,8 @@ const LoginComponent = () => {
     };
 
   return (
-    <div className="h-[90vh] items-center flex justify-center px-5 lg:px-0">
-      <div className="max-w-screen-xl bg-white dark:bg-gray-900 dark:border-gray-500 dark:border-4 shadow-2xl sm:rounded-lg flex justify-center flex-1">
+    <div className="h-[89vh] flex justify-center">
+      <div className="w-screen bg-white dark:bg-gray-900 shadow-2xl sm:rounded-lg flex justify-center flex-1">
         <div className="flex-1 bg-blue-900 text-center hidden md:flex">
           <div
             className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
@@ -45,8 +45,8 @@ const LoginComponent = () => {
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           <div className=" flex flex-col items-center">
             <div className="text-center">
-              <h1 className="text-2xl xl:text-4xl font-extrabold text-blue-900 dark:text-gray-100">
-                Tenant Sign in
+              <h1 className="text-2xl mb-4 xl:text-4xl font-extrabold text-blue-900 dark:text-gray-100">
+                Sign in
               </h1>
               <p className="text-[12px] text-gray-500 dark:text-gray-400 mt-1">
                 Enter your credentials to log in
@@ -59,6 +59,11 @@ const LoginComponent = () => {
                       <InputField placeholder="Enter your email" label='Email' type="email" name="email" register={register} errors={errors} />
                       {/* <InputField placeholder="Enter your phone" label='Phone' type="tel" name="phone" register={register} errors={errors} /> */}
                       <InputField placeholder="Password" label='Password' type="password" name="password" register={register} errors={errors} />
+                      <p className="text-right">
+                        <Link to={'/reset-password'}>
+                          <span className="text-blue-900 text-end mt-0 dark:text-indigo-400">Forgot password?</span>
+                        </Link>
+                      </p>
                       <button 
                       type="submit"
                       disabled={loading}
@@ -101,9 +106,26 @@ const LoginComponent = () => {
                       )}
                     </button>
                     </form>
+
+                      <div className="flex items-center my-1">
+                        <hr className="flex-grow border-gray-300 dark:border-gray-700" />
+                        <span className="mx-3 text-gray-500 dark:text-gray-400 text-sm">OR</span>
+                        <hr className="flex-grow border-gray-300 dark:border-gray-700" />
+                      </div>
+
+                     <button
+                      className="mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-gray-300 dark:bg-gray-900 bg-white dark:text-white dark:hover:bg-gray-800 dark:focus:ring-gray-400 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-100 focus:outline-none focus:ring-2  focus:ring-gray-300  cursor-pointer"
+                      >
+                        <img
+                          src="https://www.material-tailwind.com/logos/logo-google.png"
+                          alt="Google"
+                          className="h-6 w-6"
+                        />
+                        Sign in with Google
+                      </button>
                 
                 <p className="mt-6 text-xs text-gray-600 text-center dark:text-gray-100">
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <Link to={'/register'}>
                     <span className="text-blue-900 font-semibold dark:text-indigo-400">Sign Up</span>
                   </Link>
@@ -116,4 +138,4 @@ const LoginComponent = () => {
     </div>
   );
 };
-export default LoginComponent;
+export default SigninForm;

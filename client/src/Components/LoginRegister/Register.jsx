@@ -36,8 +36,8 @@ const Register = () => {
     };
 
   return (
-    <div className="h-[95vh] items-center flex justify-center px-5 lg:px-0">
-      <div className="max-w-screen-xl bg-white dark:bg-gray-900 dark:border-gray-500 dark:border-4 shadow-2xl sm:rounded-lg flex justify-center flex-1">
+    <div className="h-[89vh] flex justify-center">
+      <div className=" bg-white dark:bg-gray-900 shadow-2xl sm:rounded-lg flex justify-center flex-1">
         <div className="flex-1 bg-blue-900 text-center hidden md:flex">
           <div
             className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
@@ -46,17 +46,17 @@ const Register = () => {
             }}
           ></div>
         </div>
-        <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
+        <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12 mt-[-26px]">
           <div className=" flex flex-col items-center">
             <div className="text-center">
-              <h1 className="text-2xl xl:text-4xl font-extrabold text-blue-900 dark:text-gray-100">
-                Tenant Sign up
+              <h1 className="text-2xl xl:text-4xl mb-2 font-extrabold text-blue-900 dark:text-gray-100">
+                Sign up
               </h1>
-              <p className="text-[12px] text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-[12px] text-gray-500 dark:text-gray-400 ">
                 Hey enter your details to create your account
               </p>
             </div>
-            <div className="w-full flex-1 mt-8">
+            <div className="w-full flex-1 mt-2">
               <div className="mx-auto max-w-xs flex flex-col gap-4">
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <InputField placeholder="Enter your name" label='Name' type="text" name="name" register={register} errors={errors} />
@@ -103,8 +103,25 @@ const Register = () => {
                       )}
                     </button>
                     </form>
+
+                    <div className="flex items-center my-1">
+                        <hr className="flex-grow border-gray-300 dark:border-gray-700" />
+                        <span className="mx-3 text-gray-500 dark:text-gray-400 text-sm">OR</span>
+                        <hr className="flex-grow border-gray-300 dark:border-gray-700" />
+                      </div>
+
+                     <button
+                      className="mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-gray-300 dark:bg-gray-900 bg-white dark:text-white dark:hover:bg-gray-800 dark:focus:ring-gray-400 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-100 focus:outline-none focus:ring-2  focus:ring-gray-300  cursor-pointer"
+                      >
+                        <img
+                          src="https://www.material-tailwind.com/logos/logo-google.png"
+                          alt="Google"
+                          className="h-6 w-6"
+                        />
+                        Sign in with Google
+                      </button>
                 
-                <p className="mt-6 text-xs text-gray-600 text-center dark:text-gray-100">
+                <p className="mt-2 text-xs text-gray-600 text-center dark:text-gray-100">
                   Already have an account?{" "}
                   <Link to={'/login'}>
                     <span className="text-blue-900 font-semibold dark:text-indigo-400">Sign in</span>

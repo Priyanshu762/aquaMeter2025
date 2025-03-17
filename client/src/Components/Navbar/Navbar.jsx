@@ -15,7 +15,7 @@ const Navbar = () => {
     const location = useLocation();
 
     const [open, setOpen] = useState(false);
-    const [user, setUser] = useState(true);
+    const [user, setUser] = useState(false);
     const loading = useSelector((state) => state.loader.loading);
 
   return (
@@ -33,7 +33,7 @@ const Navbar = () => {
                     className="h-8 w-8 object-contain" 
                 />
                       
-                <span className="flex">
+                <span className="flex lg:visible md:invisible">
                     {"AQUAMETER".split("").map((letter, index) => (
                     <span
                         key={index}
@@ -46,7 +46,7 @@ const Navbar = () => {
             </div>
             {/* Menu Section  */}
             <div className='hidden md:block'>
-                <ul className='flex items-center gap-12 text-white'>
+                <ul className='flex items-center gap-12 lg:gap-12 md:gap-4 md:mr-4 text-white'>
                     {
                         NavbarMenu.map((item) => {
                             const isActive = location.pathname === item.link;
@@ -80,13 +80,39 @@ const Navbar = () => {
                 </button> */}
                 <ThemeToggler />
                 {user ? (
-                    // <button 
-                    // className='hover:bg-logout cursor-pointer text-primary font-semibold hover:text-white rounded-md border-2 border-primary px-6 py-2 duration-200 hidden md:block'
-                    // disabled={loading}
-                    // >
-                    //     {loading ? "Logging out..." : "Logout"}
-                    //     </button> 
-                    ""
+                    <Menu as="div" className="relative ml-3">
+                    <div>
+                        <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
+                        <span className="absolute -inset-1.5" />
+                        <span className="sr-only">Open user menu</span>
+                        <img
+                            alt=""
+                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            className="size-8 rounded-full"
+                        />
+                        </MenuButton>
+                    </div>
+                    <MenuItems
+                        transition
+                        className="absolute right-0 top-full z-50 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-900 py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in border border-gray-200 dark:border-gray-700"
+                        >
+                        {userDropdown.map((item) => {
+                            return (
+                                <MenuItem
+                                    key={item.key}
+                                >
+                                    <Link
+                                        to={item.link}
+                                        className={`${item.className}`}
+                                    >
+                                        {item.title}
+                                    </Link>
+                                </MenuItem>
+                            )
+                        })
+                        }
+                    </MenuItems>
+                    </Menu>
                 ) 
                 : (
 
@@ -96,39 +122,8 @@ const Navbar = () => {
 
                 )}
 
-                <Menu as="div" className="relative ml-3">
-              <div>
-                <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    alt=""
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    className="size-8 rounded-full"
-                  />
-                </MenuButton>
-              </div>
-              <MenuItems
-                transition
-                className="absolute right-0 top-full z-50 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-900 py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in border border-gray-200 dark:border-gray-700"
-              >
-                {userDropdown.map((item) => {
-                    return (
-                        <MenuItem
-                            key={item.key}
-                        >
-                            <Link
-                                to={item.link}
-                                className={`${item.className}`}
-                            >
-                                {item.title}
-                            </Link>
-                        </MenuItem>
-                    )
-                })
-                }
-              </MenuItems>
-            </Menu>
+
+                
                 
             </div>
             {/* Mobile hamburger Menu section  */}
