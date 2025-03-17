@@ -7,6 +7,8 @@ import ScrollToTop from "./common/ScrollToTop";
 import Loader from "./common/Loader";
 import Sidebar from "./common/Sidebar";
 import HamburgerMenu from "./HamburgerMenu/HamburgerMenu";
+import MapView from "./MapView/MapView";
+import ParametersBox from "./MapView/ParametersBox";
 
 export {
     Navbar,
@@ -18,4 +20,6 @@ export {
     Loader,
     Sidebar,
     HamburgerMenu,
+    MapView,
+    ParametersBox,
 }

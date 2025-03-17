@@ -9,6 +9,7 @@ import Dashboard from '../Pages/Dashboard/Dashboard'
 import ProtectedRoute from "../Components/common/ProtectedRoute";
 import DashboardLayout from "../Components/Layout/DashboardLayout";
 import Analytics from "../Pages/Analytics/Analytics";
+import MapViewPage from "../Pages/MapViewPage/MapViewPage";
 
 
 const AppRouter = () => {
@@ -34,7 +35,7 @@ const AppRouter = () => {
         >
             <Route index element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />
-            <Route path="map-view" element={<Home />} />
+            <Route path="map-view" element={<MapViewPage />} />
         </Route>
       </Route>
         

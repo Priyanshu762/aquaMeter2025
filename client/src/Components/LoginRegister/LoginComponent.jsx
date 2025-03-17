@@ -52,7 +52,7 @@ const SigninForm = () => {
                 Enter your credentials to log in
               </p>
             </div>
-            <div className="w-full flex-1 mt-8">
+            <div className="w-full flex-1 mt-2">
               <div className="mx-auto max-w-xs flex flex-col gap-4">
                     <form onSubmit={handleSubmit(onSubmit)}>
                       {/* <InputField placeholder="Enter your name" label='Name' type="text" name="name" register={register} errors={errors} /> */}
