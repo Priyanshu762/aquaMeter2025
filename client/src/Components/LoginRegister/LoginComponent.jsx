@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { setLoading } from "../../Store/loaderSlice.js";
+import GoogleLogin from "./GoogleLogin.jsx";
+import GoogleWrapper from "../common/GoogleWrapper.jsx";
 
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -113,16 +115,7 @@ const SigninForm = () => {
                         <hr className="flex-grow border-gray-300 dark:border-gray-700" />
                       </div>
 
-                     <button
-                      className="mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-gray-300 dark:bg-gray-900 bg-white dark:text-white dark:hover:bg-gray-800 dark:focus:ring-gray-400 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-100 focus:outline-none focus:ring-2  focus:ring-gray-300  cursor-pointer"
-                      >
-                        <img
-                          src="https://www.material-tailwind.com/logos/logo-google.png"
-                          alt="Google"
-                          className="h-6 w-6"
-                        />
-                        Sign in with Google
-                      </button>
+                     <GoogleWrapper btnContent="Sign in with Google" />
                 
                 <p className="mt-6 text-xs text-gray-600 text-center dark:text-gray-100">
                   Don&apos;t have an account?{" "}

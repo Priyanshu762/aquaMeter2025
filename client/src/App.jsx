@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
 import { Loader } from './components/index.js';
-import { useDispatch, useSelector } from 'react-redux';
-import Layout from './components/Layout/Layout.jsx';
+import { useSelector } from 'react-redux';
+import AppRouter from './Router/AppRouter.jsx';
 
 function App() {
-  const dispatch = useDispatch();
   const loading = useSelector((state) => state.loader.loading);
 
 
@@ -14,7 +12,7 @@ function App() {
 
   return (
     <>
-      <Layout />
+      <AppRouter />
     </>
   )
 }

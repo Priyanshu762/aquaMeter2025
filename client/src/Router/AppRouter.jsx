@@ -8,6 +8,7 @@ import Signup from "../Pages/Auth/Signup";
 import Dashboard from '../Pages/Dashboard/Dashboard'
 import ProtectedRoute from "../Components/common/ProtectedRoute";
 import DashboardLayout from "../Components/Layout/DashboardLayout";
+import AuthLayout from '../Components/Layout/AuthLayout'
 import Analytics from "../Pages/Analytics/Analytics";
 import MapViewPage from "../Pages/MapViewPage/MapViewPage";
 
@@ -37,6 +38,12 @@ const AppRouter = () => {
             <Route path="analytics" element={<Analytics />} />
             <Route path="map-view" element={<MapViewPage />} />
         </Route>
+      </Route>
+
+      {/* auth pages without navbar */}
+      <Route path="/" element={<AuthLayout />} >
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Signup />} />
       </Route>
         
         {/* 404 Route */}
