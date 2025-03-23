@@ -1,0 +1,50 @@
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true
+    },
+    password: {
+        type: String,
+        required: function() {
+            
+            return !this.googleId;
+        }
+    },
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    // OAuth fields
+    googleId: {
+        type: String,
+        sparse: true,
+        unique: true
+    },
+    // Profile picture URL (can come from OAuth or be uploaded)
+    profilePicture: {
+        type: String
+    },
+    // Additional user info
+    role: {
+        type: String,
+        enum: ['user', 'admin','ngo'],
+        default: 'user'
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    lastLogin: {
+        type: Date
+    }
+});
+
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

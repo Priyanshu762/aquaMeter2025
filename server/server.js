@@ -1,21 +1,22 @@
-//initialised a express server in type module format
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import cookieParser from 'cookie-parser';
-
+const express = require('express');
 const app = express();
-const port = process.env.PORT || 5000;
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+require('dotenv').config();
+const authRoutes = require('./route/authRoutes');
+const connectDB = require('./utils/connectDB');
 
-app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
+app.get('/',()=>{
+    res.send('Server is running');
+})
+app.use('/api/auth', authRoutes);
 
-//initialised a route for the login page
-app.get('/', (req, res) => {
-    res.send('Server is working');
-});
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
+    connectDB();
     console.log(`Server is running on port ${port}`);
 });
