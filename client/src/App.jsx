@@ -1,4 +1,4 @@
-import { Loader } from './components/index.js';
+import { Loader } from './Components/index.js';
 import { useSelector } from 'react-redux';
 import AppRouter from './Router/AppRouter.jsx';
 
