@@ -3,7 +3,7 @@ import App from './App.jsx';
 import { createRoot } from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
-import store from './store/store.js';
+import store from './Store/store.js';
 import AppWrapper from './components/common/AppWrapper.jsx';
 
 
