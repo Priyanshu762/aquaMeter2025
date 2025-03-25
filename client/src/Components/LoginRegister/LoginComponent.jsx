@@ -9,7 +9,8 @@ import { toast } from "react-toastify";
 import { setLoading } from "../../Store/loaderSlice.js";
 import GoogleLogin from "./GoogleLogin.jsx";
 import GoogleWrapper from "../common/GoogleWrapper.jsx";
-
+import { authService } from "../../Services/authService.js";
+import { login } from "../../Store/authSlice.js";
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().min(8, "Password must be at least 8 characters").required(),
@@ -29,8 +30,23 @@ const SigninForm = () => {
   
     const onSubmit = async (data) => {
         if (loading) return;
-        console.log(data);
-        setLoading(false);
+
+        dispatch(setLoading(true));
+      
+        try {
+          const response = await authService.login(data);
+          toast.success('Login successful!');
+          dispatch(login({
+            user: response.user,
+            token: response.token
+          }));
+          navigate('/dashboard'); // or wherever you want to redirect after login
+        } catch (error) {
+          const errorMessage = error.response?.data?.message || 'Login failed. Please try again.';
+          toast.error(errorMessage);
+        } finally {
+          dispatch(setLoading(false));
+        }
     };
 
   return (
@@ -70,7 +86,8 @@ const SigninForm = () => {
                       type="submit"
                       disabled={loading}
                       className={`mt-5 tracking-wide font-semibold bg-blue-900 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none
-                      ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-900 hover:bg-indigo-700 text-gray-100"}`}>
+                      ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-900 hover:bg-indigo-700 text-gray-100"}`}
+                      >
                       {loading ? (
                         <>
                           <svg

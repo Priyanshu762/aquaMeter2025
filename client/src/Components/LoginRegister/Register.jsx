@@ -8,7 +8,8 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../../Store/loaderSlice.js";
 import GoogleWrapper from "../common/GoogleWrapper.jsx";
-
+import { authService } from "../../Services/authService.js";
+import { login } from "../../Store/authSlice.js";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -32,8 +33,25 @@ const Register = () => {
   
     const onSubmit = async (data) => {
         if (loading) return;
-        console.log(data);
-        setLoading(false);
+
+        //Need to be optimized by transffering this code to a separate function or in reduxtoolkit action 
+        dispatch(setLoading(true));
+        try {
+            const response = await authService.register(data);
+            toast.success('Registration successful!');
+            dispatch(login({
+              user: response.user,
+              token: response.token
+            }));
+            navigate('/dashboard');
+        }
+         catch (error) {
+          const errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
+          toast.error(errorMessage);
+        } finally {
+          dispatch(setLoading(false));
+        }
+        
     };
 
   return (

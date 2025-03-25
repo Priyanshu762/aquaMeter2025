@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    phone: {
+        type: String,
+        unique: true
+    },
     // OAuth fields
     googleId: {
         type: String,

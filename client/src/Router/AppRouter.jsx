@@ -11,9 +11,14 @@ import DashboardLayout from "../Components/Layout/DashboardLayout";
 import AuthLayout from '../Components/Layout/AuthLayout'
 import Analytics from "../Pages/Analytics/Analytics";
 import MapViewPage from "../Pages/MapViewPage/MapViewPage";
+import { useSelector } from "react-redux";
 
 
 const AppRouter = () => {
+  
+  const authUser = useSelector((state) => state.auth.user);
+  const authToken = useSelector((state) => state.auth.token);
+  console.log("User is logged in :", authUser,"Token is :", authToken);
   return (
     <Router>
         <ScrollToTop />

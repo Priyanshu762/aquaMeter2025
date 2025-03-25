@@ -1,18 +1,58 @@
-import { googleLogin } from '../API/authAPI';
-import { login } from '../store/authSlice';
-import { store } from '../store/store';
+import { useDispatch } from 'react-redux';
+import { googleAuth, register, login, logout } from '../API/authAPI';
 
-export const handleGoogleLogin = async (googleToken) => {
-  try {
-    
-    const data = await googleLogin(googleToken);
-    store.dispatch(login(data));
-    localStorage.setItem('authToken', data.token);
-    localStorage.setItem('user', JSON.stringify(data.user));
-    return data;
 
-  } catch (error) {
-    console.error('Error during Google Login:', error);
-    throw error;
+export const authService = {
+  login: async (credentials) => {
+    const response = await login(credentials);
+    if (response.data.token) {
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('authToken', response.data.token);
+    }
+    return response.data;
+  },
+
+  register: async (userData) => {
+    const response = await register(userData);
+    if (response.data.token) {
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('authToken', response.data.token);
+    }
+    return response.data;
+  },
+
+  googleLogin: async (code) => {
+    try {
+      const response = await googleAuth(code);
+      if (response.data.token) {
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem('authToken', response.data.token);
+      }
+      return response.data;
+    } catch (error) {
+      console.error('Error during Google Login:', error);
+      throw error;
+    }
+  },
+
+  logout: async () => {
+    try {
+      const response= await logout();
+      localStorage.removeItem('user');
+      localStorage.removeItem('authToken');
+      
+    } catch (error) {
+      console.error('Error during logout:', error);
+      throw error;
+    }
+  },
+
+  getCurrentUser: () => {
+    return JSON.parse(localStorage.getItem('user'));
+  },
+
+  getToken: () => {
+    return localStorage.getItem('authToken');
   }
 };
+

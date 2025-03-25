@@ -7,12 +7,18 @@ const axios = require('axios');
 // Register new user
 const register = async (req, res) => {
     try {
-        const { email, password, name } = req.body;
-
+        const { email, password, name, phone } = req.body;
+        console.log(email, password, name, phone);
+        
         // Check if user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
+        }
+
+        const existingPhone = await User.findOne({ phone });
+        if (existingPhone) {
+            return res.status(400).json({ message: 'Phone number already exists' });
         }
 
         // Hash password
@@ -23,7 +29,8 @@ const register = async (req, res) => {
         const user = new User({
             email,
             password: hashedPassword,
-            name
+            name,
+            phone
         });
 
         await user.save();
@@ -37,10 +44,13 @@ const register = async (req, res) => {
                 id: user._id,
                 email: user.email,
                 name: user.name
-            }
+            },
+            token: token
         });
     } catch (error) {
         res.status(500).json({ message: 'Error registering user', error: error.message });
+        console.log(error);
+        
     }
 };
 
@@ -53,7 +63,7 @@ const login = async (req, res) => {
         const user = await User.findOne({ email });
         
         if (!user) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+            return res.status(400).json({ message: 'User not found' });
         }
 
         // Check if user has a password (was created through regular registration)
@@ -81,7 +91,8 @@ const login = async (req, res) => {
                 id: user._id,
                 email: user.email,
                 name: user.name
-            }
+            },
+            token: token
         });
     } catch (error) {
         res.status(500).json({ message: 'Error logging in', error: error.message });
@@ -97,6 +108,7 @@ const oauthLogin = async (req,res)=>{
             `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`
         );
         const {email, name, picture} = userRes.data;
+        console.log(email, name, picture);
         
         // Find existing user
         let user = await User.findOne({ email });
@@ -119,10 +131,12 @@ const oauthLogin = async (req,res)=>{
                 email,
                 name,
                 profilePicture: picture
-            }
+            },
+            token: token
         });
     } catch (error) {
         res.status(500).json({ message: 'Error with OAuth login', error: error.message });
+        console.log(error.message);
     }
 }
 
