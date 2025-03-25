@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import store from './Store/store.js';
-import AppWrapper from './components/common/AppWrapper.jsx';
+import AppWrapper from './Components/common/AppWrapper.jsx';
 
 
 if (localStorage.getItem("darkMode") === "true") {
