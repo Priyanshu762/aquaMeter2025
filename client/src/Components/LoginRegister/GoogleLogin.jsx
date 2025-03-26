@@ -15,7 +15,7 @@ const GoogleLogin = ({btnContent}) => {
             if (authResult?.code) {
                 await authService.googleLogin(authResult.code);
                 toast.success('Google login successful!');
-                navigate('/dashboard');
+                navigate('/');
             }
         } catch (error) {
             toast.error(error.response?.data?.message || 'Google login failed');

@@ -16,7 +16,7 @@ export const userDropdown = [
     {
         id: 3,
         key: 'SignOut',
-        link: 'logout',
+        // link: 'logout',
         className: "block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden font-semibold dark:bg-gray-900 dark:text-white dark:data-focus:bg-gray-800",
         title: 'Logout'
     }

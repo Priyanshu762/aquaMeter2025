@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Loader = () => {
   return (
     <StyledWrapper>
-      <div className='fixed inset-0 flex items-center justify-center bg-secondary bg-opacity-10 z-50'>
+      <div className='fixed inset-0 flex items-center justify-center dark:bg-gray-900 bg-secondary bg-opacity-10 z-50'>
         <div className="loader" />
       </div>
     </StyledWrapper>

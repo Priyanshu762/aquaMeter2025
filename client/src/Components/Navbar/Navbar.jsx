@@ -7,6 +7,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/react'
 import { userDropdown } from '../../Data/global/userDropdown';
+import { logout } from '../../Store/authSlice';
+import { authService } from '../../Services/authService';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
     
@@ -15,8 +18,19 @@ const Navbar = () => {
     const location = useLocation();
 
     const [open, setOpen] = useState(false);
-    const [user, setUser] = useState(false);
+    const user = useSelector((state) => state.auth.user);
     const loading = useSelector((state) => state.loader.loading);
+
+    const handleLogout = () => {
+        authService.logout();
+        try {
+            dispatch(logout());
+            navigate('/login');
+            toast.success('Logout successful!');
+        } catch (error) {
+            toast.error('Logout failed!');
+        }
+    };
 
   return (
     <>
@@ -100,6 +114,7 @@ const Navbar = () => {
                             return (
                                 <MenuItem
                                     key={item.key}
+                                    onClick={() => item.title === 'Logout' ? handleLogout() : null}
                                 >
                                     <Link
                                         to={item.link}
@@ -109,8 +124,7 @@ const Navbar = () => {
                                     </Link>
                                 </MenuItem>
                             )
-                        })
-                        }
+                        })}
                     </MenuItems>
                     </Menu>
                 ) 

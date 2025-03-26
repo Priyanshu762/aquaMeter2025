@@ -27,8 +27,8 @@ const AppRouter = () => {
         <Route index  element={<Home />} />
         <Route path="analytics" element={<Home />} />
         <Route path="map-view" element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Signup />} />
+        {/* <Route path="login" element={<Login />} />
+        <Route path="register" element={<Signup />} /> */}
 
         {/* protected route  */}
         <Route 

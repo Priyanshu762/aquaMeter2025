@@ -55,7 +55,7 @@ const Register = () => {
     };
 
   return (
-    <div className="h-[89vh] flex justify-center">
+    <div className="h-[100vh] flex justify-center">
       <div className=" bg-white dark:bg-gray-900 shadow-2xl sm:rounded-lg flex justify-center flex-1">
         <div className="flex-1 bg-blue-900 text-center hidden md:flex">
           <div
@@ -68,7 +68,7 @@ const Register = () => {
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12 mt-[-26px]">
           <div className=" flex flex-col items-center">
             <div className="text-center">
-              <h1 className="text-2xl xl:text-4xl mb-2 font-extrabold text-blue-900 dark:text-gray-100">
+              <h1 className="text-2xl xl:text-4xl mt-12 mb-2 font-extrabold text-blue-900 dark:text-gray-100">
                 Sign up
               </h1>
               <p className="text-[12px] text-gray-500 dark:text-gray-400 ">

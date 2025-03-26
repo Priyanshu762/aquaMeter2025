@@ -50,7 +50,7 @@ const SigninForm = () => {
     };
 
   return (
-    <div className="h-[89vh] flex justify-center">
+    <div className="h-[100vh] flex justify-center">
       <div className="w-screen bg-white dark:bg-gray-900 shadow-2xl sm:rounded-lg flex justify-center flex-1">
         <div className="flex-1 bg-blue-900 text-center hidden md:flex">
           <div
@@ -60,7 +60,7 @@ const SigninForm = () => {
             }}
           ></div>
         </div>
-        <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
+        <div className="lg:w-1/2 xl:w-5/12 mt-8 p-6 sm:p-12">
           <div className=" flex flex-col items-center">
             <div className="text-center">
               <h1 className="text-2xl mb-4 xl:text-4xl font-extrabold text-blue-900 dark:text-gray-100">
