@@ -1,6 +1,6 @@
-import { FaUser, FaEnvelope, FaLock, FaPhone } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaLock, FaPhone, FaLocationArrow } from "react-icons/fa";
 
-const InputField = ({ placeholder, label, type, name, register, errors, icon }) => {
+const InputField = ({ placeholder, label, type, name, register, errors, icon, className }) => {
 
   const getIcon = () => {
     switch (type) {
@@ -10,13 +10,15 @@ const InputField = ({ placeholder, label, type, name, register, errors, icon }) 
         return <FaLock className="w-5 h-5 text-gray-400 dark:text-gray-300" />;
       case "tel":
         return <FaPhone className="w-5 h-5 text-gray-400 dark:text-gray-300" />;
+      case "city":
+        return <FaLocationArrow className="w-5 h-5 text-gray-400 dark:text-gray-300" />;
       default:
         return <FaUser className="w-5 h-5 text-gray-400 dark:text-gray-300" />;
     }
   };
 
     return (
-      <div className="flex flex-col my-3">
+      <div className={`flex flex-col my-3 ${className}`}>
         <label className="hidden text-sm text-gray-700 dark:text-gray-300">{label}</label>
         <div className="relative">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">

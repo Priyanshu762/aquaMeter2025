@@ -14,6 +14,8 @@ import DateCard from "./Weather/DateCard";
 import ForecastTile from "./Weather/ForecastTile";
 import ForecastCard from "./Weather/ForecastCard";
 import EarthCard from "./Weather/EarthCard";
+import SearchBar from "./Weather/SearchBar";
+import DataCard from "./Weather/DataCard";
 
 export {
     Navbar,
@@ -31,5 +33,7 @@ export {
     DateCard,
     ForecastTile,
     ForecastCard,
-    EarthCard
+    EarthCard,
+    SearchBar,
+    DataCard,
 }

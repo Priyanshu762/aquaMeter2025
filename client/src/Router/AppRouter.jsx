@@ -21,7 +21,7 @@ const AppRouter = () => {
   const authToken = useSelector((state) => state.auth.token);
   console.log("User is logged in :", authUser,"Token is :", authToken);
   return (
-    <Router>
+    <Router >
         <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>

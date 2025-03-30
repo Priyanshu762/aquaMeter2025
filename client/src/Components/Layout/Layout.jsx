@@ -4,14 +4,14 @@ import { useSelector } from "react-redux";
 import { Loader } from "..";
 
 const Layout = () => {
-    const loading = useSelector((state) => state.loader.loading);
-    
-    if (loading) return <Loader />;
+  const loading = useSelector((state) => state.loader.loading);
+
+  if (loading) return <Loader />;
 
   return (
-    <div className="">
+    <div className="h-screen flex flex-col">
       <Navbar />
-      <main>
+      <main className="scrollbar overflow-y-scroll flex-1">
         <Outlet />
       </main>
     </div>
