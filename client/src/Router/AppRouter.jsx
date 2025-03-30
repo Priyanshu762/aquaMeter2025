@@ -11,6 +11,7 @@ import DashboardLayout from "../Components/Layout/DashboardLayout";
 import AuthLayout from '../Components/Layout/AuthLayout'
 import Analytics from "../Pages/Analytics/Analytics";
 import MapViewPage from "../Pages/MapViewPage/MapViewPage";
+import WeatherPage from "../Pages/Weather/WeatherPage";
 import { useSelector } from "react-redux";
 
 
@@ -27,8 +28,7 @@ const AppRouter = () => {
         <Route index  element={<Home />} />
         <Route path="analytics" element={<Home />} />
         <Route path="map-view" element={<Home />} />
-        {/* <Route path="login" element={<Login />} />
-        <Route path="register" element={<Signup />} /> */}
+        <Route path="weather" element={<WeatherPage />} />
 
         {/* protected route  */}
         <Route 

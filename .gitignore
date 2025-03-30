@@ -20,3 +20,4 @@ yarn.lock
 # Production Build
 /build
 /dist
+.qodo
