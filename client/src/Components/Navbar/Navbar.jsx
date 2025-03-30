@@ -38,9 +38,7 @@ const Navbar = () => {
             style={{ background: "linear-gradient(143.49deg, rgba(0, 52, 133, 0.8) 0%, rgba(16, 81, 107, 0.8) 45.5%, rgba(0, 51, 77, 0.8) 91.47%)" }}
             className='w-full sticky'>
         <div className="container flex justify-between items-center py-4">
-            {/* Logo Section */}
             <div className='sm:text-lg md:text-lg lg:text-2xl xl:text-2xl text-sm flex items-center gap-2 font-bold text-white dark:text-white '>
-                {/* <MdOutlineMapsHomeWork /> */}
                 <img 
                     src='/logo-large-no-bg.png' 
                     alt="Logo" 
@@ -96,7 +94,7 @@ const Navbar = () => {
                 {user ? (
                     <Menu as="div" className="relative ml-3">
                     <div>
-                        <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
+                        <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden  z-50">
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
                         <img
