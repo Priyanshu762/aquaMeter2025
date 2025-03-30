@@ -9,7 +9,7 @@ const Layout = () => {
     if (loading) return <Loader />;
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="">
       <Navbar />
       <main>
         <Outlet />
