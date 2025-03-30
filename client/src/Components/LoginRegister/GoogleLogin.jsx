@@ -5,6 +5,7 @@ import { authService } from '../../Services/authService';
 import { toast } from 'react-toastify';
 import { setLoading } from '../../Store/loaderSlice';
 import { useDispatch } from 'react-redux';
+import { login } from '../../Store/authSlice';
 
 const GoogleLogin = ({btnContent}) => {
     const navigate = useNavigate();
@@ -13,9 +14,13 @@ const GoogleLogin = ({btnContent}) => {
         dispatch(setLoading(true))
         try {
             if (authResult?.code) {
-                await authService.googleLogin(authResult.code);
+                const response = await authService.googleLogin(authResult.code);
+                dispatch(login({
+                              user: response.user,
+                              token: response.token
+                            }));
                 toast.success('Google login successful!');
-                navigate('/');
+                navigate('/',  { replace: true });
             }
         } catch (error) {
             toast.error(error.response?.data?.message || 'Google login failed');

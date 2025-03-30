@@ -35,12 +35,12 @@ const SigninForm = () => {
       
         try {
           const response = await authService.login(data);
-          toast.success('Login successful!');
           dispatch(login({
             user: response.user,
             token: response.token
           }));
-          navigate('/dashboard'); // or wherever you want to redirect after login
+          toast.success('Login successful!');
+          navigate('/',  { replace: true }); 
         } catch (error) {
           const errorMessage = error.response?.data?.message || 'Login failed. Please try again.';
           toast.error(errorMessage);

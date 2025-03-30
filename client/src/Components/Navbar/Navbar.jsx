@@ -19,7 +19,7 @@ const Navbar = () => {
 
     const [open, setOpen] = useState(false);
     const user = useSelector((state) => state.auth.user);
-    const loading = useSelector((state) => state.loader.loading);
+    
 
     const handleLogout = () => {
         authService.logout();

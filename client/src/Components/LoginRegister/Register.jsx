@@ -43,7 +43,7 @@ const Register = () => {
               user: response.user,
               token: response.token
             }));
-            navigate('/dashboard');
+            navigate('/',  { replace: true });
         }
          catch (error) {
           const errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
