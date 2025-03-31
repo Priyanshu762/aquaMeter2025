@@ -16,6 +16,6 @@ router.get('/oauth', oauthLogin);
 router.post('/logout', logout);
 
 // Protected routes
-router.get('/me', protect, getCurrentUser);
+router.get('/me', protect   , getCurrentUser);
 
 module.exports = router;
