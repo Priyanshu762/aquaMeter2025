@@ -18,6 +18,7 @@ import SearchBar from "./Weather/SearchBar";
 import DataCard from "./Weather/DataCard";
 import ProfileSection from "./Profile/ProfileSection";
 import SettingsSection from "./Settings/SettingsSection";
+import EventCard from "./Events/EventCard";
 
 export {
     Navbar,
@@ -40,4 +41,5 @@ export {
     DataCard,
     ProfileSection,
     SettingsSection,
+    EventCard,
 }
