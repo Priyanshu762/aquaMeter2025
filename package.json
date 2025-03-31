@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "client": "cd client && npm run dev",
-    "server": "cd server && nodemon server.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "devServer": "cd server && nodemon server.js",
+    "server": "cd server && node server.js",
+    "dev": "concurrently \"npm run devServer\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
