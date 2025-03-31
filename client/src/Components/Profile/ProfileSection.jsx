@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const ProfileSection = () => {
+  const user = useSelector((state) => state.auth.user);
+
   const [profile, setProfile] = useState({
-    name: "Jenny Wilson",
+    name: user.name,
     bio: "A social media influencer and singer",
     phone: "+1 234 567 890",
-    email: "jenny@example.com",
+    email: user.email,
     address: "123, Hollywood Blvd, Los Angeles, CA",
     location: "New York, USA",
     occupation: "Content Creator",
@@ -13,7 +16,7 @@ const ProfileSection = () => {
     twitter: "https://twitter.com/jennywilson",
     instagram: "https://twitter.com/jennywilson",
     facebook: "https://twitter.com/jennywilson",
-    imageUrl: "https://pagedone.io/asset/uploads/1705471668.png",
+    imageUrl: user.profilePicture,
   });
 
   const [previewImage, setPreviewImage] = useState(profile.imageUrl);
