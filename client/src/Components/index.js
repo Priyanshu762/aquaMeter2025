@@ -19,6 +19,10 @@ import DataCard from "./Weather/DataCard";
 import ProfileSection from "./Profile/ProfileSection";
 import SettingsSection from "./Settings/SettingsSection";
 import EventCard from "./Events/EventCard";
+import ComplaintMainSection from "./Complaints/ComplaintMainSection";
+import ComplaintToggle from "./Complaints/ComplaintToggle";
+import ComplaintForm from "./Complaints/ComplaintForm";
+import ComplaintStatus from "./Complaints/ComplaintStatus";
 
 export {
     Navbar,
@@ -42,4 +46,9 @@ export {
     ProfileSection,
     SettingsSection,
     EventCard,
+    ComplaintMainSection,
+    ComplaintToggle,
+    ComplaintForm,
+    ComplaintStatus,
+
 }

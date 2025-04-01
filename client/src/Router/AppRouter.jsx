@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import ProfilePage from "../Pages/Profile/ProfilePage";
 import SettingsPage from "../Pages/Settings/SettingsPage";
 import EventsPage from "../Pages/Events/EventsPage";
+import ComplaintsPage from "../Pages/Complaints/ComplaintsPage";
 
 
 const AppRouter = () => {
@@ -32,6 +33,7 @@ const AppRouter = () => {
         <Route path="analytics" element={<Home />} />
         <Route path="map-view" element={<Home />} />
         <Route path="events" element={<EventsPage />} />
+        <Route path="complaints" element={<ComplaintsPage />} />
         <Route path="weather" element={<WeatherPage />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route path="settings" element={<SettingsPage />} />
