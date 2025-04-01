@@ -36,7 +36,7 @@ const Navbar = () => {
     <>
         <nav 
             style={{ background: "linear-gradient(143.49deg, rgba(0, 52, 133, 0.8) 0%, rgba(16, 81, 107, 0.8) 45.5%, rgba(0, 51, 77, 0.8) 91.47%)" }}
-            className='w-full sticky'>
+            className='w-full sticky z-50'>
         <div className="container flex justify-between items-center py-4">
             <div className='sm:text-lg md:text-lg lg:text-2xl xl:text-2xl text-sm flex items-center gap-2 font-bold text-white dark:text-white '>
                 <img 
@@ -106,7 +106,7 @@ const Navbar = () => {
                     </div>
                     <MenuItems
                         transition
-                        className="absolute right-0 top-full z-50 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-900 py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in border border-gray-200 dark:border-gray-700"
+                        className="absolute right-0 top-full z-[100] mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-900 py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in border border-gray-200 dark:border-gray-700"
                         >
                         {userDropdown.map((item) => {
                             return (
