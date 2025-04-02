@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaSearch, FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ComplaintStatus = () => {
   const [searchId, setSearchId] = useState("");
@@ -8,22 +9,28 @@ const ComplaintStatus = () => {
       id: "12345",
       issue: "Garbage",
       status: "Pending",
-      images: ["/images/garbage1.jpg", "/images/garbage2.jpg"],
-      actions: "Inspection scheduled."
+      imagesBefore: ["/images/garbage1.jpg"],
+      imagesAfter: ["/images/garbage2.jpg"],
+      actions: "Inspection scheduled.",
+      updatedStatus: "Scheduled for removal in 2 days."
     },
     {
       id: "67890",
       issue: "Foul Smell",
       status: "In Progress",
-      images: ["/images/smell1.jpg"],
-      actions: "Investigating source."
+      imagesBefore: ["/images/smell1.jpg"],
+      imagesAfter: [],
+      actions: "Investigating source.",
+      updatedStatus: "Awaiting lab test results."
     },
     {
       id: "54321",
       issue: "Discoloration",
       status: "Resolved",
-      images: ["/images/discoloration.jpg"],
-      actions: "Water treatment completed."
+      imagesBefore: ["/images/discoloration.jpg"],
+      imagesAfter: ["/images/water-clear.jpg"],
+      actions: "Water treatment completed.",
+      updatedStatus: "No further issues detected."
     },
   ];
 
@@ -46,61 +53,115 @@ const ComplaintStatus = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto p-6">
-      <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 text-center">
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
         📌 Complaint Status
       </h2>
-      <input
-        type="text"
-        placeholder="Enter Complaint ID"
-        value={searchId}
-        onChange={(e) => setSearchId(e.target.value)}
-        className="w-full border rounded p-2 mb-4 dark:bg-gray-800 dark:text-white"
-      />
 
-      
+      {/* Search Bar */}
+      <div className="relative w-full mb-6">
+        <input
+          type="text"
+          placeholder="Enter Complaint ID..."
+          value={searchId}
+          onChange={(e) => setSearchId(e.target.value)}
+          className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 pr-10 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <FaSearch className="absolute right-3 top-3 text-gray-500 dark:text-gray-400 w-5 h-5 mt-1 mr-1"  />
+      </div>
 
-      <div className="overflow-x-auto mt-8">
-        <table className="min-w-full border border-gray-300 dark:border-gray-600">
-          <thead className="bg-gray-200 dark:bg-gray-700">
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg">
+          <thead className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white">
             <tr>
-              <th className="border p-2">Complaint ID</th>
-              <th className="border p-2">Issue</th>
-              <th className="border p-2">Status</th>
-              <th className="border p-2">Actions</th>
-              <th className="border p-2">Details</th>
+              <th className="border p-3 text-left">Complaint ID</th>
+              <th className="border p-3 text-left">Issue</th>
+              <th className="border p-3 text-center">Status</th>
+              <th className="border p-3 text-left">Actions</th>
+              <th className="border p-3 text-center">Details</th>
             </tr>
           </thead>
           <tbody>
-            {filteredComplaints.map(({ id, issue, status, actions, images }) => (
-              <>
-                <tr key={id} className="text-center border dark:border-gray-600">
-                  <td className="border p-2">{id}</td>
-                  <td className="border p-2">{issue}</td>
-                  <td className={`border p-2 ${getStatusClass(status)}`}>{status}</td>
-                  <td className="border p-2">{actions}</td>
-                  <td className="border p-2">
+            {filteredComplaints.map(({ id, issue, status, actions, updatedStatus, imagesBefore, imagesAfter }) => (
+              <React.Fragment key={id}>
+                <tr className="even:bg-gray-50 dark:even:bg-gray-700 text-gray-900 dark:text-white">
+                  <td className="border p-3">{id}</td>
+                  <td className="border p-3">{issue}</td>
+                  <td className="border p-3 text-center">
+                    <span className={`px-3 py-1 text-sm font-semibold rounded-full ${getStatusClass(status)}`}>
+                      {status}
+                    </span>
+                  </td>
+                  <td className="border p-3">{actions}</td>
+                  <td className="border p-3 text-center">
                     <button
-                      className="bg-blue-500 text-white px-3 py-1 rounded"
+                      className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2"
                       onClick={() => setExpandedRow(expandedRow === id ? null : id)}
                     >
+                      {expandedRow === id ? <FaEyeSlash /> : <FaEye />}
                       {expandedRow === id ? "Hide" : "View"}
                     </button>
                   </td>
                 </tr>
+                
+                {/* Complaint Details Row */}
                 {expandedRow === id && (
-                  <tr>
-                    <td colSpan={5} className="p-4 bg-gray-100 dark:bg-gray-800">
-                      <h3 className="text-lg font-semibold">Complaint Details</h3>
-                      <p><strong>Actions Taken:</strong> {actions}</p>
-                      <div className="flex gap-2 mt-2">
-                        {images.map((img, index) => (
-                          <img key={index} src={img} alt="complaint" className="w-20 h-20 object-cover rounded-lg" />
-                        ))}
+                  <tr className="bg-gray-100 dark:bg-gray-800 transition-all duration-300 border-1 border-gray-300">
+                    <td colSpan={5} className="p-6 border-t border-gray-300 dark:border-gray-600 rounded-lg">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                        Complaint Details
+                      </h3>
+                      <p className="text-gray-700 dark:text-gray-300">
+                        <strong>Actions Taken:</strong> {actions}
+                      </p>
+                      <p className="text-gray-700 dark:text-gray-300">
+                        <strong>Updated Status:</strong> {updatedStatus}
+                      </p>
+                      
+                      {/* Before & After Images */}
+                      <div className="grid grid-cols-2 gap-4 mt-4">
+                        {/* Before Inspection */}
+                        <div>
+                          <h4 className="text-md font-medium text-gray-900 dark:text-white mb-2">
+                            Before Inspection
+                          </h4>
+                          <div className="flex gap-3">
+                            {imagesBefore.map((img, index) => (
+                              <img
+                                key={index}
+                                src={img}
+                                alt="Before Inspection"
+                                className="w-32 h-32 object-cover rounded-lg shadow-md border border-gray-300 dark:border-gray-700"
+                              />
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* After Inspection */}
+                        <div>
+                          <h4 className="text-md font-medium text-gray-900 dark:text-white mb-2">
+                            After Inspection
+                          </h4>
+                          <div className="flex gap-3">
+                            {imagesAfter.length > 0 ? (
+                              imagesAfter.map((img, index) => (
+                                <img
+                                  key={index}
+                                  src={img}
+                                  alt="After Inspection"
+                                  className="w-32 h-32 object-cover rounded-lg shadow-md border border-gray-300 dark:border-gray-700"
+                                />
+                              ))
+                            ) : (
+                              <p className="text-gray-600 dark:text-gray-400 italic">No after-inspection images available</p>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </td>
                   </tr>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </tbody>
         </table>
