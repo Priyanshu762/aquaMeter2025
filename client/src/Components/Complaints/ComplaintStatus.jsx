@@ -95,7 +95,7 @@ const ComplaintStatus = () => {
                   <td className="border p-3">{actions}</td>
                   <td className="border p-3 text-center">
                     <button
-                      className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2"
+                      className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
                       onClick={() => setExpandedRow(expandedRow === id ? null : id)}
                     >
                       {expandedRow === id ? <FaEyeSlash /> : <FaEye />}
@@ -104,7 +104,6 @@ const ComplaintStatus = () => {
                   </td>
                 </tr>
                 
-                {/* Complaint Details Row */}
                 {expandedRow === id && (
                   <tr className="bg-gray-100 dark:bg-gray-800 transition-all duration-300 border-1 border-gray-300">
                     <td colSpan={5} className="p-6 border-t border-gray-300 dark:border-gray-600 rounded-lg">
@@ -118,9 +117,7 @@ const ComplaintStatus = () => {
                         <strong>Updated Status:</strong> {updatedStatus}
                       </p>
                       
-                      {/* Before & After Images */}
                       <div className="grid grid-cols-2 gap-4 mt-4">
-                        {/* Before Inspection */}
                         <div>
                           <h4 className="text-md font-medium text-gray-900 dark:text-white mb-2">
                             Before Inspection
@@ -137,7 +134,6 @@ const ComplaintStatus = () => {
                           </div>
                         </div>
 
-                        {/* After Inspection */}
                         <div>
                           <h4 className="text-md font-medium text-gray-900 dark:text-white mb-2">
                             After Inspection

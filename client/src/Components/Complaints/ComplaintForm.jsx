@@ -57,26 +57,26 @@ const ComplaintForm = () => {
       <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 text-center">📄 Register Complaint</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label className="block text-gray-700 dark:text-gray-200">Name</label>
-          <input type="text" {...register("name")} className="w-full border rounded p-2" />
+          <label className="block text-gray-700 dark:text-gray-200 outline-none">Name</label>
+          <input type="text" {...register("name")} className="w-full border rounded p-2 outline-none focus:border-2 focus:border-indigo-500/80" />
           {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
         </div>
 
         <div>
           <label className="block text-gray-700 dark:text-gray-200">Phone Number</label>
-          <input type="text" {...register("phone")} className="w-full border rounded p-2" />
+          <input type="text" {...register("phone")} className="w-full border rounded p-2 outline-none focus:border-2 focus:border-indigo-500/80" />
           {errors.phone && <p className="text-red-500 text-sm">{errors.phone.message}</p>}
         </div>
 
         <div>
           <label className="block text-gray-700 dark:text-gray-200">Location</label>
-          <input type="text" {...register("location")} className="w-full border rounded p-2" />
+          <input type="text" {...register("location")} className="w-full border rounded p-2 outline-none focus:border-2 focus:border-indigo-500/80" />
           {errors.location && <p className="text-red-500 text-sm">{errors.location.message}</p>}
         </div>
 
         <div>
           <label className="block text-gray-700 dark:text-gray-200">Issue Type</label>
-          <select {...register("issue")} className="w-full border rounded p-2 dark:bg-gray-700 dark:text-white focus:outline-none">
+          <select {...register("issue")} className="w-full border rounded p-2 dark:bg-gray-700 dark:text-white focus:outline-none outline-none focus:border-2 focus:border-indigo-500/80">
             <option value="">Select an issue</option>
             <option value="garbage">Garbage</option>
             <option value="foul smell">Foul Smell</option>
@@ -98,12 +98,12 @@ const ComplaintForm = () => {
               accept="image/*"
               multiple
               onChange={handleImageChange}
-              className="hidden"
+              className="hidden outline-none focus:border-2 focus:border-indigo-500/80"
               id="file-upload"
             />
             <label
               htmlFor="file-upload"
-              className="cursor-pointer flex flex-col items-center justify-center w-24 h-24 border-2 border-gray-300 border-dashed rounded-lg text-gray-600 hover:bg-gray-100"
+              className="cursor-pointer outline-none flex flex-col items-center justify-center w-24 h-24 border-2 border-gray-300 border-dashed rounded-lg text-gray-600 hover:bg-gray-100"
             >
               <FiPlus size={24} />
               <span className="text-xs">Add More</span>
@@ -126,7 +126,7 @@ const ComplaintForm = () => {
 
         <div>
           <label className="block text-gray-700 dark:text-gray-200">Additional Information</label>
-          <textarea {...register("additionalInfo")} className="w-full border rounded p-2"></textarea>
+          <textarea {...register("additionalInfo")} className="w-full border rounded p-2 outline-none focus:border-2 focus:border-indigo-500/80"></textarea>
         </div>
 
         <button type="submit" 

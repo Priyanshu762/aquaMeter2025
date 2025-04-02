@@ -63,3 +63,11 @@ body {
 .dark .scrollbar::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #7A5DC7, #4B379A);
 }
+
+/* Make date & time picker icons white in dark mode */
+.dark input[type="date"]::-webkit-calendar-picker-indicator,
+.dark input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    /* Converts black icons to white */
+    cursor: pointer;
+}

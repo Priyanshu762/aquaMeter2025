@@ -39,7 +39,7 @@ const DeviceHeatmap = ({ deviceId }) => {
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-[55vw] mx-auto overflow-visible mb-20">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-[55vw] mx-auto overflow-visible ">
       <h2 className="text-lg font-semibold text-center mb-4">📊 Last 30 Days Heatmap</h2>
 
       <div className="grid grid-cols-6 md:grid-cols-10 gap-3 justify-center relative">
