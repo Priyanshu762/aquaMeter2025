@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const EarthCard = () => {
   return (
     <StyledWrapper>
-      <div className="section-banner">
+      <div className="section-banner ">
         <div id="star-1">
           <div className="curved-corner-star">
             <div id="curved-corner-bottomright" />

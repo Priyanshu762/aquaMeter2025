@@ -4,17 +4,19 @@ import { WiStrongWind } from "react-icons/wi";
 import { GiPressureCooker } from "react-icons/gi";
 import { FiSun } from "react-icons/fi";
 import { FaCloudRain } from "react-icons/fa";
+import { useSelector } from 'react-redux';
 
 const WeatherPage = () => {
+
   return (
     <>
-        <SearchBar />
-        <div className='p-4 mx-48 mt-8 flex gap-16 justify-between'>
+        <SearchBar  />
+        <div className='p-4 mx-48 mt-4 flex gap-16 justify-between'>
         <div className='flex flex-col  gap-8 justify-between'>
-        <DisplayCard />
-        <DateCard />
+        <DateCard time='11:11' period='AM' day='Wednesday, June 15th' />
+        <DisplayCard temperature='24' high='32' low='16' location='Lucknow, Uttar Pradesh' weather='Rain'  />
         </div>
-        <div className='mt-4'>
+        <div className=''>
             <ForecastCard />
         </div>
         </div>

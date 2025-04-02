@@ -39,25 +39,28 @@ const SearchBar = () => {
                       <InputField className="w-full" placeholder="Search any city" label='text' type="city" name="text" register={register} errors={errors} />
                       
                       <button 
-                      type="submit"
-                      disabled={loading}
-                      className={`tracking-wide font-semibold bg-blue-900 text-gray-100 w-36 py-4 rounded-xl hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none
-                      ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-900 hover:bg-indigo-700 text-gray-100"}`}
-                      >
-                      {loading ? (
-                        <>
-                          <FaSearch />
-                          <span className="ml-3">Searching...</span>
-                        </>
+                          type="submit"
+                          disabled={loading}
+                          className={`
+                            tracking-wide font-semibold w-36 py-4 rounded-xl transition-all duration-300 ease-in-out flex items-center justify-center 
+                            focus:shadow-outline focus:outline-none 
+                            ${loading ? "bg-gray-400 dark:bg-gray-500 cursor-not-allowed" : 
+                            "bg-gray-200 text-gray-900 hover:bg-gray-300 dark:bg-blue-900 dark:text-gray-100 dark:hover:bg-indigo-700 cursor-pointer"}
+                          `}
+                        >
+                          {loading ? (
+                            <>
+                              <FaSearch />
+                              <span className="ml-3">Searching...</span>
+                            </>
+                          ) : (
+                            <>
+                              <FaSearch />
+                              <span className="ml-3">Search</span>
+                            </>
+                          )}
+                        </button>
 
-                      ) : 
-                      (
-                        <>
-                          <FaSearch />
-                          <span className="ml-3">Search</span>
-                        </>
-                      )}
-                    </button>
                       </div>
                     </form>
 
