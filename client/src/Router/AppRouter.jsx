@@ -17,6 +17,8 @@ import ProfilePage from "../Pages/Profile/ProfilePage";
 import SettingsPage from "../Pages/Settings/SettingsPage";
 import EventsPage from "../Pages/Events/EventsPage";
 import ComplaintsPage from "../Pages/Complaints/ComplaintsPage";
+import PreviousEvents from "../Pages/Events/PreviousEvents";
+import CreateEvent from "../Pages/Events/CreateEvent";
 
 
 const AppRouter = () => {
@@ -31,11 +33,12 @@ const AppRouter = () => {
         <Route path="/" element={<Layout />}>
         <Route index  element={<Home />} />
         <Route path="analytics" element={<Home />} />
-        <Route path="map-view" element={<Home />} />
+        <Route path="map-view" element={<MapViewPage />} />
         <Route path="events" element={<EventsPage />} />
         <Route path="complaints" element={<ComplaintsPage />} />
         <Route path="weather" element={<WeatherPage />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="previous-events" element={<PreviousEvents />} />
         <Route path="settings" element={<SettingsPage />} />
 
         {/* protected route  */}
@@ -49,7 +52,7 @@ const AppRouter = () => {
         >
             <Route index element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />
-            <Route path="map-view" element={<MapViewPage />} />
+            <Route path="create-event" element={<CreateEvent />} />
         </Route>
       </Route>
 

@@ -3,13 +3,12 @@ import { Link } from "react-router-dom";
 import sidebarNavItems from '../../Data/global/sidebarNavItems';
 import { FiMenu } from "react-icons/fi";
 
-const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+const Sidebar = ({isOpen, setIsOpen}) => {
 
   return (
     <div className="flex">
       <div
-        className={`h-screen bg-white-100 text-black dark:bg-gray-900 dark:text-white transition-all duration-300 border-r-2 dark:border-sidebarBorder
+        className={`h-screen fixed bg-white-100 text-black dark:bg-gray-900 dark:text-white transition-all duration-300 border-r-2 dark:border-sidebarBorder
           ${isOpen ? "w-48" : "w-16"}`}
       >
 

@@ -1,10 +1,9 @@
-import React from "react";
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import React, { useEffect } from "react";
+import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import geojsonData from "../../Data/stationData/geojsonData";
 
-// Custom marker icon (you can customize this further if needed)
 const customIcon = new L.Icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
   iconSize: [25, 41],
@@ -12,7 +11,6 @@ const customIcon = new L.Icon({
   popupAnchor: [1, -34],
 });
 
-// Function to style markers based on their status
 const pointToLayer = (feature, latlng) => {
   let color;
   switch (feature.properties.status) {
@@ -38,16 +36,34 @@ const pointToLayer = (feature, latlng) => {
   });
 };
 
-const MapView = ({ onMarkerClick }) => {
+// Custom Component to handle map centering
+const RecenterMap = ({ coordinates }) => {
+  const map = useMap();
+  
+  useEffect(() => {
+    if (coordinates) {
+      map.setView(coordinates, 15, { animate: true });
+    }
+  }, [coordinates, map]);
+
+  return null;
+};
+
+const MapView = ({ onMarkerClick, deviceData }) => {
+  console.log("Selected Device coor in MapView: ", deviceData.coordinates);
+
   return (
-    <div className="flex justify-center md:justify-start shadow-2xl w-full md:h-[50vh] md:w-[55vw]">
+    <div className="flex justify-center md:justify-start shadow-2xl w-full md:h-[40vh] md:w-[55vw]">
       <MapContainer
-        center={[25.2678, 83.0173]}
-        zoom={12}
+        center={deviceData?.coordinates || [83.0373, 25.2878]} // Default coordinates
+        zoom={8}
         scrollWheelZoom={true}
-        className="rounded-lg overflow-hidden"
-        style={{ height: "50vh", width: "50vw" }}
+        className="rounded-xl overflow-hidden"
+        style={{ height: "40vh", width: "55vw" }}
       >
+        {/* Recenter the map when coordinates change */}
+        <RecenterMap coordinates={deviceData?.coordinates} />
+
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -56,12 +72,13 @@ const MapView = ({ onMarkerClick }) => {
           data={geojsonData}
           pointToLayer={pointToLayer}
           onEachFeature={(feature, layer) => {
-            // When marker is clicked, call the parent callback with this marker's properties
             layer.on("click", () => {
               onMarkerClick(feature.properties);
             });
-            // Bind a popup for visual feedback on the map
-            layer.bindPopup(`<b>${feature.properties.name}</b><br>Status: ${feature.properties.status}`);
+
+            layer.bindPopup(
+              `<b>${feature.properties.name}</b><br>Status: ${feature.properties.status}`
+            );
           }}
         />
       </MapContainer>

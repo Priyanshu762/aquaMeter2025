@@ -12,7 +12,8 @@ const geojsonData = {
         ph: 7.0,
         temp: 25,
         turbidity: 2,
-        timestamp: "2025-03-17T12:30:00Z"
+        timestamp: "2025-03-17T12:30:00Z",
+        coordinates: [25.2678, 83.0173]
       },
       geometry: {
         type: "Point",
@@ -30,7 +31,8 @@ const geojsonData = {
         ph: 6.8,
         temp: 30,
         turbidity: 5,
-        timestamp: "2025-03-17T13:00:00Z"
+        timestamp: "2025-03-17T13:00:00Z",
+        coordinates: [25.2778, 83.0273]
       },
       geometry: {
         type: "Point",
@@ -48,7 +50,8 @@ const geojsonData = {
         ph: 9.0,
         temp: 35,
         turbidity: 10,
-        timestamp: "2025-03-17T13:30:00Z"
+        timestamp: "2025-03-17T13:30:00Z",
+        coordinates: [25.2878, 83.0373]
       },
       geometry: {
         type: "Point",

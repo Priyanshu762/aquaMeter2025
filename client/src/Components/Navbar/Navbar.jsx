@@ -82,14 +82,7 @@ const Navbar = () => {
                     }
                 </ul>
             </div>
-            {/* Icons Section  */}
             <div className='flex items-center gap-4'>
-                {/* <button className='text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200'>
-                    <CiSearch />
-                </button> */}
-                {/* <button className='text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200' onClick={() => dispatch(toggleTheme())}>
-                    {darkMode ? <MdDarkMode /> : <MdLightMode /> }
-                </button> */}
                 <ThemeToggler />
                 {user ? (
                     <Menu as="div" className="relative ml-3">

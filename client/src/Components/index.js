@@ -23,6 +23,9 @@ import ComplaintMainSection from "./Complaints/ComplaintMainSection";
 import ComplaintToggle from "./Complaints/ComplaintToggle";
 import ComplaintForm from "./Complaints/ComplaintForm";
 import ComplaintStatus from "./Complaints/ComplaintStatus";
+import DeviceHeatmap from "./MapView/DeviceHeatMap";
+import PreviousEventCard from "./Events/PreviousEventCard";
+import EventToggle from "./Events/EventToggle";
 
 export {
     Navbar,
@@ -50,5 +53,7 @@ export {
     ComplaintToggle,
     ComplaintForm,
     ComplaintStatus,
-
+    DeviceHeatmap,
+    PreviousEventCard,
+    EventToggle,
 }
