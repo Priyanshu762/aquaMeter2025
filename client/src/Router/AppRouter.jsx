@@ -42,6 +42,7 @@ const AppRouter = () => {
         <Route path="complaints" element={<ComplaintsPage />} />
         <Route path="weather" element={<WeatherPage />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="leaderboard" element={<ProfilePage />} />
         <Route path="previous-events" element={<PreviousEvents />} />
         <Route path="settings" element={<SettingsPage />} />
 

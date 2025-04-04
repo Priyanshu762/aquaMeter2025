@@ -21,7 +21,14 @@ export const userDropdown = [
         title: 'Previous Events'
     },
     {
-        id: 3,
+        id: 4,
+        key: 'leaderboard',
+        link: 'leaderboard',
+        className: "block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden font-semibold dark:bg-gray-900 dark:text-white dark:data-focus:bg-gray-800",
+        title: 'Leaderboard'
+    },
+    {
+        id: 5,
         key: 'SignOut',
         // link: 'logout',
         className: "block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden font-semibold dark:bg-gray-900 dark:text-white dark:data-focus:bg-gray-800",

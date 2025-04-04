@@ -33,6 +33,10 @@ import AccessControl from "./Settings/AdminSettings/AccessControl";
 import EventInfoCard from "./Events/EventInfoCard";
 import EventRegisterCard from "./Events/EventRegisterCard";
 import CurrentWeatherCard from "./Weather/CurrentWeatherCard";
+import DataCards from "./Dashboard/DataCards";
+import OverviewCards from "./Dashboard/OverviewCards";
+import StatCard from "./Dashboard/StatCard";
+import DeviceDataTable from "./Dashboard/DeviceDataTable";
 
 export {
     Navbar,
@@ -70,4 +74,8 @@ export {
     EventInfoCard,
     EventRegisterCard,
     CurrentWeatherCard,
+    DataCards,
+    StatCard,
+    OverviewCards,
+    DeviceDataTable,
 }

@@ -39,7 +39,7 @@ const UpcomingEventsTable = () => {
                   className="relative inline-block px-6 py-2 font-semibold text-white border-1 border-indigo-500 overflow-hidden group transition-all duration-300 ease-in-out rounded-lg cursor-pointer"
                 >
                   <span className="absolute left-0 top-0 w-full h-full bg-violet-400 transform -translate-x-full group-hover:translate-x-0 transition-all duration-300 ease-in-out"></span>
-                  <span className="relative z-10">Check Event</span>
+                  <span className="relative ">Check Event</span>
                 </button>
               </td>
             </tr>
