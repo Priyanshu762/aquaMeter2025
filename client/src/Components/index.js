@@ -26,6 +26,13 @@ import ComplaintStatus from "./Complaints/ComplaintStatus";
 import DeviceHeatmap from "./MapView/DeviceHeatMap";
 import PreviousEventCard from "./Events/PreviousEventCard";
 import EventToggle from "./Events/EventToggle";
+import UserManagement from "./Settings/AdminSettings/UserManagement";
+import SystemLogs from "./Settings/AdminSettings/SystemLogs";
+import GeneralSettings from "./Settings/AdminSettings/GeneralSettings";
+import AccessControl from "./Settings/AdminSettings/AccessControl";
+import EventInfoCard from "./Events/EventInfoCard";
+import EventRegisterCard from "./Events/EventRegisterCard";
+import CurrentWeatherCard from "./Weather/CurrentWeatherCard";
 
 export {
     Navbar,
@@ -56,4 +63,11 @@ export {
     DeviceHeatmap,
     PreviousEventCard,
     EventToggle,
+    UserManagement,
+    AccessControl,
+    GeneralSettings,
+    SystemLogs,
+    EventInfoCard,
+    EventRegisterCard,
+    CurrentWeatherCard,
 }

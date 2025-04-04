@@ -16,13 +16,12 @@ const getIndicator = (value, param) => {
   return value >= min && value <= max ? <FaThumbsUp className="text-green-500" /> : <FaThumbsDown className="text-red-500" />;
 };
 
-const ParametersBox = ({ data, onNext, onPrevious }) => {
+const ParametersBox = ({ data, onNext, onPrevious, progress, setProgress }) => {
   if (!data) {
     return <div className="text-center p-4">Click a marker to view details.</div>;
   }
 
-  const [progress, setProgress] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const intervalRef = useRef(null);
 
   useEffect(() => {

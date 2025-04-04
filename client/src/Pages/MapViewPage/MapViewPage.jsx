@@ -6,19 +6,22 @@ const MapViewPage = () => {
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(Math.floor(Math.random() * geojsonData.features.length));
     const [selectedDevice, setSelectedDevice] = useState(geojsonData.features[currentIndex].properties);
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         const currentDevice = geojsonData.features[currentIndex].properties;
         setSelectedMarker(currentDevice);
-        setSelectedDevice(currentDevice); // Sync selected device for heatmap
+        setSelectedDevice(currentDevice); 
         console.log(`Current Device: in map `, currentDevice);
     }, [currentIndex]);
 
     const handleNext = () => {
+        setProgress(0);
         setCurrentIndex((prevIndex) => (prevIndex + 1) % geojsonData.features.length);
     };
 
     const handlePrevious = () => {
+        setProgress(0);
         setCurrentIndex((prevIndex) => (prevIndex - 1 + geojsonData.features.length) % geojsonData.features.length);
     };
 
@@ -40,7 +43,9 @@ const MapViewPage = () => {
                     <ParametersBox 
                         data={selectedMarker}
                         onNext={handleNext} 
-                        onPrevious={handlePrevious}  
+                        onPrevious={handlePrevious}
+                        progress={progress}
+                        setProgress={setProgress}
                     />
                 </div>
             </div>

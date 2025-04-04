@@ -1,12 +1,12 @@
-import { FiBarChart2, FiMap, FiCalendar, FiAlertTriangle, FiCloud } from "react-icons/fi"; 
+import { FiBarChart2, FiMap, FiCalendar, FiAlertTriangle, FiCloud, FiHome } from "react-icons/fi"; 
 
 export const NavbarMenu = [
     {
         id: 1,
-        key: "analytics",
-        title: "Analytics",
-        link: "/analytics",
-        icon: <FiBarChart2 />,
+        key: "home",
+        title: "Home",
+        link: "/",
+        icon: <FiHome />,
     },
     {
         id: 2,

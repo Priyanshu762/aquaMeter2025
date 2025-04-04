@@ -1,5 +1,5 @@
 import React from 'react'
-import { DisplayCard, DateCard, DataCard, ForecastCard, EarthCard, SearchBar } from '../../Components'
+import { DisplayCard, DateCard, DataCard, ForecastCard, EarthCard, SearchBar, CurrentWeatherCard } from '../../Components'
 import { WiStrongWind } from "react-icons/wi";
 import { GiPressureCooker } from "react-icons/gi";
 import { FiSun } from "react-icons/fi";
@@ -10,18 +10,21 @@ const WeatherPage = () => {
 
   return (
     <>
+        <span className=''>
         <SearchBar  />
-        <div className='p-4 mx-48 mt-4 flex gap-16 justify-between'>
-        <div className='flex flex-col  gap-8 justify-between'>
-        <DateCard time='11:11' period='AM' day='Wednesday, June 15th' />
-        <DisplayCard temperature='24' high='32' low='16' location='Lucknow, Uttar Pradesh' weather='Rain'  />
+        </span>
+        <div className='p-4 mx-48 mt-4 flex gap-12 justify-center'>
+        <div className=''>
+        {/* <DateCard time='11:11' period='AM' day='Wednesday, June 15th' /> */}
+        {/* <DisplayCard temperature='24' high='32' low='16' location='Lucknow, Uttar Pradesh' weather='Rain'  /> */}
+        <CurrentWeatherCard />
         </div>
         <div className=''>
             <ForecastCard />
         </div>
         </div>
-        <div className='mx-48 mt-12 flex justify-between gap-16'>
-            <div>
+        <div className='mx-48 mt-2 flex justify-between gap-34'>
+            <div className=''>
             <EarthCard />
             </div>
             <div className='flex gap-4 mb-16'>

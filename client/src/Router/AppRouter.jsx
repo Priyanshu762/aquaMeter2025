@@ -19,6 +19,9 @@ import EventsPage from "../Pages/Events/EventsPage";
 import ComplaintsPage from "../Pages/Complaints/ComplaintsPage";
 import PreviousEvents from "../Pages/Events/PreviousEvents";
 import CreateEvent from "../Pages/Events/CreateEvent";
+import AdminSettingsPage from "../Pages/Settings/AdminSettingsPage";
+import EventDetailsPage from "../Pages/Events/EventDetailsPage";
+import AlertsPage from "../Pages/Alerts/AlertsPage";
 
 
 const AppRouter = () => {
@@ -32,9 +35,10 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
         <Route index  element={<Home />} />
-        <Route path="analytics" element={<Home />} />
+        <Route path="" element={<Home />} />
         <Route path="map-view" element={<MapViewPage />} />
         <Route path="events" element={<EventsPage />} />
+        <Route path="event/:eventId" element={<EventDetailsPage />} />
         <Route path="complaints" element={<ComplaintsPage />} />
         <Route path="weather" element={<WeatherPage />} />
         <Route path="profile" element={<ProfilePage />} />
@@ -52,6 +56,8 @@ const AppRouter = () => {
         >
             <Route index element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />
+            <Route path="alerts" element={<AlertsPage />} />
+            <Route path="settings" element={<AdminSettingsPage />} />
             <Route path="create-event" element={<CreateEvent />} />
         </Route>
       </Route>

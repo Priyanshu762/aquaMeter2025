@@ -1,5 +1,6 @@
 const eventsData = [
   {
+    id: 1,
     title: 'AWS Cloud Workshop',
     date: 'January 10, 2025',
     location: 'San Francisco',
@@ -8,6 +9,7 @@ const eventsData = [
     imageUrl: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1'
   },
   {
+    id: 2,
     title: 'Tech Fest 2025',
     date: 'May 5, 2025',
     location: 'San Francisco',
@@ -16,6 +18,7 @@ const eventsData = [
     imageUrl: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d'
   },
   {
+    id: 3,
     title: 'AI & ML Conference',
     date: 'June 12, 2025',
     location: 'San Francisco',
@@ -24,6 +27,7 @@ const eventsData = [
     imageUrl: 'https://images.unsplash.com/photo-1556761175-b413da4baf72'
   },
   {
+    id: 4,
     title: 'AWS Cloud Workshop',
     date: 'April 10, 2025',
     location: 'San Francisco',
@@ -32,6 +36,7 @@ const eventsData = [
     imageUrl: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1'
   },
   {
+    id: 5,
     title: 'Tech Fest 2025',
     date: 'May 5, 2025',
     location: 'San Francisco',
@@ -40,6 +45,7 @@ const eventsData = [
     imageUrl: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d'
   },
   {
+    id: 6,
     title: 'AI & ML Conference',
     date: 'June 12, 2025',
     location: 'San Francisco',

@@ -1,6 +1,6 @@
 import React from 'react';
 import ForecastTile from './ForecastTile';
-
+import { TiWeatherStormy } from "react-icons/ti";
 const ForecastCard = () => {
   return (
     <div className="w-full max-w-xl h-auto rounded-3xl p-6 flex flex-col gap-4 
@@ -21,14 +21,17 @@ const ForecastCard = () => {
             <ForecastTile />
           </div>
 
-          <div className="w-full p-4 rounded-3xl items-start 
+          <div className="flex justify-between gap-4 w-full p-4 rounded-3xl 
             bg-gradient-to-r from-gray-100 to-gray-300 text-gray-900 dark:from-[rgba(255,255,255,0.1)] dark:to-[rgba(255,255,255,0.1)] dark:text-white border border-1 border-gray-200 dark:border-none">
-            <div className='flex gap-2 justify-between mx-auto p-1'>
+            <div className='flex flex-col justify-start'>
               <p>Tomorrow</p>
               <div className='flex flex-col gap-2'>
                 <h2 className="text-3xl font-bold">14°</h2>
                 <p className="text-sm">Thunder Storm</p>
               </div>
+            </div>
+            <div>
+              <span className='text-7xl'><TiWeatherStormy /></span>
             </div>
           </div>
         </div>
