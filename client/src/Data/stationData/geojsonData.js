@@ -13,7 +13,8 @@ const geojsonData = {
         temp: 25,
         turbidity: 2,
         timestamp: "2025-03-17T12:30:00Z",
-        coordinates: [25.2678, 83.0173]
+        coordinates: [25.2678, 83.0173],
+        location: "Varanasi, India",
       },
       geometry: {
         type: "Point",
@@ -32,7 +33,8 @@ const geojsonData = {
         temp: 30,
         turbidity: 5,
         timestamp: "2025-03-17T13:00:00Z",
-        coordinates: [25.2778, 83.0273]
+        coordinates: [25.2778, 83.0273],
+        location: "Jhusi, India",
       },
       geometry: {
         type: "Point",
@@ -51,7 +53,8 @@ const geojsonData = {
         temp: 35,
         turbidity: 10,
         timestamp: "2025-03-17T13:30:00Z",
-        coordinates: [25.2878, 83.0373]
+        coordinates: [25.2878, 83.0373],
+        location: "Lucknow, India",
       },
       geometry: {
         type: "Point",

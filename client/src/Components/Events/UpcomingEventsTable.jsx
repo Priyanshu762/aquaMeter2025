@@ -36,10 +36,10 @@ const UpcomingEventsTable = () => {
               <td className="px-6 py-4">
                 <button
                   onClick={() => navigate(`/event/${event.id}`)}
-                  className="relative inline-block px-6 py-2 font-semibold text-white border-1 border-indigo-500 overflow-hidden group transition-all duration-300 ease-in-out rounded-lg cursor-pointer"
+                  className="relative inline-block px-6 py-2 font-semibold text-white border-1 border-violet-500 overflow-hidden group transition-all duration-300 ease-in-out rounded-lg cursor-pointer"
                 >
                   <span className="absolute left-0 top-0 w-full h-full bg-violet-400 transform -translate-x-full group-hover:translate-x-0 transition-all duration-300 ease-in-out"></span>
-                  <span className="relative ">Check Event</span>
+                  <span className="relative text-gray-800 dark:text-gray-100">Check Event</span>
                 </button>
               </td>
             </tr>

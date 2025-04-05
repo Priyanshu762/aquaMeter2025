@@ -22,6 +22,7 @@ import CreateEvent from "../Pages/Events/CreateEvent";
 import AdminSettingsPage from "../Pages/Settings/AdminSettingsPage";
 import EventDetailsPage from "../Pages/Events/EventDetailsPage";
 import AlertsPage from "../Pages/Alerts/AlertsPage";
+import LeaderboardPage from "../Pages/Leaderboard/LeaderboardPage";
 
 
 const AppRouter = () => {
@@ -42,7 +43,7 @@ const AppRouter = () => {
         <Route path="complaints" element={<ComplaintsPage />} />
         <Route path="weather" element={<WeatherPage />} />
         <Route path="profile" element={<ProfilePage />} />
-        <Route path="leaderboard" element={<ProfilePage />} />
+        <Route path="leaderboard" element={<LeaderboardPage />} />
         <Route path="previous-events" element={<PreviousEvents />} />
         <Route path="settings" element={<SettingsPage />} />
 

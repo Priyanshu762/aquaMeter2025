@@ -46,7 +46,7 @@ const DevicesDataTable = ({ data }) => {
         </div>
       </div>
 
-      <div className="overflow-x-auto max-h-[75vh] w-[80vw] mx-auto scrollbar rounded-md border border-gray-200 dark:border-gray-700 shadow-inner">
+      <div className="overflow-x-auto max-h-[75vh] w-[80vw] mx-auto custom-scrollbar rounded-md border border-gray-200 dark:border-gray-700 shadow-inner">
         <table className="min-w-[1200px] w-full text-sm text-left bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200">
           <thead className="dark:bg-indigo-700 bg-gray-700 text-white sticky top-0 z-10 text-left">
             <tr>

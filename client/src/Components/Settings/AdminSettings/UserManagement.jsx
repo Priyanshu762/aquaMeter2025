@@ -134,7 +134,6 @@ const UserManagement = () => {
     
     <AddUserModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onAddUser={handleAddUser} />
 
-      {/* Edit User Modal */}
       <EditUserModal isOpen={isOpen} user={editUser} onClose={closeModal} onUpdate={handleUpdateUser} />
     </div>
   );

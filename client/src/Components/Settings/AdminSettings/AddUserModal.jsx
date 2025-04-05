@@ -18,12 +18,12 @@ const AddUserModal = ({ isOpen, onClose, onAddUser }) => {
     }
 
     const newUser = {
-      id: Date.now(), // Generate unique ID
+      id: Date.now(),
       ...userData,
     };
 
     onAddUser(newUser);
-    setUserData({ name: "", email: "", role: "User" }); // Reset form
+    setUserData({ name: "", email: "", role: "User" }); 
     onClose();
   };
 

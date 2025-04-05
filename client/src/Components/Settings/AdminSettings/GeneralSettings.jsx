@@ -49,7 +49,6 @@ const GeneralSettingsPage = () => {
       </p>
 
       <div className="space-y-6">
-        {/* Site Title */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-1">Site Title</label>
           <input
@@ -61,7 +60,6 @@ const GeneralSettingsPage = () => {
           />
         </div>
 
-        {/* Notifications */}
         <div className="flex items-center justify-between">
           <label className="text-gray-700 dark:text-gray-300">Enable Notifications</label>
           <input
@@ -73,7 +71,6 @@ const GeneralSettingsPage = () => {
           />
         </div>
 
-        {/* Timezone */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-1">Timezone</label>
           <select
@@ -89,7 +86,6 @@ const GeneralSettingsPage = () => {
           </select>
         </div>
 
-        {/* Language */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-1">Language</label>
           <select
@@ -105,7 +101,6 @@ const GeneralSettingsPage = () => {
           </select>
         </div>
 
-        {/* Theme Mode */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-1">Theme Mode</label>
           <select
@@ -120,7 +115,6 @@ const GeneralSettingsPage = () => {
           </select>
         </div>
 
-        {/* Date Format */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-1">Date Format</label>
           <select
@@ -135,7 +129,6 @@ const GeneralSettingsPage = () => {
           </select>
         </div>
 
-        {/* Auto Logout */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-1">Auto Logout (minutes)</label>
           <input
@@ -148,7 +141,6 @@ const GeneralSettingsPage = () => {
           />
         </div>
 
-        {/* Support Email */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-1">Support Email</label>
           <input
@@ -160,7 +152,6 @@ const GeneralSettingsPage = () => {
           />
         </div>
 
-        {/* Data Sync */}
         <div className="flex items-center justify-between">
           <label className="text-gray-700 dark:text-gray-300">Enable Data Sync</label>
           <input
@@ -172,7 +163,6 @@ const GeneralSettingsPage = () => {
           />
         </div>
 
-        {/* Buttons */}
         <div className="flex gap-4">
           <button
             onClick={handleSave}

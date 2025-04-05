@@ -5,7 +5,6 @@ const SystemLogs = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate fetching logs from an API
     setTimeout(() => {
       setLogs([
         { id: 1, message: "User Admin logged in", timestamp: "2025-04-04 10:00 AM", type: "info" },

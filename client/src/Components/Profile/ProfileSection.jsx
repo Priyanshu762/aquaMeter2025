@@ -1,30 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import { FaPen, FaSave, FaTimes } from "react-icons/fa";
 
 const ProfileSection = () => {
   const user = useSelector((state) => state.auth.user);
 
-  const [profile, setProfile] = useState({
-    name: user.name,
-    bio: "A social media influencer and singer",
-    phone: "+1 234 567 890",
-    email: user.email,
-    address: "123, Hollywood Blvd, Los Angeles, CA",
-    location: "New York, USA",
-    occupation: "Content Creator",
-    linkedin: "https://linkedin.com/in/jennywilson",
-    twitter: "https://twitter.com/jennywilson",
-    instagram: "https://twitter.com/jennywilson",
-    facebook: "https://twitter.com/jennywilson",
-    imageUrl: user.profilePicture,
+  const [formData, setFormData] = useState({
+    name: user.name || "",
+    bio: "A passionate content creator",
+    email: user.email || "",
+    phone: "",
+    address: "",
+    location: "",
+    occupation: "",
+    linkedin: "",
+    twitter: "",
+    instagram: "",
+    facebook: "",
+    imageUrl: user.profilePicture || "",
   });
 
-  const [previewImage, setPreviewImage] = useState(profile.imageUrl);
+  const [previewImage, setPreviewImage] = useState(formData.imageUrl);
   const [isEditing, setIsEditing] = useState(false);
-  const [hovered, setHovered] = useState(false);
 
-  const handleChange = (e) => {
-    setProfile({ ...profile, [e.target.name]: e.target.value });
+  const nameInputRef = useRef(null);
+
+  useEffect(() => {
+    if (isEditing && nameInputRef.current) {
+      nameInputRef.current.focus();
+    }
+  }, [isEditing]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e) => {
@@ -36,161 +45,137 @@ const ProfileSection = () => {
   };
 
   const handleSave = () => {
-    console.log("Saved Data:", profile);
-    setProfile({ ...profile, imageUrl: previewImage });
-    alert("Profile updated successfully!");
+    setFormData((prev) => ({ ...prev, imageUrl: previewImage }));
+    alert("✅ Profile updated successfully!");
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setPreviewImage(profile.imageUrl);
+    setPreviewImage(formData.imageUrl);
     setIsEditing(false);
   };
 
   return (
-    <section className="relative pt-36 pb-24">
-      <img
-        src="https://pagedone.io/asset/uploads/1705471739.png"
-        alt="Cover"
-        className="w-full absolute top-0 left-0 h-60 object-cover z-[-10]"
-      />
-
-      <div className="w-full max-w-7xl mx-auto px-6 md:px-8 relative z-0">
-        <div 
-            className="flex items-center justify-center mb-4 relative"
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-        >
+    <section className="w-full max-w-5xl mx-auto px-4 py-12 text-gray-800 dark:text-gray-100">
+      <div className="flex flex-col items-center text-center">
+        <div className="relative group">
           <img
             src={previewImage}
             alt="Profile"
-            className="cursor-pointer border-4 border-white dark:border-gray-800 rounded-full object-cover w-32 h-32"
+            className="w-32 h-32 object-cover rounded-full border-4 border-white shadow-md dark:border-gray-700"
           />
-          {hovered && (
-            <label className="absolute bottom-0 left-160  w-10 h-10 cursor-pointer">
+          {isEditing && (
+            <label
+              htmlFor="profile-image"
+              className="absolute bottom-0 right-0 cursor-pointer bg-indigo-600 text-white p-2 rounded-full shadow-md hover:bg-indigo-700 transition"
+              aria-label="Change Profile Picture"
+            >
               <input
+                id="profile-image"
                 type="file"
                 accept="image/*"
-                className="hidden"
                 onChange={handleImageChange}
+                className="hidden"
               />
-              <span className="w-10 h-10 flex items-center justify-center rounded-full bg-indigo-600 text-white">
-                ✎
-              </span>
+              <FaPen size={14} />
             </label>
           )}
         </div>
 
-        <div className="flex flex-col sm:flex-row max-sm:gap-5 items-center justify-between mb-5">
-          <ul className="flex items-center gap-5">
-            {["Home", "Account", "Profile"].map((item, index) => (
-              <li key={index}>
-                <a
-                  href="#"
-                  className={`flex items-center gap-2 cursor-pointer group ${
-                    item === "Home"
-                      ? "text-gray-600 dark:text-gray-300"
-                      : "text-gray-400 dark:text-gray-500"
-                  }`}
-                >
-                  {index > 0 && (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="5"
-                      height="20"
-                      viewBox="0 0 5 20"
-                      fill="none"
-                    >
-                      <path
-                        d="M4.12567 1.13672L1 18.8633"
-                        stroke="#E5E7EB"
-                        strokeWidth="1.6"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  )}
-                  <span className="font-medium text-base leading-7">{item}</span>
-                  {item === "Profile" && (
-                    <span className="rounded-full py-1.5 px-2.5 bg-indigo-200 dark:bg-indigo-900 text-xs text-indigo-800 dark:text-indigo-200">
-                      New
-                    </span>
-                  )}
-                </a>
-              </li>
-            ))}
-          </ul>
+        {isEditing ? (
+          <input
+            type="text"
+            name="name"
+            ref={nameInputRef}
+            value={formData.name}
+            onChange={handleInputChange}
+            className="mt-4 text-xl font-semibold bg-transparent border-b border-gray-300 dark:border-gray-700 p-2 focus:outline-none"
+            placeholder="Full Name"
+          />
+        ) : (
+          <h2 className="mt-4 text-2xl font-bold text-gray-900 dark:text-white">{formData.name}</h2>
+        )}
 
-          
-        </div>
+        {isEditing ? (
+          <textarea
+            name="bio"
+            value={formData.bio}
+            onChange={handleInputChange}
+            className="mt-2 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 w-full max-w-md border dark:border-gray-600 rounded-md p-2"
+            placeholder="Short bio"
+          />
+        ) : (
+          <p className="text-gray-600 dark:text-gray-400 mt-2">{formData.bio}</p>
+        )}
+      </div>
 
-        <div className="max-w-lg mx-auto text-center">
-          {isEditing ? (
-            <>
-              <input
-                type="text"
-                name="name"
-                value={profile.name}
-                onChange={handleChange}
-                className="w-full text-center font-bold text-3xl text-gray-900 dark:text-gray-100 bg-transparent border p-2 rounded-full"
-              />
-              <input
-                type="text"
-                name="bio"
-                value={profile.bio}
-                onChange={handleChange}
-                className="w-full text-base text-gray-500 dark:text-gray-400 text-center bg-transparent border p-2 rounded-full mt-2"
-              />
-            </>
-          ) : (
-            <>
-              <h3 className="text-center font-bold text-3xl text-gray-900 dark:text-gray-100 mb-3">{profile.name}</h3>
-              <p className="text-base text-gray-500 dark:text-gray-400 text-center mb-8">{profile.bio}</p>
-            </>
-          )}
-
-          <div className="mt-4 space-y-3">
-            {["phone", "email", "address"].map((field) => (
-              <input
-                key={field}
-                type={field === "email" ? "email" : "text"}
-                name={field}
-                value={profile[field]}
-                onChange={handleChange}
-                disabled={!isEditing || field === "email" ? true : false}
-                className={`w-full text-base text-gray-600 dark:text-gray-300 bg-transparent border-b border-gray-300 dark:border-gray-700 e p-2 rounded-xl ${
-                  !isEditing ? "cursor-pointer" : ""
-                }`}
-                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="flex justify-center mt-6">
-          {isEditing ? (
-            <>
-              <button
-                onClick={handleSave}
-                className="rounded-full border border-indigo-600 bg-indigo-600 py-3 px-6 text-sm font-semibold text-white hover:bg-indigo-700"
-              >
-                Save Changes
-              </button>
-              <button
-                onClick={handleCancel}
-                className="ml-4 rounded-full border border-gray-400 bg-gray-200 py-3 px-6 text-sm font-semibold text-gray-800 hover:bg-gray-300"
-              >
-                Cancel
-              </button>
-            </>
-          ) : (
-            <button
-              onClick={() => setIsEditing(true)}
-              className="rounded-full border border-gray-400 bg-gray-200 py-3 px-6 text-sm font-semibold text-gray-800 hover:bg-gray-300"
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {[
+          { label: "Email", name: "email", type: "email", disabled: true },
+          { label: "Phone", name: "phone", type: "text" },
+          { label: "Address", name: "address", type: "text" },
+          { label: "Location", name: "location", type: "text" },
+          { label: "Occupation", name: "occupation", type: "text" },
+          { label: "LinkedIn", name: "linkedin", type: "url" },
+          { label: "Twitter", name: "twitter", type: "url" },
+          { label: "Instagram", name: "instagram", type: "url" },
+          { label: "Facebook", name: "facebook", type: "url" },
+        ].map(({ label, name, type, disabled }) => (
+          <div key={name} className="flex flex-col">
+            <label
+              htmlFor={name}
+              className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
             >
-              Edit Profile
+              {label}
+            </label>
+            <input
+              id={name}
+              type={type}
+              name={name}
+              value={formData[name]}
+              onChange={handleInputChange}
+              disabled={disabled || !isEditing}
+              placeholder={`Enter ${label}`}
+              className={`p-2 rounded-md border focus:outline-none focus:ring-2 ${
+                disabled
+                  ? "bg-gray-100 dark:bg-gray-700 text-gray-400"
+                  : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-indigo-500"
+              }`}
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-8 flex justify-center gap-4">
+        {isEditing ? (
+          <>
+            <button
+              onClick={handleSave}
+              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-full"
+              aria-label="Save Profile"
+            >
+              <FaSave size={14} />
+              Save
             </button>
-          )}
-        </div>
+            <button
+              onClick={handleCancel}
+              className="flex items-center gap-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-5 rounded-full dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
+              aria-label="Cancel"
+            >
+              <FaTimes size={14} />
+              Cancel
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={() => setIsEditing(true)}
+            className="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-5 rounded-full dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+            aria-label="Edit Profile"
+          >
+            <FaPen size={14} />
+            Edit Profile
+          </button>
+        )}
       </div>
     </section>
   );

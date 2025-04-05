@@ -1,6 +1,8 @@
 import React from 'react';
 import ForecastTile from './ForecastTile';
 import { TiWeatherStormy } from "react-icons/ti";
+import { TbSunset2 } from "react-icons/tb";
+import { WiSunrise } from "react-icons/wi";
 const ForecastCard = () => {
   return (
     <div className="w-full max-w-xl h-auto rounded-3xl p-6 flex flex-col gap-4 
@@ -38,15 +40,15 @@ const ForecastCard = () => {
 
         <div className="w-1/3 p-4 rounded-3xl flex flex-col justify-between items-center bg-gradient-to-r from-gray-100 to-gray-300 text-gray-900 dark:from-[rgba(255,255,255,0.1)] dark:to-[rgba(255,255,255,0.1)] dark:text-white border border-1 border-gray-200 dark:border-none">
           
-          <p className="text-sm">Sunrise
+          <p className="text-lg font-medium"> <span className='flex gap-8'>Sunrise <WiSunrise className='text-3xl' /> </span>
             <h2 className="text-2xl font-bold">6:45 AM</h2>
           </p>
 
-          <p className="text-sm mt-2">Sunset
+          <p className="text-lg font-medium mt-2"><span className='flex gap-8'>Sunset <TbSunset2 className='text-3xl' /> </span>
             <h2 className="text-2xl font-bold">5:30 PM</h2>
           </p>
 
-          <p className="text-sm mt-2">Length of Day
+          <p className="text-lg font-medium mt-2"><span className=''>Length of Day  </span>
             <h2 className="text-xl font-bold">10h 23m</h2>
           </p>
         </div>

@@ -9,7 +9,6 @@ const EditPermissionsModal = ({
   onClose,
   onSave,
 }) => {
-  // Close on Escape
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") onClose();

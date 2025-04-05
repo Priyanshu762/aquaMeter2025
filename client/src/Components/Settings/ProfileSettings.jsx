@@ -30,7 +30,6 @@ const ProfileSettings = () => {
     <div>
       <h2 className="text-xl font-semibold mb-4">Profile Settings</h2>
 
-      {/* Profile Picture */}
       <div className="flex items-center mb-6">
         <img
           src={previewImage}
@@ -43,7 +42,6 @@ const ProfileSettings = () => {
         </label>
       </div>
 
-      {/* Form */}
       <div className="space-y-4">
         <input
           className="w-full pl-10 pr-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-md focus:outline-none focus:border-gray-400 focus:bg-white dark:bg-gray-800 dark:placeholder-gray-300 dark:focus:border-gray-100 dark:focus:bg-gray-900 dark:text-gray-200"

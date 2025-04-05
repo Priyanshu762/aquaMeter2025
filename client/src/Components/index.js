@@ -37,6 +37,8 @@ import DataCards from "./Dashboard/DataCards";
 import OverviewCards from "./Dashboard/OverviewCards";
 import StatCard from "./Dashboard/StatCard";
 import DeviceDataTable from "./Dashboard/DeviceDataTable";
+import TopperCard from "./Leaderboard/TopperCard";
+import LeaderboardTable from "./Leaderboard/LeaderboardTable";
 
 export {
     Navbar,
@@ -78,4 +80,6 @@ export {
     StatCard,
     OverviewCards,
     DeviceDataTable,
+    TopperCard,
+    LeaderboardTable,
 }
