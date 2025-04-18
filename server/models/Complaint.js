@@ -32,6 +32,10 @@ const complaintSchema = new mongoose.Schema({
     enum: ["pending", "in-progress", "resolved", "rejected"],
     default: "pending",
   },
+  action:{
+    type: String,
+    default: "Pending to Inspection"
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -42,6 +46,9 @@ const complaintSchema = new mongoose.Schema({
     ref: "User",
     default: null,
   },
+  updatedStatus: { type: String,
+    default: "pending"
+   },
   remarks: { type: String },
   createdAt: {
     type: Date,

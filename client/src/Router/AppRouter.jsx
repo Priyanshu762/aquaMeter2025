@@ -64,7 +64,7 @@ const AppRouter = () => {
             <Route path="analytics" element={<Analytics />} />
             <Route path="alerts" element={<AlertsPage />} />
             <Route path="settings" element={<AdminSettingsPage />} />
-            <Route path="create-event" element={<CreateEvent />} />
+            <Route path="create-event" element={authUser && authUser.role == 'admin' ?<CreateEvent />:<NotFound/>} />
           </Route>
         </Route>
 

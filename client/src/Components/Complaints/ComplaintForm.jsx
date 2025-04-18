@@ -5,7 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FiPlus } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { complaintService } from "../../Services/complaintService";
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
   phone: yup
@@ -34,37 +35,49 @@ const ComplaintForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({ resolver: yupResolver(schema) });
 
   const [imagePreviews, setImagePreviews] = useState([]);
-
-  const onSubmit = (data) => {
+    
+  const onSubmit = async (data) => {
     if (selectedFiles.some(file => file.size > 5 * 1024 * 1024)) {
       alert("Each image must be less than 5MB");
       return;
     }
+    try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("phone", data.phone);
+      formData.append("location", data.location);
+      formData.append("issue", data.issue);
+      selectedFiles.forEach((file) => formData.append("images[]", file));
+      formData.append("additionalInfo", data.additionalInfo || "");
     
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("phone", data.phone);
-    formData.append("location", data.location);
-    formData.append("issue", data.issue);
-    selectedFiles.forEach((file) => {
-      formData.append("images[]", file);
-    });
-    formData.append("additionalInfo", data.additionalInfo || "");
+      // ✅ Debug: Log FormData contents
+      for (let [key, value] of formData.entries()) {
+        if (value instanceof File) {
+          console.log(`${key}: ${value.name} (${value.size} bytes)`);
+        } else {
+          console.log(`${key}: ${value}`);
+        }
+      }
+      const response =await complaintService.createComplaint(formData);
 
-
-    
-    console.log("Name:", formData.get('name'));
-    console.log("Phone:", formData.get('phone'));
-    console.log("Location:", formData.get('location'));
-    console.log("Issue:", formData.get('issue'));
-    console.log("All Images:", formData.getAll('images[]'));
-    console.log("Addtional info:", formData.get('additionalInfo'));
-    // for (let pair of formData.entries()) console.log(pair[0], pair[1]);
+      // const response = await axios.post("http://localhost:8080/api/complaints", formData);
+  
+      if (response.status === 201) {
+        toast.success("Complaint submitted successfully!");
+        reset();
+        setSelectedFiles([]);
+        setImagePreviews([]);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error submitting complaint. Please try again.");
+    }
   };
-
+  
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setSelectedFiles((prev) => [...prev, ...files]);
@@ -130,7 +143,7 @@ const ComplaintForm = () => {
           <div className="border-dashed border-2 border-gray-400 p-4 flex flex-wrap gap-2 rounded-lg">
             <input
               type="file"
-              {...register("images")}
+              {...register("images[]")}
               accept="image/*"
               multiple
               onChange={handleImageChange}

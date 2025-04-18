@@ -2,21 +2,51 @@ const Event = require('../models/Event');
 
 // Create Event (only NGO or Admin)
 exports.createEvent = async (req, res) => {
-    try {
-        if (req.user.role !== 'ngo' && req.user.role !== 'admin') {
-            return res.status(403).json({ message: 'Access denied' });
-        }
- 
-        const newEvent = await Event.create({
-            ...req.body,
-            organizerNgoId: req.user._id
-        });
 
-        res.status(201).json({ message: 'Event created', event: newEvent });
+    try {
+        console.log("Registeration of event started");
+        
+      if (req.user.role !== 'ngo' && req.user.role !== 'admin') {
+        console.log("Denied");
+        
+        return res.status(403).json({ message: 'Access denied' });
+      }
+  
+      const {
+        name,
+        description,
+        date,
+        time,
+        location,
+        participantsLimit,
+      } = req.body;
+  
+      const image = req.file ? req.file.filename : null;
+      
+      if (!image) {
+        console.log("No image found");
+        
+        return res.status(400).json({ message: "Image is required" });
+      }
+      console.log(name,description,date,time,location,image);
+      
+  
+      const newEvent = await Event.create({
+        name,
+        description,
+        date,
+        time,
+        location,
+        participantsLimit,
+        image,
+        organizerNgoId: req.user._id,
+      });
+  
+      res.status(201).json({ message: "Event created", event: newEvent });
     } catch (err) {
-        res.status(500).json({ message: 'Error creating event', error: err.message });
+      res.status(500).json({ message: "Error creating event", error: err.message });
     }
-};
+  };
 
 // Get all events (Admins see all, NGOs see their events, public sees all public ones if needed)
 exports.getAllEvents = async (req, res) => {

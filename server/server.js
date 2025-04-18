@@ -34,7 +34,7 @@ app.get('/',(req,res)=>{
     res.send('Server is running');
 })
 app.use('/api/auth', authRoutes);
-app.use('/api/event',eventRoutes );
+app.use('/api/events',eventRoutes );
 app.use('/api/complaints', complaintRoutes );
 
 // Error handling middleware
