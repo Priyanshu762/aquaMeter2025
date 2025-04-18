@@ -35,3 +35,32 @@ export const logout = async () => {
     throw error;
   }
 };
+
+export const deleteAccount = async () => {  
+  try {
+    const response = await axios.post('/api/auth/delete-account');
+    return response;
+  } catch (error) {
+    throw error;
+
+  }
+}
+export const changePassword = async (passwordData) => {
+  try {
+    const response = await axios.post('/api/auth/change-password', passwordData);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const profileUpdate = async (profileData) => {
+  try {
+    console.log("Profile Data:", profileData);
+    
+    const response = await axios.post('/api/auth/update-profile', profileData);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}

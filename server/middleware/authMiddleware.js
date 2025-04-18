@@ -5,6 +5,7 @@ const protect = async (req, res, next) => {
     try {
         // Get token from cookie
         const token = req.cookies.jwt;
+        console.log('Token from protect middleware:', token);
  
         if (!token) {
             return res.status(401).json({ message: 'Not authorized, no token' });
@@ -17,6 +18,7 @@ const protect = async (req, res, next) => {
         const user = await User.findById(decoded.userId).select('-password');
 
         if (!user) {
+            console.log('User not found in protect middleware');
             return res.status(401).json({ message: 'User not found' });
         }
 
@@ -26,6 +28,7 @@ const protect = async (req, res, next) => {
         next();
     } catch (error) {
         res.status(401).json({ message: 'Not authorized, token failed' });
+        console.log("Error in protect middleware",error);
     }
 };
 

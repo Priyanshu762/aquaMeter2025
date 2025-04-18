@@ -1,28 +1,37 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { FaPen, FaSave, FaTimes } from "react-icons/fa";
+import { setLoading } from "../../Store/loaderSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { authService } from "../../Services/authService";
 
 const ProfileSection = () => {
   const user = useSelector((state) => state.auth.user);
+  const loading = useSelector((state) => state.loader.loading);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: user.name || "",
-    bio: "A passionate content creator",
+    bio: user.profile.bio ||"A passionate content creator",
     email: user.email || "",
-    phone: "",
-    address: "",
-    location: "",
-    occupation: "",
-    linkedin: "",
-    twitter: "",
-    instagram: "",
-    facebook: "",
+    phone: user.profile.phone || "",
+    address: user.profile.address || "",  
+    location:   "",
+    occupation: user.profile.occupation || "",
+    linkedIn: user.profile.linkedIn || "",
+    twitter: user.profile.twitter || "",
+    instagram: user.profile.instagram || "",
+    facebook: user.profile.facebook || "",
     imageUrl: user.profilePicture || "",
+    latitude: user.profile.latitude || "",
+    longitude: user.profile.longitude || "",
   });
 
   const [previewImage, setPreviewImage] = useState(formData.imageUrl);
   const [isEditing, setIsEditing] = useState(false);
-
   const nameInputRef = useRef(null);
 
   useEffect(() => {
@@ -44,15 +53,58 @@ const ProfileSection = () => {
     }
   };
 
-  const handleSave = () => {
-    setFormData((prev) => ({ ...prev, imageUrl: previewImage }));
-    alert("✅ Profile updated successfully!");
+  const handleSave = async() => {
+    dispatch(setLoading(true));
+    try {
+      const payload = {
+        ...formData,
+        location: {
+          type: "Point",
+          coordinates: [
+            parseFloat(formData.longitude),
+            parseFloat(formData.latitude),
+          ],
+        },
+      };
+
+      console.log("Profile data to save:", payload);
+      const response = await authService.profileUpdate(payload);
+      console.log("Response from profile update API:", response);
+      // Call your API here to update profile with payload
+
+    } catch (error) {
+      console.error("Error saving profile:", error);
+    } finally {
+      setPreviewImage(formData.imageUrl);
+      dispatch(setLoading(false));
+    }
     setIsEditing(false);
   };
 
   const handleCancel = () => {
     setPreviewImage(formData.imageUrl);
     setIsEditing(false);
+  };
+
+  const handleGetLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setFormData((prev) => ({
+            ...prev,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          }));
+          toast.sucess("Location fetched successfully!");
+        },
+        (error) => {
+          // alert("Error fetching location: " + error.message);
+          toast.error("Error fetching location: " + error.message);
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
   };
 
   return (
@@ -116,7 +168,7 @@ const ProfileSection = () => {
           { label: "Address", name: "address", type: "text" },
           { label: "Location", name: "location", type: "text" },
           { label: "Occupation", name: "occupation", type: "text" },
-          { label: "LinkedIn", name: "linkedin", type: "url" },
+          { label: "LinkedIn", name: "linkedIn", type: "url" },
           { label: "Twitter", name: "twitter", type: "url" },
           { label: "Instagram", name: "instagram", type: "url" },
           { label: "Facebook", name: "facebook", type: "url" },
@@ -144,6 +196,21 @@ const ProfileSection = () => {
             />
           </div>
         ))}
+        {isEditing && (
+          <div className="sm:col-span-2">
+            <button
+              onClick={handleGetLocation}
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-full"
+            >
+              Get My Location
+            </button>
+            {formData.latitude && formData.longitude && (
+              <p className="text-sm text-gray-600 mt-2">
+                Latitude: {formData.latitude}, Longitude: {formData.longitude}
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="mt-8 flex justify-center gap-4">
@@ -153,6 +220,7 @@ const ProfileSection = () => {
               onClick={handleSave}
               className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-full"
               aria-label="Save Profile"
+              disabled={loading}
             >
               <FaSave size={14} />
               Save

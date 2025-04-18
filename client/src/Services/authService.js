@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { googleAuth, register, login, logout } from '../API/authAPI';
+import { googleAuth, register, login, logout, deleteAccount, profileUpdate } from '../API/authAPI';
 
 
 export const authService = {
@@ -53,6 +53,32 @@ export const authService = {
 
   getToken: () => {
     return localStorage.getItem('authToken');
-  }
+  },
+  deleteAccont: async () => {
+    try {
+      const response = await deleteAccount();
+      return response;
+    } catch (error) {
+      console.log('Error during account deletion:', error);
+      throw error;
+    }
+  },
+  changePassword: async (passwordData) => {
+    try {
+      const response = await axios.post('/api/auth/change-password', passwordData);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+  profileUpdate: async (profileData) => {
+    try {
+      const response = await profileUpdate(profileData);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+
 };
 

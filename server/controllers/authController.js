@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Profile = require('../models/Profile');
 const bcrypt = require('bcryptjs');
 const { generateAndSetCookies, clearCookies } = require('../utils/generateAndSetCookies');
 const { oauth2client } = require('../utils/googleConfig');
@@ -24,13 +25,21 @@ const register = async (req, res) => {
         // Hash password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
+        const profilePicture = "https://www.pngitem.com/pimgs/m/146-1468479_transparent-avatar-png-default-avatar-png-transparent-png.png";
         // Create new user
+        // const profile = await Profile.create({bio, phone, occupation, address, city, state, pinCode, linkedIn, location});cosnt
+        const profile = new Profile({
+            bio: "This is a default bio",
+            phone:phone,}); 
+            
+        await profile.save();
         const user = new User({
             email,
             password: hashedPassword,
             name,
-            phone
+            profilePicture,
+            profile: profile._id,
+            profile: profile
         });
 
         await user.save();
@@ -49,8 +58,7 @@ const register = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({ message: 'Error registering user', error: error.message });
-        console.log(error);
-        
+        console.log("Error in register authController",error);        
     }
 };
 
@@ -61,7 +69,6 @@ const login = async (req, res) => {
         
         // Find user
         const user = await User.findOne({ email });
-        
         if (!user) {
             return res.status(400).json({ message: 'User not found' });
         }
@@ -82,7 +89,7 @@ const login = async (req, res) => {
         // Update last login
         user.lastLogin = new Date();
         await user.save();
-
+        const profile = await Profile.findById(user.profile);
         // Generate and set cookie
         const token = generateAndSetCookies(user._id, res);
         res.json({
@@ -90,12 +97,16 @@ const login = async (req, res) => {
             user: {
                 id: user._id,
                 email: user.email,
-                name: user.name
+                name: user.name,
+                profilePicture: user.profilePicture,
+                role:user.role,
+                profile:profile
             },
             token: token
         });
     } catch (error) {
         res.status(500).json({ message: 'Error logging in', error: error.message });
+        console.log("Error in login authController",error);
     }
 };
 
@@ -114,29 +125,40 @@ const oauthLogin = async (req,res)=>{
         let user = await User.findOne({ email });
         
         if(!user){
+            
+            const profile = new Profile({
+                bio: "This is a default bio",
+            });
+            await profile.save();
+            // Create new user
             user = await User.create({
                 email,
                 name,
                 profilePicture: picture,
-                googleId: userRes.data.id
+                googleId: userRes.data.id,
+                profile: profile._id,
+                role:user.role
             });
         }
         
         const {_id} = user;
         const token = generateAndSetCookies(_id,res);
+        const userProfile=await Profile.findById(user.profile);
         res.json({
             message: 'OAuth login successful',
             user: {
                 id: _id,
                 email,
                 name,
-                profilePicture: picture
+                profilePicture: picture,
+                role:user.role,
+                profile:userProfile
             },
             token: token
         });
     } catch (error) {
         res.status(500).json({ message: 'Error with OAuth login', error: error.message });
-        console.log(error.message);
+        console.log("Error in oauthLogin authController",error);
     }
 }
 
@@ -147,6 +169,7 @@ const logout = async (req, res) => {
         res.json({ message: 'Logged out successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Error logging out', error: error.message });
+        console.log("Error in logout authController",error);
     }
 };
 
@@ -160,13 +183,120 @@ const getCurrentUser = async (req, res) => {
         res.json(user);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching user', error: error.message });
+        console.log("Error in getCurrentUser authController",error);
     }
 };
+const changePassword = async (req, res) => {
+    try {
+        const { oldPassword, newPassword } = req.body;
+        const user = await User.findById(req.user._id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Check if the old password is correct
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Old password is incorrect' });
+        }
+
+        // Hash the new password
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(newPassword, salt);
+        
+        await user.save();
+
+        res.json({ message: 'Password changed successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error changing password', error: error.message });
+        console.log("Error in Change password authController",error);
+    }
+};
+const updateProfile = async (req, res) => {
+    try {
+      const {
+        bio,
+        phone,
+        occupation,
+        address,
+        city,
+        state,
+        pinCode,
+        linkedIn,
+        twitter,
+        instagram,
+        facebook,
+        latitude,
+        longitude,
+      } = req.body;
+  
+      const profile = await Profile.findById(req.user.profile);
+      if (!profile) {
+        return res.status(404).json({ message: "Profile not found" });
+      }
+  
+      // Update fields
+      if (bio) profile.bio = bio;
+      if (phone) profile.phone = phone;
+      if (occupation) profile.occupation = occupation;
+      if (address) profile.address = address;
+      if (city) profile.city = city;
+      if (state) profile.state = state;
+      if (pinCode) profile.pinCode = pinCode;
+      if (linkedIn) profile.linkedIn = linkedIn;
+      if (twitter) profile.twitter = twitter;
+      if (instagram) profile.instagram = instagram;
+      if (facebook) profile.facebook = facebook;
+  
+      // Update location
+      if (latitude && longitude) {
+        profile.latitude = parseFloat(latitude);
+        profile.longitude = parseFloat(longitude);
+        profile.location = {
+          type: "Point",
+          coordinates: [parseFloat(longitude), parseFloat(latitude)],
+        };
+      }
+  
+      await profile.save();
+  
+      res.json({ message: "Profile updated successfully", profile });
+    } catch (error) {
+      console.error("Error in updateProfile authController:", error);
+      res.status(500).json({
+        message: "Error updating profile",
+        error: error.message,
+      });
+    }
+  };
+  
+
+const deleteAccount = async (req, res) => {
+    try {
+        const profile = await Profile.findByIdAndDelete(req.user.profile);
+        if (!profile) {
+            return res.status(404).json({ message: 'Profile not found' });
+        }
+        const user = await User.findByIdAndDelete(req.user._id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({ message: 'Account deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting account', error: error.message });
+        console.log("Error in deleteAccount authController",error);
+    }
+}
 
 module.exports = {
     register,
     login,
     oauthLogin,
     logout,
-    getCurrentUser
+    getCurrentUser,
+    changePassword,
+    deleteAccount,
+    updateProfile
+
 };

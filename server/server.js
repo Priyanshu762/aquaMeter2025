@@ -6,7 +6,10 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 const authRoutes = require('./route/authRoutes');
+const eventRoutes = require('./route/eventRoutes');
+const complaintRoutes = require('./route/complaintRoutes');
 const connectDB = require('./utils/connectDB');
+const path = require('path');
 
 // Security middleware
 app.use(helmet());
@@ -25,10 +28,14 @@ app.use(cors({
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 app.get('/',(req,res)=>{
     res.send('Server is running');
 })
 app.use('/api/auth', authRoutes);
+app.use('/api/event',eventRoutes );
+app.use('/api/complaints', complaintRoutes );
 
 // Error handling middleware
 app.use((err, req, res, next) => {

@@ -4,7 +4,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FiPlus } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
-
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
   phone: yup
@@ -25,6 +26,10 @@ const schema = yup.object().shape({
 });
 
 const ComplaintForm = () => {
+  const isAuthenticated = useSelector(
+    (state) => state.auth.isAuthenticated)
+  const user = useSelector((state) => state.auth.user);
+  const loading = useSelector((state) => state.loader.loading);
   const {
     register,
     handleSubmit,
@@ -128,12 +133,12 @@ const ComplaintForm = () => {
           <label className="block text-gray-700 dark:text-gray-200">Additional Information</label>
           <textarea {...register("additionalInfo")} className="w-full border rounded p-2 outline-none focus:border-2 focus:border-indigo-500/80"></textarea>
         </div>
-
-        <button type="submit" 
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-400 font-semibold cursor-pointer"
-            >
-          
-          Submit Complaint
+        <button
+          type="submit"
+          className={`w-full text-white p-2 rounded font-semibold transition-colors duration-300 ${isAuthenticated ? 'bg-blue-600 hover:bg-blue-400 cursor-pointer' : 'bg-gray-400 cursor-not-allowed'}`}
+          disabled={loading || !isAuthenticated}
+        >
+          {isAuthenticated ? 'Submit Complaint' : 'Login to Submit'}
         </button>
       </form>
     </div>

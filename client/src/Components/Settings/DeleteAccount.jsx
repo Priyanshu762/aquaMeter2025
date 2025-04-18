@@ -1,19 +1,37 @@
 import React, { useState } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { authService } from '../../Services/authService';
+import { setLoading } from '../../Store/loaderSlice';
+import { logout } from '../../Store/authSlice';
+import { toast } from 'react-toastify'; 
 const DeleteAccount = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [confirmText, setConfirmText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  const handleDelete = () => {
+    const user = useSelector((state) => state.auth.user);
+  
+  const loading = useSelector((state) => state.loader.loading);
+  const handleDelete = async () => {
     if (confirmText === 'DELETE') {
-      setIsDeleting(true);
-      setTimeout(() => {
-        console.log('Account Deleted');
-        alert('Your account has been deleted.');
-        setIsDeleting(false);
-      }, 2000); 
+      dispatch(setLoading(true));
+      try {
+        // Call the delete account API
+        const response= await authService.deleteAccont();
+        console.log('Account deleted:', response.data);
+        toast.success('Your account has been deleted successfully.');
+        dispatch(logout()); // Logout the user after deletion
+        navigate('/'); // Redirect to home or login page after deletion
+
+      } catch (error) {
+        console.error('Error deleting account:', error);
+        toast.error('Error deleting account. Please try again later.');
+      }
+      finally {
+        dispatch(setLoading(false));
+      }
     } else {
-      alert('Please type DELETE to confirm.');
+      toast.error('Please type DELETE to confirm account deletion.');
     }
   };
 
@@ -23,7 +41,7 @@ const DeleteAccount = () => {
       <p className="mb-4">
         Once you delete your account, there is no going back. Please be sure before proceeding.
       </p>
-      
+
       <label className="block mb-4">
         <span className="dark:text-gray-300 text-gray-700">Type <b>DELETE</b> to confirm:</span>
         <input
@@ -36,14 +54,13 @@ const DeleteAccount = () => {
 
       <button
         onClick={handleDelete}
-        className={`py-2 px-4 rounded ${
-          confirmText === 'DELETE'
+        className={`py-2 px-4 rounded ${confirmText === 'DELETE'
             ? 'bg-red-600 text-white hover:bg-red-700 cursor-pointer'
             : 'bg-gray-400 cursor-not-allowed'
-        }`}
-        disabled={confirmText !== 'DELETE' || isDeleting}
+          }`}
+        disabled={confirmText !== 'DELETE' || loading}
       >
-        {isDeleting ? 'Deleting...' : 'Delete Account'}
+        {loading ? 'Deleting...' : 'Delete Account'}
       </button>
     </div>
   );

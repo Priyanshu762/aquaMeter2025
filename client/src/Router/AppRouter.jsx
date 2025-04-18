@@ -26,50 +26,54 @@ import LeaderboardPage from "../Pages/Leaderboard/LeaderboardPage";
 
 
 const AppRouter = () => {
-  
+
   const authUser = useSelector((state) => state.auth.user);
   const authToken = useSelector((state) => state.auth.token);
-  console.log("User is logged in :", authUser,"Token is :", authToken);
+  console.log("User is logged in :", authUser, "Token is :", authToken);
   return (
     <Router >
-        <ScrollToTop />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
-        <Route index  element={<Home />} />
-        <Route path="" element={<Home />} />
-        <Route path="map-view" element={<MapViewPage />} />
-        <Route path="events" element={<EventsPage />} />
-        <Route path="event/:eventId" element={<EventDetailsPage />} />
-        <Route path="complaints" element={<ComplaintsPage />} />
-        <Route path="weather" element={<WeatherPage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="leaderboard" element={<LeaderboardPage />} />
-        <Route path="previous-events" element={<PreviousEvents />} />
-        <Route path="settings" element={<SettingsPage />} />
-
-        {/* protected route  */}
-        <Route 
-          path="dashboard"
-          element={
+          <Route index element={<Home />} />
+          <Route path="" element={<Home />} />
+          <Route path="map-view" element={<MapViewPage />} />
+          <Route path="events" element={<EventsPage />} />
+          <Route path="event/:eventId" element={<EventDetailsPage />} />
+          <Route path="complaints" element={<ComplaintsPage />} />
+          <Route path="weather" element={<WeatherPage />} />
+          <Route path="profile" element={
             <ProtectedRoute>
-              <DashboardLayout />
+              <ProfilePage />
             </ProtectedRoute>
-          }
-        >
+          } />
+          <Route path="leaderboard" element={<LeaderboardPage />} />
+          <Route path="previous-events" element={<PreviousEvents />} />
+          <Route path="settings" element={<SettingsPage />} />
+
+          {/* protected route  */}
+          <Route
+            path="dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="alerts" element={<AlertsPage />} />
             <Route path="settings" element={<AdminSettingsPage />} />
             <Route path="create-event" element={<CreateEvent />} />
+          </Route>
         </Route>
-      </Route>
 
-      {/* auth pages without navbar */}
-      <Route path="/" element={<AuthLayout />} >
+        {/* auth pages without navbar */}
+        <Route path="/" element={<AuthLayout />} >
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Signup />} />
-      </Route>
-        
+        </Route>
+
         {/* 404 Route */}
         <Route path="*" element={<NotFound />} />
       </Routes>

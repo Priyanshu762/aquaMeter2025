@@ -20,10 +20,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    phone: {
-        type: String,
-        unique: true
-    },
     // OAuth fields
     googleId: {
         type: String,
@@ -39,6 +35,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['user', 'admin','ngo'],
         default: 'user'
+    },
+    profile:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Profile'
+    },
+    isProfileComplete: {
+        type: Boolean,
+        default: false
     },
     createdAt: {
         type: Date,

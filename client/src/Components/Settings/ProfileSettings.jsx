@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-
+import { useSelector } from 'react-redux';
 const ProfileSettings = () => {
+  const user = useSelector((state) => state.auth.user);
+
   const [profile, setProfile] = useState({
-    name: 'Jenny Wilson',
-    email: 'jenny@example.com',
-    avatar: 'https://pagedone.io/asset/uploads/1705471668.png',
+    name: user.name || 'John Doe',
+    email: user.email,
+    avatar: user.profilePicture || 'https://www.pngitem.com/pimgs/m/146-1468479_transparent-avatar-png-default-avatar-png-transparent-png.png',
   });
 
   const [previewImage, setPreviewImage] = useState(profile.avatar);

@@ -5,7 +5,11 @@ const {
     login, 
     oauthLogin, 
     logout, 
-    getCurrentUser 
+    getCurrentUser,
+    changePassword,
+    deleteAccount,
+    updateProfile 
+
 } = require('../controllers/authController.js');
 const { protect } = require('../middleware/authMiddleware.js');
 
@@ -14,8 +18,10 @@ router.post('/register', register);
 router.post('/login', login);
 router.get('/oauth', oauthLogin);
 router.post('/logout', logout);
-
 // Protected routes
+router.post('/change-password', protect, changePassword);
+router.post('/delete-account', protect, deleteAccount);
+router.post('/update-profile', protect, updateProfile);
 router.get('/me', protect   , getCurrentUser);
 
 module.exports = router;

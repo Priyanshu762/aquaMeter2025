@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { FaSearch, FaEye, FaEyeSlash } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const ComplaintStatus = () => {
   const [searchId, setSearchId] = useState("");
   const [expandedRow, setExpandedRow] = useState(null);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const complaints = [
     {
       id: "12345",
@@ -58,6 +60,7 @@ const ComplaintStatus = () => {
       </h2>
 
       {/* Search Bar */}
+      
       <div className="relative w-full mb-6">
         <input
           type="text"
@@ -68,9 +71,9 @@ const ComplaintStatus = () => {
         />
         <FaSearch className="absolute right-3 top-3 text-gray-500 dark:text-gray-400 w-5 h-5 mt-1 mr-1"  />
       </div>
-
       {/* Table */}
-      <div className="overflow-x-auto">
+
+      {isAuthenticated?(<div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg">
           <thead className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white">
             <tr>
@@ -161,7 +164,13 @@ const ComplaintStatus = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div>):(
+        
+        <div className="text-center text-gray-600 dark:text-gray-400 mt-6">
+          <p className="text-lg font-semibold">Please login to view your complaint status.</p>
+        </div>
+      )}
+
     </div>
   );
 };
