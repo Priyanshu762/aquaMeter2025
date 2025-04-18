@@ -17,10 +17,10 @@ const ForecastCard = () => {
         <div className='flex flex-col gap-2 overflow-x-auto'>
           <div className="w-full h-36 p-2 flex gap-4 
             bg-gradient-to-r from-gray-100 to-gray-300 text-gray-900 dark:from-[rgba(255,255,255,0.1)] dark:to-[rgba(255,255,255,0.1)] dark:text-white border border-1 border-gray-200 dark:border-none rounded-3xl backdrop-blur-lg ">
-            <ForecastTile />
-            <ForecastTile />
-            <ForecastTile />
-            <ForecastTile />
+            <ForecastTile temperature='26' weatherPrediction='Heavy Raining' Humidity='30' Time='2 PM' />
+            <ForecastTile temperature='29' weatherPrediction='Mostly Cloudy' Humidity='25' Time='4 PM' />
+            <ForecastTile temperature='30' weatherPrediction='Sunny' Humidity='50' Time='6 PM' />
+            <ForecastTile temperature='27' weatherPrediction='Thunderstorm' Humidity='78' Time='10 PM' />
           </div>
 
           <div className="flex justify-between gap-4 w-full p-4 rounded-3xl 

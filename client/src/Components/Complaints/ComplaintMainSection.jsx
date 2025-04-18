@@ -3,8 +3,8 @@ import React from 'react';
 const ComplaintMainSection = () => {
   return (
     <div className='w-full h-screen max-w-7xl px-6 flex items-center mt-[-76px]'>
-      <div className='flex justify-center items-center w-full gap-8'>
-        <div className='max-w-md'>
+      <div className='flex justify-center items-center w-full'>
+        <div className='max-w-md ml-64'>
           <p className='font-bold text-5xl'>Online</p>
           <p className='font-bold text-5xl'> 
             <span className='dark:text-orange-500 text-indigo-900'>

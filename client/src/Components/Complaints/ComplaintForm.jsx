@@ -26,10 +26,10 @@ const schema = yup.object().shape({
 });
 
 const ComplaintForm = () => {
-  const isAuthenticated = useSelector(
-    (state) => state.auth.isAuthenticated)
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   const user = useSelector((state) => state.auth.user);
   const loading = useSelector((state) => state.loader.loading);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const {
     register,
     handleSubmit,
@@ -39,22 +39,53 @@ const ComplaintForm = () => {
   const [imagePreviews, setImagePreviews] = useState([]);
 
   const onSubmit = (data) => {
-    console.log("Submitted Data:", data);
+    if (selectedFiles.some(file => file.size > 5 * 1024 * 1024)) {
+      alert("Each image must be less than 5MB");
+      return;
+    }
+    
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("phone", data.phone);
+    formData.append("location", data.location);
+    formData.append("issue", data.issue);
+    selectedFiles.forEach((file) => {
+      formData.append("images[]", file);
+    });
+    formData.append("additionalInfo", data.additionalInfo || "");
+
+
+    
+    console.log("Name:", formData.get('name'));
+    console.log("Phone:", formData.get('phone'));
+    console.log("Location:", formData.get('location'));
+    console.log("Issue:", formData.get('issue'));
+    console.log("All Images:", formData.getAll('images[]'));
+    console.log("Addtional info:", formData.get('additionalInfo'));
+    // for (let pair of formData.entries()) console.log(pair[0], pair[1]);
   };
 
   const handleImageChange = (e) => {
-    const files = e.target.files;
-    if (files) {
-      const previews = Array.from(files).map((file) => ({
-        url: URL.createObjectURL(file),
-        id: Math.random().toString(36).substr(2, 9),
-      }));
-      setImagePreviews((prev) => [...prev, ...previews]);
-    }
+    const files = Array.from(e.target.files);
+    setSelectedFiles((prev) => [...prev, ...files]);
+
+    const previews = files.map((file) => ({
+    url: URL.createObjectURL(file),
+    id: Math.random().toString(36).substr(2, 9),
+    }));
+    setImagePreviews((prev) => [...prev, ...previews]);
   };
 
   const removeImage = (id) => {
-    setImagePreviews(imagePreviews.filter((img) => img.id !== id));
+    const previewToRemove = imagePreviews.find((img) => img.id === id);
+    const index = imagePreviews.indexOf(previewToRemove);
+
+    setImagePreviews((prev) => prev.filter((img) => img.id !== id));
+    setSelectedFiles((prev) => {
+      const newFiles = [...prev];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
   };
 
   return (

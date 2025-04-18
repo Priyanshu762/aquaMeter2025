@@ -32,7 +32,7 @@ const ComplaintToggle = () => {
         </button>
       </div>
 
-      <div className="mt-6 w-full max-w-4xl bg-white p-6 rounded-lg shadow-md dark:bg-gray-800 mb-20">
+      <div className="mt-6 w-full max-w-5xl bg-white p-6 rounded-lg shadow-md dark:bg-gray-800 mb-20">
         {showStatus ? <ComplaintStatus /> : <ComplaintForm />}
       </div>
     </div>

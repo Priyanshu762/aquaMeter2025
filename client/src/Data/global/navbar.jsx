@@ -1,4 +1,5 @@
 import { FiBarChart2, FiMap, FiCalendar, FiAlertTriangle, FiCloud, FiHome } from "react-icons/fi"; 
+import { FaRankingStar } from "react-icons/fa6";
 
 export const NavbarMenu = [
     {
@@ -35,5 +36,12 @@ export const NavbarMenu = [
         title: "Weather",
         link: "/weather",
         icon: <FiCloud />,
+    },
+    {
+        id: 6,
+        key: "leaderboard",
+        title: "Leaderboard",
+        link: "/leaderboard",
+        icon: <FaRankingStar />,
     },
 ];
