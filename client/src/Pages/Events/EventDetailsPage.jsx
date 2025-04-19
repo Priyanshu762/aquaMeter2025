@@ -4,7 +4,6 @@ import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaUsers, FaShareAlt } from "rea
 import { EventInfoCard, EventRegisterCard } from "../../Components";
 import EventDetailsSkeleton from "../../Skeletons/EventDetailsSkeleton";
 import axios from "../../utils/axios";
-import { set } from "mongoose";
 const isLoggedIn = () => !!localStorage.getItem("user");
 
 const EventDetailsPage = ({ event_Id }) => {
