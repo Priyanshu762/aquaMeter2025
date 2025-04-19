@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import EditUserModal from "./EditUserModal";
 import AddUserModal from "./AddUserModal"; 
-import useModal from "../../../hooks/useModal";
+import useModal from "../../../Hooks/useModal";
 import { FaUserPlus } from "react-icons/fa";
 
 const UserManagement = () => {
