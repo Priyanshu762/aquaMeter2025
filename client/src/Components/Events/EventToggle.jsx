@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import UpcomingEventsTable from "./UpcomingEventsTable";
 import PastEventsTable from "./PastEventsTable";
 import EventFormModal from "./EventFormModal";
-import useModal from "../../hooks/useModal";
+import useModal from "../../Hooks/useModal";
 import { FaPlusCircle } from "react-icons/fa";
 
 const EventToggle = () => {
