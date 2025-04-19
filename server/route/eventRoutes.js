@@ -5,13 +5,17 @@ const {
     getAllEvents,
     getEventById,
     updateEvent,
-    deleteEvent
+    deleteEvent,
+    getAllPastEvents,
+    getAllUpcomingEvents
 } = require('../controllers/eventController');
 const { protect } = require('../middleware/authMiddleware');
 const upload = require('../utils/multer');
 
 router.post('/', protect,upload.single("image"),createEvent);
 router.get('/', protect, getAllEvents);
+router.get('/upcoming-events', protect, getAllUpcomingEvents);
+router.get('/past-events', protect, getAllPastEvents);
 router.get('/:id', protect, getEventById);
 router.put('/:id', protect, updateEvent);
 router.delete('/:id', protect, deleteEvent);

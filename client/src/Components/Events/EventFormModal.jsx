@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from '../../utils/axios'
+import InputField from "../common/InputField";
 // Validation Schema
 const eventSchema = yup.object().shape({
   name: yup.string().required("Event name is required"),
@@ -49,13 +50,13 @@ const EventFormModal = ({ isOpen, onClose }) => {
       data.image = imageFile; // attach actual image file
 
       console.log("Submitted Event:", data);
-      const response = await axios.post('/api/events',data,{
-        headers:{
-          'Content-Type':"multipart/form-data"
+      const response = await axios.post('/api/events', data, {
+        headers: {
+          'Content-Type': "multipart/form-data"
         }
       })
-      console.log("Response from create events",response);
-      
+      console.log("Response from create events", response);
+
       toast.success("Event created successfully!", { autoClose: 3000 });
       reset();
       setImageFile(null);
@@ -73,12 +74,21 @@ const EventFormModal = ({ isOpen, onClose }) => {
     if (isOpen) window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
+  const isAtLeastTomorrow = (value) => {
+    const selectedDate = new Date(value);
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    return selectedDate >= tomorrow || "Date must be at least tomorrow";
+  };
 
   if (!isOpen) return null;
 
   return (
     <>
       <ToastContainer />
+      {/* <InputField register={register}/> */}
+
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fadeIn">
         <div ref={modalRef} className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-xl w-full max-w-lg">
           <h2 className="text-xl font-bold mb-5 text-gray-800 dark:text-white">Create Event</h2>
@@ -108,14 +118,24 @@ const EventFormModal = ({ isOpen, onClose }) => {
             </div>
 
             {/* Date & Time */}
-            <div>
-              <input
-                type="date"
-                {...register("date")}
-                className="w-full py-3 px-4 border dark:border-gray-700 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white"
-              />
-              {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date.message}</p>}
-            </div>
+            <input
+              type="date"
+              {...register("date", {
+                validate: value => {
+                  const selectedDate = new Date(value);
+                  const tomorrow = new Date();
+                  tomorrow.setDate(tomorrow.getDate() + 1); // move to tomorrow
+                  tomorrow.setHours(0, 0, 0, 0); // normalize
+
+                  return selectedDate >= tomorrow || "Date must be at least tomorrow";
+                }
+              })}
+              min={new Date(Date.now() + 86400000).toISOString().split("T")[0]} // 86400000ms = 1 day
+              className="w-full py-3 px-4 border dark:border-gray-700 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white"
+            />
+            {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date.message}</p>}
+
+
             <div>
               <input
                 type="time"
@@ -157,10 +177,10 @@ const EventFormModal = ({ isOpen, onClose }) => {
                 onChange={handleImageChange}
                 className="block w-full text-sm text-gray-700 dark:text-white file:mr-4 file:py-2 file:px-4 file:border-0 file:rounded-lg file:bg-indigo-100 file:text-indigo-700 hover:file:bg-indigo-200"
               />
-            
+
             </div>
             <div className="col-span-1 row-span-2 flex justify-center items-center">
-            {imagePreview && (
+              {imagePreview && (
                 <div className="mt-4">
                   <img
                     src={imagePreview}

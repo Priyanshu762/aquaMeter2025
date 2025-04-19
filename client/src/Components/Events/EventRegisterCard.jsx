@@ -8,7 +8,7 @@ import { IoIosPeople } from "react-icons/io";
 import { FaShareSquare } from "react-icons/fa";
 import { WiStars } from "react-icons/wi";
 
-const EventRegisterCard = ({ event = {} }) => {
+const EventRegisterCard = ({ event }) => {
   const user = useSelector((state) => state.auth.user);
   const [registered, setRegistered] = useState(false);
 
@@ -21,7 +21,9 @@ const EventRegisterCard = ({ event = {} }) => {
 
   // Function to handle registration
   const handleRegister = () => {
-    setRegistered(true);
+    // setRegistered(true);
+    
+
     alert("You have successfully registered for the event!");
   };
 
@@ -83,7 +85,9 @@ const EventRegisterCard = ({ event = {} }) => {
             } p-1 px-2 pr-4 rounded-sm text-white`}
           >
             <FaCheck className="ml-1 mt-1" />
-            &nbsp; {registered ? "Registered" : "Register"}
+            &nbsp; {
+            registered ? "Registered" : "Register"
+            }
           </button>
         </div>
       </div>
@@ -96,7 +100,7 @@ const EventRegisterCard = ({ event = {} }) => {
           </span>
           <div className="flex flex-col">
             <span className="text-lg font-semibold text-gray-800 dark:text-white">Registered</span>
-            <span className="text-lg font-semibold text-gray-800 dark:text-white">136</span>
+            <span className="text-lg font-semibold text-gray-800 dark:text-white">{event.participantsCount}</span>
           </div>
         </div>
         <div className="flex gap-8 justify-start items-center mt-4">
@@ -105,7 +109,8 @@ const EventRegisterCard = ({ event = {} }) => {
           </span>
           <div className="flex flex-col">
             <span className="text-lg font-semibold text-gray-800 dark:text-white">Impressions</span>
-            <span className="text-lg font-semibold text-gray-800 dark:text-white">170</span>
+            <span className="text-lg font-semibold text-gray-800 dark:text-white">{event.participantsLimit
+            }</span>
           </div>
         </div>
       </div>

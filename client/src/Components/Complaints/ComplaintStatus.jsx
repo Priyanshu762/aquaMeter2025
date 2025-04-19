@@ -3,11 +3,13 @@ import { use } from "react";
 import { FaSearch, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { complaintService } from "../../Services/complaintService";
+import ComplaintStatusSkeleton from "../../Skeletons/ComplaintStatusSkeleton";
 
 const ComplaintStatus = () => {
   const [searchId, setSearchId] = useState("");
   const [expandedRow, setExpandedRow] = useState(null);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [loading, setLoading] = useState(true);
   const [complaints,setComplaints] = useState([
     {
       _id: "12345",
@@ -47,12 +49,16 @@ const ComplaintStatus = () => {
         setComplaints(res || []);
       } catch (error) {
         console.error("Error fetching complaints:", error);
+      }finally{
+        setLoading(false)
       }
     };
     fetchComplaints();
   }, []);
   
-
+if(loading){
+  if (loading) return <ComplaintStatusSkeleton rows={3} />;
+}
   return (
     <div className="w-full max-w-4xl mx-auto p-6">
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">

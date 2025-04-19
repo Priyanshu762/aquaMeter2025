@@ -2,15 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaUsers, FaShareAlt } from "react-icons/fa";
 import { EventInfoCard, EventRegisterCard } from "../../Components";
-
+import EventDetailsSkeleton from "../../Skeletons/EventDetailsSkeleton";
+import axios from "../../utils/axios";
+import { set } from "mongoose";
 const isLoggedIn = () => !!localStorage.getItem("user");
 
-const EventDetailsPage = () => {
+const EventDetailsPage = ({ event_Id }) => {
   const { eventId } = useParams();
   const navigate = useNavigate();
   const [registered, setRegistered] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const event = {
     id: eventId,
     name: "Blind Coding",
@@ -25,6 +27,8 @@ const EventDetailsPage = () => {
     contact: "sankalan@cs.du.ac.in",
     impressions: 30189,
   };
+  const [eventDetails, setEventDetails] = useState(event);
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,26 +44,60 @@ const EventDetailsPage = () => {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
+  const formatDatesInArray = (data, dateKey = "date") => {
+    const newItem = { ...data };
+    if (newItem[dateKey]) {
+      const date = new Date(newItem[dateKey]);
+      newItem[dateKey] = date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      });
+    }
+    return newItem;
+  };
 
-  
+  useEffect(() => {
+    const fetchEventDetails = async () => {
+
+      try {
+        const response = await axios.get(`/api/events/${eventId}`);
+        console.log("Response from getEventDetails", response);
+        const data = response.data
+        const foramattedData = formatDatesInArray(data);
+        setEventDetails(foramattedData);
+        console.log("Event details:", eventDetails);
+
+      } catch (error) {
+        console.log("Error in EventDetailPage", error);
+      } finally {
+        setLoading(false)
+      }
+
+    }
+    fetchEventDetails()
+  }, [])
+
+  if (loading) return <EventDetailsSkeleton />;
+
 
   return (
     <>
-    <div className="flex justify-between gap-2">
+      <div className="flex justify-between gap-2">
         <div className="w-2/3">
-            <EventInfoCard 
-                imgUrl={event.imageUrl}
-                name={event.name}
-                description={event.description}
-                date={event.date}
-                time={event.time}
-                location={event.location}
-                />
+          <EventInfoCard
+            imgUrl={eventDetails.image}
+            name={eventDetails.name}
+            description={eventDetails.description}
+            date={eventDetails.date}
+            time={eventDetails.time}
+            location={eventDetails.location}
+          />
         </div>
         <div className="w-1/3">
-            <EventRegisterCard />
+          <EventRegisterCard event={eventDetails} />
         </div>
-    </div>
+      </div>
     </>
   );
 };

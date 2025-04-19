@@ -1,14 +1,49 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { useNavigate } from "react-router-dom";
+import axios from '../../utils/axios'
+import EventTableSkeleton from "../../Skeletons/EventTableSkeleton";
 
 const UpcomingEventsTable = () => {
   const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+  const [upcomingEvents, setUpcomingEvents] = React.useState([])
+  const formatDatesInArray=(dataArray, dateKey = "date")=> {
+    return dataArray.map(item => {
+      const newItem = { ...item }; 
+  
+      if (newItem[dateKey]) {
+        const date = new Date(newItem[dateKey]);
+        newItem[dateKey] = date.toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        });
+      }
+  
+      return newItem;
+    });
+  }
+  
 
-  const upcomingEvents = [
-    { id: 1, name: "AWS Cloud Workshop", date: "2025-04-15", time: "10:00 AM", location: "Seminar Hall, University", description: "An in-depth hands-on AWS cloud session." },
-    { id: 2, name: "ReactJS Bootcamp", date: "2025-05-02", time: "2:00 PM", location: "Online", description: "Learn React.js with hands-on coding experience." },
-  ];
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get('/api/events/upcoming-events')
+        const formattedData= formatDatesInArray(response.data);
+        setUpcomingEvents(formattedData);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }finally{
+        setLoading(false);
+      }
+    }
+    fetchEvents();
+  }, [])
+  console.log("Events list:", upcomingEvents);
 
+  if (loading) {
+    return <EventTableSkeleton rows={4} />;
+  }
   return (
     <div className="overflow-x-auto h-[80vh] scrollbar">
       <table className="w-full border border-gray-300 dark:border-gray-700 rounded-lg shadow-md">

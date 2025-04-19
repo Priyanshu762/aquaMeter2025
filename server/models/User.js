@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    parcipatedEvents: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Event'
+    }],
     // OAuth fields
     googleId: {
         type: String,

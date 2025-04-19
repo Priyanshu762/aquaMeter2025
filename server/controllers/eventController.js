@@ -1,72 +1,83 @@
 const Event = require('../models/Event');
 
 // Create Event (only NGO or Admin)
-exports.createEvent = async (req, res) => {
+const { uploadToCloudinary } = require('../utils/uploadToCloudinary');
+const fs = require('fs');
 
+exports.createEvent = async (req, res) => {
     try {
-        console.log("Registeration of event started");
-        
-      if (req.user.role !== 'ngo' && req.user.role !== 'admin') {
-        console.log("Denied");
-        
-        return res.status(403).json({ message: 'Access denied' });
-      }
-  
-      const {
-        name,
-        description,
-        date,
-        time,
-        location,
-        participantsLimit,
-      } = req.body;
-  
-      const image = req.file ? req.file.filename : null;
-      
-      if (!image) {
-        console.log("No image found");
-        
-        return res.status(400).json({ message: "Image is required" });
-      }
-      console.log(name,description,date,time,location,image);
-      
-  
-      const newEvent = await Event.create({
-        name,
-        description,
-        date,
-        time,
-        location,
-        participantsLimit,
-        image,
-        organizerNgoId: req.user._id,
-      });
-  
-      res.status(201).json({ message: "Event created", event: newEvent });
+        if (req.user.role !== 'ngo' && req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Access denied' });
+        }
+
+        const {
+            name, description, date, time,
+            location, participantsLimit
+        } = req.body;
+
+        if (!req.file) {
+            return res.status(400).json({ message: "Image is required" });
+        }
+
+        const result = await uploadToCloudinary(req.file.path);
+
+        // Optional: remove local file after upload
+        fs.unlinkSync(req.file.path);
+
+        const newEvent = await Event.create({
+            name,
+            description,
+            date,
+            time,
+            location,
+            participantsLimit,
+            image: result.secure_url, // URL from Cloudinary
+            organizerNgoId: req.user._id,
+        });
+
+        res.status(201).json({ message: "Event created", event: newEvent });
+
     } catch (err) {
-      res.status(500).json({ message: "Error creating event", error: err.message });
+        res.status(500).json({ message: "Error creating event", error: err.message });
     }
-  };
+};
+
 
 // Get all events (Admins see all, NGOs see their events, public sees all public ones if needed)
 exports.getAllEvents = async (req, res) => {
     try {
         let events;
-
-        if (req.user.role === 'admin') {
-            events = await Event.find().populate('organizerNgoId participants');
-        } else if (req.user.role === 'ngo') {
-            events = await Event.find({ organizerNgoId: req.user._id }).populate('organizerNgoId participants');
-        } else {
-            // For public users, modify this logic as needed
-            events = await Event.find().populate('organizerNgoId');
-        }
-
+        const selectFields = "name date time description location image";
+        events = await Event.find().select(selectFields)
+        let upcomingEvents = await Event.find({ date: { $gte: new Date() } }).select(selectFields);
+        let pastEvents = await Event.find({ date: { $lt: new Date() } }).select(selectFields);
         res.json(events);
     } catch (err) {
         res.status(500).json({ message: 'Error fetching events', error: err.message });
     }
 };
+
+exports.getAllUpcomingEvents = async (req, res) => {
+    try {
+        const selectFields = "name date time description location image";
+        const events = await Event.find({ date: { $gte: new Date() } }).select(selectFields);
+        res.json(events);
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching events', error: err.message });
+    }
+};
+exports.getAllPastEvents = async (req, res) => {
+    try {
+        const selectFields = "name date time description location image";
+        const event = await Event.find({ date: { $lt: new Date() } }).select(selectFields);
+        res.status(200).json(event);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching events', error: err.message });
+
+    }
+}
+
+
 
 // Get single event
 exports.getEventById = async (req, res) => {

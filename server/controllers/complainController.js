@@ -1,40 +1,33 @@
 const Complaint = require('../models/Complaint');
+const { uploadMultipleToCloudinary } = require('../utils/uploadToCloudinary');
+const fs = require('fs');
 
-// 📌 Create a new complaint
 const createComplaint = async (req, res) => {
   try {
     const { name, phone, location, issue, additionalInfo } = req.body;
-
-    // Handle multiple uploaded files from multer
     const files = req.files || [];
 
-    // Convert file info to array of URLs
-    const imageUrls = files.map(file => ({
-      url: `/uploads/${file.filename}`
-    }));
+    if (!files.length) {
+      return res.status(400).json({ message: "At least one image is required" });
+    }
 
-    console.log("Received Files:", files);
-    console.log("Complaint Data:", {
-      name,
-      phone,
-      location,
-      issue,
-      additionalInfo,
-      imageUrls
-    });
+    const uploadedImages = await uploadMultipleToCloudinary(files);
 
-    // Create new complaint document
+    // Remove local files after upload
+    files.forEach(file => fs.unlinkSync(file.path));
+
+    const imageUrls = uploadedImages.map(result => ({ url: result.secure_url }));
+
     const complaint = new Complaint({
       name,
       phone,
       location,
       issue,
       additionalInfo,
-      images: imageUrls.length > 0 ? imageUrls : [],
+      images: imageUrls,
       createdBy: req.user?._id || null,
     });
 
-    // Save to DB
     await complaint.save();
 
     res.status(201).json({
@@ -47,6 +40,7 @@ const createComplaint = async (req, res) => {
     res.status(500).json({ message: "Server error while creating complaint" });
   }
 };
+
 
 
 // 📌 Get all complaints (with optional status filter + pagination)
