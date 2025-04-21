@@ -23,6 +23,9 @@ import AdminSettingsPage from "../Pages/Settings/AdminSettingsPage";
 import EventDetailsPage from "../Pages/Events/EventDetailsPage";
 import AlertsPage from "../Pages/Alerts/AlertsPage";
 import LeaderboardPage from "../Pages/Leaderboard/LeaderboardPage";
+import QRScanner from "../Components/QrScanner";
+import ScannerPage from "../Pages/Attendance/ScannerPage";
+import OngoingEvent from "../Components/Events/OngoingEvent";
 
 
 const AppRouter = () => {
@@ -50,6 +53,7 @@ const AppRouter = () => {
           <Route path="leaderboard" element={<LeaderboardPage />} />
           <Route path="previous-events" element={<PreviousEvents />} />
           <Route path="settings" element={<SettingsPage />} />
+          <Route path="events/attendance" element={<ScannerPage />} />
 
           {/* protected route  */}
           <Route
@@ -64,14 +68,23 @@ const AppRouter = () => {
             <Route path="analytics" element={<Analytics />} />
             <Route path="alerts" element={<AlertsPage />} />
             <Route path="settings" element={<AdminSettingsPage />} />
-            <Route path="create-event" element={authUser && authUser.role == 'admin' ?<CreateEvent />:<NotFound/>} />
+            <Route path="create-event" element={authUser && authUser.role == 'admin' ? <CreateEvent /> : <NotFound />} />
+            <Route path="ongoing-events" element={authUser && (authUser.role == 'admin'||authUser.role == 'ngo') ? <OngoingEvent /> : <NotFound />} />
           </Route>
         </Route>
 
         {/* auth pages without navbar */}
         <Route path="/" element={<AuthLayout />} >
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Signup />} />
+          <Route path="login" element={
+            <ProtectedRoute>
+              <Login />
+            </ProtectedRoute>
+          } />
+          <Route path="register" element={
+            <ProtectedRoute>
+              <Signup />
+            </ProtectedRoute>
+          } />
         </Route>
 
         {/* 404 Route */}

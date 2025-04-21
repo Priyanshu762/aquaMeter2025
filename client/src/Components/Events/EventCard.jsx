@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const EventCard = ({ event }) => {
+const   EventCard = ({ event }) => {
   
   const navigate = useNavigate()
   
@@ -16,7 +16,7 @@ const EventCard = ({ event }) => {
       </div>
       <div className="p-4">
         <div className="mb-2 flex items-center justify-between">
-          <p className="text-slate-800 dark:text-white text-xl font-semibold">{event.title}</p>
+          <p className="text-slate-800 dark:text-white text-xl font-semibold">{event.name}</p>
         </div>
         
         <div className='flex justify-between gap-2 mb-2'>

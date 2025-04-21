@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCalendarDateFill } from "react-icons/bs";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
 import { FaLocationDot, FaCheck } from "react-icons/fa6";
@@ -7,10 +7,18 @@ import { SlCalender } from "react-icons/sl";
 import { IoIosPeople } from "react-icons/io";
 import { FaShareSquare } from "react-icons/fa";
 import { WiStars } from "react-icons/wi";
-
+import axios from "../../utils/axios"
+import { toast } from "react-toastify";
+import { setLoading } from "../../Store/loaderSlice";
+import {eventParticapted} from "../../Store/authSlice"
+import { useDispatch } from "react-redux";
 const EventRegisterCard = ({ event }) => {
   const user = useSelector((state) => state.auth.user);
+  const dispatch=useDispatch()
   const [registered, setRegistered] = useState(false);
+  // if(user?.parcipatedEvents.includes(event._id)){
+  //   setRegistered(true);
+  // }
 
   // Event details (Replace these with dynamic data if needed)
   const eventTitle = event.title || "Tech Fest 2025";
@@ -18,13 +26,32 @@ const EventRegisterCard = ({ event }) => {
   const eventTime = event.time || "10:00 AM - 2:00 PM";
   const eventLocation = event.location || "University Auditorium";
   const eventUrl = event.url || window.location.href; // Dynamic URL
-
+  const [loading,setLoading] = useState(false);
   // Function to handle registration
-  const handleRegister = () => {
-    // setRegistered(true);
-    
 
-    alert("You have successfully registered for the event!");
+  useEffect(() => {
+    if(user?.participatedEvents.includes(event._id)){
+      setRegistered(true);
+    }
+  })
+  const handleRegister = async () => {
+    // setRegistered(true);
+    setLoading(true)
+    try {
+      const eventId = event._id
+      const response = await axios.post(`/api/events/register/${eventId}`);
+
+      console.log("Response from register in event register card", response);
+      await dispatch(eventParticapted({eventId:event._id}));
+      toast.success("You have successfully registered for the event!");
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Registration failed. Please try again.');
+      console.log("Error in handleRegister", error);
+    }finally{
+      setLoading(false);
+      
+    }
+
   };
 
   // Function to share event
@@ -76,19 +103,22 @@ const EventRegisterCard = ({ event }) => {
           <span>{user?.name || "Username"}</span>
           <span>{user?.email || "Email ID"}</span>
         </div>
-        <div>
-          <button
+        <div>{
+          user.role=="user"&&
+
+
+            <button
             onClick={handleRegister}
-            disabled={registered}
-            className={`flex justify-center gap-1 mt-2 ${
-              registered ? "bg-gray-500" : "bg-green-600"
+            disabled={registered||loading}
+            className={`flex justify-center gap-1 mt-2 ${registered ? "bg-gray-500" : "bg-green-600"
             } p-1 px-2 pr-4 rounded-sm text-white`}
-          >
+            >
             <FaCheck className="ml-1 mt-1" />
             &nbsp; {
-            registered ? "Registered" : "Register"
+              registered ? "Registered" : "Register"
             }
           </button>
+          }
         </div>
       </div>
 
@@ -108,7 +138,7 @@ const EventRegisterCard = ({ event }) => {
             <WiStars className="text-3xl bg-gray-700 rounded-sm text-gray-300" />
           </span>
           <div className="flex flex-col">
-            <span className="text-lg font-semibold text-gray-800 dark:text-white">Impressions</span>
+            <span className="text-lg font-semibold text-gray-800 dark:text-white">Required</span>
             <span className="text-lg font-semibold text-gray-800 dark:text-white">{event.participantsLimit
             }</span>
           </div>

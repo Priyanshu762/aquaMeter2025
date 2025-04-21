@@ -20,10 +20,20 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    parcipatedEvents: [{
+    participatedEvents: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Event'
     }],
+    points: { 
+        type: Number,
+        default: 0 
+    },
+    legitComplaints: [
+        { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: "Complaint" 
+        }
+    ],
     // OAuth fields
     googleId: {
         type: String,

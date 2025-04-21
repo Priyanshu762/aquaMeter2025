@@ -63,7 +63,7 @@ const EventFormModal = ({ isOpen, onClose }) => {
       setImagePreview(null);
       setTimeout(() => onClose(), 2000);
     } catch (err) {
-      toast.error("Failed to create event.");
+      toast.error(err.response.data.message, { autoClose: 5000 });
     }
   };
 
@@ -160,7 +160,7 @@ const EventFormModal = ({ isOpen, onClose }) => {
             <div>
               <input
                 type="number"
-                placeholder="Participants Limit"
+                placeholder="Participants Required"
                 {...register("participantsLimit")}
                 className="w-full py-3 px-4 border dark:border-gray-700 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white"
               />

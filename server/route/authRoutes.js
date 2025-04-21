@@ -8,7 +8,8 @@ const {
     getCurrentUser,
     changePassword,
     deleteAccount,
-    updateProfile 
+    updateProfile,
+    getUserForLeaderboard 
 
 } = require('../controllers/authController.js');
 const { protect } = require('../middleware/authMiddleware.js');
@@ -23,5 +24,6 @@ router.post('/change-password', protect, changePassword);
 router.post('/delete-account', protect, deleteAccount);
 router.post('/update-profile', protect, updateProfile);
 router.get('/me', protect   , getCurrentUser);
+router.get('/userForLeaderBoard',getUserForLeaderboard)
 
 module.exports = router;

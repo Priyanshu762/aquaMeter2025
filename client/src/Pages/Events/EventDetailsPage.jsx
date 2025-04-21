@@ -43,7 +43,7 @@ const EventDetailsPage = ({ event_Id }) => {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-  const formatDatesInArray = (data, dateKey = "date") => {
+  const formatDates = (data, dateKey = "date") => {
     const newItem = { ...data };
     if (newItem[dateKey]) {
       const date = new Date(newItem[dateKey]);
@@ -63,7 +63,7 @@ const EventDetailsPage = ({ event_Id }) => {
         const response = await axios.get(`/api/events/${eventId}`);
         console.log("Response from getEventDetails", response);
         const data = response.data
-        const foramattedData = formatDatesInArray(data);
+        const foramattedData = formatDates(data);
         setEventDetails(foramattedData);
         console.log("Event details:", eventDetails);
 
@@ -72,7 +72,6 @@ const EventDetailsPage = ({ event_Id }) => {
       } finally {
         setLoading(false)
       }
-
     }
     fetchEventDetails()
   }, [])

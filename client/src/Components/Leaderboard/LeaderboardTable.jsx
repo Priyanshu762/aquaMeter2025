@@ -8,7 +8,7 @@ const getMedalEmoji = (rank) => {
 };
 
 const LeaderboardTable = ({ users, currentUserId }) => {
-  const visibleUsers = users.filter((user) => user.rank >= 4 && user.rank <= 30);
+  const visibleUsers = users.filter((user) => user.rank >=4 && user.rank <= 30);
   const currentUser = users.find((user) => user.id === currentUserId);
 
   return (
@@ -41,7 +41,7 @@ const LeaderboardTable = ({ users, currentUserId }) => {
                   </td>
                   <td className="px-6 py-4 text-gray-700 dark:text-white">{user.name}</td>
                   <td className="px-6 py-4 text-right text-gray-900 dark:text-white">
-                    {user.score}
+                    {user.points}
                   </td>
                 </tr>
               );

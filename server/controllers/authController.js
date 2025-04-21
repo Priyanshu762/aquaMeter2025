@@ -39,7 +39,8 @@ const register = async (req, res) => {
             name,
             profilePicture,
             profile: profile._id,
-            profile: profile
+            profile: profile,
+
         });
 
         await user.save();
@@ -100,7 +101,8 @@ const login = async (req, res) => {
                 name: user.name,
                 profilePicture: user.profilePicture,
                 role:user.role,
-                profile:profile
+                profile:profile,
+                participatedEvents:user.participatedEvents
             },
             token: token
         });
@@ -137,7 +139,7 @@ const oauthLogin = async (req,res)=>{
                 profilePicture: picture,
                 googleId: userRes.data.id,
                 profile: profile._id,
-                role:user.role
+                role:'user'
             });
         }
         
@@ -152,7 +154,8 @@ const oauthLogin = async (req,res)=>{
                 name,
                 profilePicture: picture,
                 role:user.role,
-                profile:userProfile
+                profile:userProfile,
+                participatedEvents:user.participatedEvents
             },
             token: token
         });
@@ -288,7 +291,38 @@ const deleteAccount = async (req, res) => {
         console.log("Error in deleteAccount authController",error);
     }
 }
+const getUserForLeaderboard = async (req, res) => {
+    
+    try {
+        // Fetch top 20 users sorted by points in descending order
+        const topUsers = await User.find()
+            .sort({ points: -1 })  // Sort by points in descending order
+            .limit(20)  // Limit the result to top 20 users
+            .select('name points profilePicture _id')  // Select only relevant fields
+            .exec();
 
+            
+        
+        // Check if there are no users
+        if (!topUsers || topUsers.length === 0) {
+            return res.status(404).json({
+                message: "No users found for the leaderboard."
+            });
+        }
+
+        // Respond with the leaderboard data
+        return res.status(200).json({
+            message: "Top 20 users fetched successfully.",
+            leaderboard: topUsers
+        });
+    } catch (error) {
+        console.error("Error fetching leaderboard:", error);
+        return res.status(500).json({
+            message: "An error occurred while fetching the leaderboard.",
+            error: error.message
+        });
+    }
+};
 module.exports = {
     register,
     login,
@@ -297,6 +331,8 @@ module.exports = {
     getCurrentUser,
     changePassword,
     deleteAccount,
-    updateProfile
+    updateProfile,
+    getUserForLeaderboard,
 
 };
+
