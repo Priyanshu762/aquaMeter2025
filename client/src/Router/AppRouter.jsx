@@ -26,6 +26,9 @@ import LeaderboardPage from "../Pages/Leaderboard/LeaderboardPage";
 import QRScanner from "../Components/QrScanner";
 import ScannerPage from "../Pages/Attendance/ScannerPage";
 import OngoingEvent from "../Components/Events/OngoingEvent";
+import RoleBasedRoute from "./RoleBasedRoute";
+import PublicRoute from "./PublicRoute";
+import PrivateRoute from "./PrivateRoute";
 
 
 const AppRouter = () => {
@@ -46,9 +49,9 @@ const AppRouter = () => {
           <Route path="complaints" element={<ComplaintsPage />} />
           <Route path="weather" element={<WeatherPage />} />
           <Route path="profile" element={
-            <ProtectedRoute>
+            <PrivateRoute>
               <ProfilePage />
-            </ProtectedRoute>
+            </PrivateRoute>
           } />
           <Route path="leaderboard" element={<LeaderboardPage />} />
           <Route path="previous-events" element={<PreviousEvents />} />
@@ -59,31 +62,43 @@ const AppRouter = () => {
           <Route
             path="dashboard"
             element={
-              <ProtectedRoute>
+              <PrivateRoute>
                 <DashboardLayout />
-              </ProtectedRoute>
+              </PrivateRoute>
             }
           >
             <Route index element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="alerts" element={<AlertsPage />} />
             <Route path="settings" element={<AdminSettingsPage />} />
-            <Route path="create-event" element={authUser && authUser.role == 'admin' ? <CreateEvent /> : <NotFound />} />
-            <Route path="ongoing-events" element={authUser && (authUser.role == 'admin'||authUser.role == 'ngo') ? <OngoingEvent /> : <NotFound />} />
+            <Route path="create-event"  
+              element={
+                <RoleBasedRoute allowedRoles={['admin']}>
+                  <CreateEvent />
+                </RoleBasedRoute>
+              }
+            />
+            <Route path="ongoing-events" 
+              element={
+                <RoleBasedRoute allowedRoles={['admin', 'ngo']}>
+                  <OngoingEvent />
+                </RoleBasedRoute>
+              }
+            />
           </Route>
         </Route>
 
         {/* auth pages without navbar */}
         <Route path="/" element={<AuthLayout />} >
           <Route path="login" element={
-            <ProtectedRoute>
+            <PublicRoute>
               <Login />
-            </ProtectedRoute>
+            </PublicRoute>
           } />
           <Route path="register" element={
-            <ProtectedRoute>
+            <PublicRoute>
               <Signup />
-            </ProtectedRoute>
+            </PublicRoute>
           } />
         </Route>
 
