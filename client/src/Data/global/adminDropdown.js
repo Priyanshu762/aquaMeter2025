@@ -1,4 +1,4 @@
-export const userDropdown = [
+export const adminDropdown = [
     {
         id: 1,
         key: 'profile',
@@ -19,6 +19,13 @@ export const userDropdown = [
         link: 'previous-events',
         className: "block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden font-semibold dark:bg-gray-900 dark:text-white dark:data-focus:bg-gray-800",
         title: 'Previous Events'
+    },
+    {
+        id: 4,
+        key: 'dashboard',
+        link: 'dashboard',
+        className: "block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden font-semibold dark:bg-gray-900 dark:text-white dark:data-focus:bg-gray-800",
+        title: 'Dashboard'
     },
     {
         id: 5,
