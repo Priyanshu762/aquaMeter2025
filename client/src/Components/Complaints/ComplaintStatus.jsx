@@ -10,18 +10,7 @@ const ComplaintStatus = () => {
   const [expandedRow, setExpandedRow] = useState(null);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [loading, setLoading] = useState(true);
-  const [complaints,setComplaints] = useState([
-    {
-      _id: "12345",
-      issue: "Garbage",
-      status: "Pending",
-      imagesBefore: ["/images/garbage1.jpg"],
-      imagesAfter: ["/images/garbage2.jpg"],
-      actions: "Inspection scheduled.",
-      updatedStatus: "Scheduled for removal in 2 days."
-    },
-
-  ]);
+  const [complaints,setComplaints] = useState([]);
 
   // const filteredComplaints = complaints.filter((complaint) =>
   //   complaint._id.includes(searchId)
@@ -66,8 +55,11 @@ if(loading){
       </h2>
 
       {/* Search Bar */}
-      
-      <div className="relative w-full mb-6">
+
+      {complaints.length > 0 ? 
+        (<>
+           {isAuthenticated ? (
+        <div className="relative w-full mb-6">
         <input
           type="text"
           placeholder="Enter Complaint ID..."
@@ -77,9 +69,11 @@ if(loading){
         />
         <FaSearch className="absolute right-3 top-3 text-gray-500 dark:text-gray-400 w-5 h-5 mt-1 mr-1"  />
       </div>
+      ) : (<></>) }
+      
       {/* Table */}
 
-      {isAuthenticated?(<div className="overflow-x-auto">
+      {isAuthenticated ? (<div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg">
           <thead className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white">
             <tr>
@@ -172,10 +166,28 @@ if(loading){
         </table>
       </div>):(
         
-        <div className="text-center text-gray-600 dark:text-gray-400 mt-6">
+        <div className="text-center text-gray-600 dark:text-gray-300 mt-6">
           <p className="text-lg font-semibold">Please login to view your complaint status.</p>
         </div>
       )}
+        </>) : 
+        !isAuthenticated ? 
+        (
+          <>
+            <div className="text-center text-gray-600 dark:text-gray-300 mt-6">
+              <p className="text-lg font-semibold">Please login to view your complaint status.</p>
+            </div>
+          </>
+        ) 
+        :
+        (<>
+          <div className="text-center text-gray-600 dark:text-gray-300 mt-6">
+            <p className="text-lg font-semibold">Please file a complaint to view its status.</p>
+          </div>
+        </>) 
+      }
+
+     
 
     </div>
   );

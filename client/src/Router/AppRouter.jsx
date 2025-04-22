@@ -45,7 +45,12 @@ const AppRouter = () => {
           <Route path="" element={<Home />} />
           <Route path="map-view" element={<MapViewPage />} />
           <Route path="events" element={<EventsPage />} />
-          <Route path="event/:eventId" element={<EventDetailsPage />} />
+          <Route path="event/:eventId" element={
+            <PrivateRoute>
+              <EventDetailsPage />
+            </PrivateRoute>
+            } />
+            
           <Route path="complaints" element={<ComplaintsPage />} />
           <Route path="weather" element={<WeatherPage />} />
           <Route path="profile" element={
