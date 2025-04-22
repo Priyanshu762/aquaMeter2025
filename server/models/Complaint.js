@@ -7,6 +7,11 @@ const complaintSchema = new mongoose.Schema({
     required: true,
     match: /^[0-9]{10}$/,
   },
+  complaintId: {
+    type: String,
+    unique: true,
+    required: true
+  },
   location: { type: String, required: true },
   issue: {
     type: String,

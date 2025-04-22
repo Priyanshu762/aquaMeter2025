@@ -1,6 +1,9 @@
 const Complaint = require('../models/Complaint');
 const { uploadMultipleToCloudinary } = require('../utils/uploadToCloudinary');
 const fs = require('fs');
+const { customAlphabet } = require('nanoid');
+const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 6);
+
 
 const createComplaint = async (req, res) => {
   try {
@@ -18,7 +21,18 @@ const createComplaint = async (req, res) => {
 
     const imageUrls = uploadedImages.map(result => ({ url: result.secure_url }));
 
+    // Generate a unique 6-character alphanumeric complaint ID
+    let complaintId;
+    let isUnique = false;
+
+    while (!isUnique) {
+      complaintId = nanoid(); // e.g. "A1B2C3"
+      const existing = await Complaint.findOne({ complaintId });
+      if (!existing) isUnique = true;
+    }
+
     const complaint = new Complaint({
+      complaintId,
       name,
       phone,
       location,
