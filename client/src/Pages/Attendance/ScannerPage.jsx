@@ -14,7 +14,7 @@ const ScannerPage = ({ setScannedData }) => {
   };
 
   return (
-    <div className="h-[50vh]">
+    <div className="h-[65vh]">
       <QrScanner onScanSuccess={handleScan} />
     </div>
   );

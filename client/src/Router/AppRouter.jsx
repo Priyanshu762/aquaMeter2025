@@ -24,11 +24,11 @@ import EventDetailsPage from "../Pages/Events/EventDetailsPage";
 import AlertsPage from "../Pages/Alerts/AlertsPage";
 import LeaderboardPage from "../Pages/Leaderboard/LeaderboardPage";
 import QRScanner from "../Components/QrScanner";
-import ScannerPage from "../Pages/Attendance/ScannerPage";
 import OngoingEvent from "../Components/Events/OngoingEvent";
 import RoleBasedRoute from "./RoleBasedRoute";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
+import WelcomePage from "../Pages/Welcome/WelcomePage";
 
 
 const AppRouter = () => {
@@ -61,7 +61,6 @@ const AppRouter = () => {
           <Route path="leaderboard" element={<LeaderboardPage />} />
           <Route path="previous-events" element={<PreviousEvents />} />
           <Route path="settings" element={<SettingsPage />} />
-          <Route path="events/attendance" element={<ScannerPage />} />
 
           {/* protected route  */}
           <Route
@@ -73,12 +72,13 @@ const AppRouter = () => {
             }
           >
             <Route index element={<Dashboard />} />
+            <Route path="welcome" element={<WelcomePage />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="alerts" element={<AlertsPage />} />
             <Route path="settings" element={<AdminSettingsPage />} />
             <Route path="create-event"  
               element={
-                <RoleBasedRoute allowedRoles={['admin']}>
+                <RoleBasedRoute allowedRoles={['admin', 'ngo']}>
                   <CreateEvent />
                 </RoleBasedRoute>
               }

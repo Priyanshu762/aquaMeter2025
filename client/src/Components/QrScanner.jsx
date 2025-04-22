@@ -6,7 +6,7 @@ const QrScanner = ({ onScanSuccess }) => {
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("qr-reader", {
       fps: 25,
-      qrbox: { width: 250, height: 250 },
+      qrbox: { width: 350, height: 300 },
     });
 
     scanner.render(
@@ -24,10 +24,14 @@ const QrScanner = ({ onScanSuccess }) => {
     };
   }, []);
 
+  const mystyle = {
+      width: '100%',
+      height: '250px'
+    };
+
   return (
     <div>
-      <h3>Scan QR Code</h3>
-      <div id="qr-reader" style={{ width: "50%" }} />
+      <div id="qr-reader" style={mystyle} />
     </div>
   );
 };

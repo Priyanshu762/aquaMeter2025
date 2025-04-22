@@ -6,7 +6,7 @@ const PublicRoute = ({ children }) => {
 
   if (isAuthenticated) {
     if (user?.role === 'admin' || user?.role === 'ngo') {
-      return <Navigate to="/dashboard" replace />;
+      return <Navigate to="/dashboard/welcome" replace />;
     }
     return <Navigate to="/" replace />;
   }
