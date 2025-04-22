@@ -174,7 +174,7 @@ const UpcomingEventsTable = () => {
                   index % 2 === 0
                     ? "bg-gray-50 dark:bg-gray-900"
                     : "bg-white dark:bg-gray-800"
-                } hover:bg-indigo-100 dark:hover:bg-indigo-700 transition duration-200`}
+                } hover:bg-indigo-100 dark:hover:bg-blue-900 transition duration-200`}
               >
                 <td className="px-6 py-4 font-medium">{event.name}</td>
                 <td className="px-6 py-4">{event.date}</td>
@@ -182,16 +182,49 @@ const UpcomingEventsTable = () => {
                 <td className="px-6 py-4">{event.location}</td>
                 <td className="px-6 py-4">
                   <div className="flex gap-2">
-                    <MdUpdate
-                      size={25}
-                      className="cursor-pointer hover:scale-110"
-                      onClick={() => handleUpdateClick(event)}
-                    />
-                    <MdDelete
-                      size={25}
-                      className="cursor-pointer hover:scale-110 hover:text-red-500"
-                      onClick={() => handleDelete(event)}
-                    />
+                    <button
+                    onClick={() => handleUpdateClick(event)}
+                    className="flex items-center gap-2 text-gray-700 dark:text-gray-300
+                        hover:scale-105 transition-all duration-200 hover:text-green-600 dark:hover:text-green-400 cursor-pointer"
+                    >
+                    <svg
+                        className="w-5 h-5 stroke-current"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    >
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                    <span className="font-medium text-sm">Edit</span>
+                    </button>
+
+                    <button
+                    onClick={() => handleDelete(event)}
+                    className="flex items-center gap-2 text-gray-700 dark:text-gray-300 
+                        hover:scale-105 transition-all duration-200 hover:text-red-600 dark:hover:text-red-400 cursor-pointer"
+                    >
+                    <svg
+                        className="w-5 h-5 stroke-current"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    >
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                        <line x1={10} y1={11} x2={10} y2={17} />
+                        <line x1={14} y1={11} x2={14} y2={17} />
+                    </svg>
+                    <span className="font-medium text-sm">Delete</span>
+                    </button>
+
+
                   </div>
                 </td>
               </tr>

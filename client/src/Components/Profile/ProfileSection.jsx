@@ -15,19 +15,19 @@ const ProfileSection = () => {
 
   const [formData, setFormData] = useState({
     name: user.name || "",
-    bio: user.profile.bio ||"A passionate content creator",
+    bio: user.profile?.bio || "A passionate content creator",
     email: user.email || "",
-    phone: user.profile.phone || "",
-    address: user.profile.address || "",  
+    phone: user.profile?.phone || "",
+    address: user.profile?.address || "",  
     location:   "",
-    occupation: user.profile.occupation || "",
-    linkedIn: user.profile.linkedIn || "",
-    twitter: user.profile.twitter || "",
-    instagram: user.profile.instagram || "",
-    facebook: user.profile.facebook || "",
+    occupation: user.profile?.occupation || "",
+    linkedIn: user.profile?.linkedIn || "",
+    twitter: user.profile?.twitter || "",
+    instagram: user.profile?.instagram || "",
+    facebook: user.profile?.facebook || "",
     imageUrl: user.profilePicture || "",
-    latitude: user.profile.latitude || "",
-    longitude: user.profile.longitude || "",
+    latitude: user.profile?.latitude || "",
+    longitude: user.profile?.longitude || "",
   });
 
   const [previewImage, setPreviewImage] = useState(formData.imageUrl);
@@ -95,7 +95,7 @@ const ProfileSection = () => {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           }));
-          toast.sucess("Location fetched successfully!");
+          toast.success("Location fetched successfully!");
         },
         (error) => {
           // alert("Error fetching location: " + error.message);
