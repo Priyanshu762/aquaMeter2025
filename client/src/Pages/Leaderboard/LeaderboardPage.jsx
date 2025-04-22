@@ -3,11 +3,13 @@ import { LeaderboardTable, TopperCard } from '../../Components';
 // import { fetchLeaderboardData } from '../../utils/leaderboardAPI';
 import { addRankToUsers } from '../../utils/rankingUtils';
 import axios from '../../utils/axios'
+import { useSelector } from 'react-redux';
 
 const LeaderboardPage = () => {
   const [rankedUsers, setRankedUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const fetchUsersForLeaderBoard = async () => {
@@ -46,7 +48,7 @@ const LeaderboardPage = () => {
           {rankedUsers.slice(0, 3).map((user, index) => (
             <TopperCard
               key={user._id}
-              position={user.rank}
+              position={String(user.rank)}
               subscript={['st', 'nd', 'rd'][index] || 'th'}
               name={user.name}
               score={user.points}
@@ -56,7 +58,7 @@ const LeaderboardPage = () => {
       </div>
 
       <div>
-        <LeaderboardTable users={rankedUsers} currentUserId="u100" />
+        <LeaderboardTable users={rankedUsers} currentUserId={user?.id} />
       </div>
     </div>
   );

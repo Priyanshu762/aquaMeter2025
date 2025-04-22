@@ -9,7 +9,7 @@ const getMedalEmoji = (rank) => {
 
 const LeaderboardTable = ({ users, currentUserId }) => {
   const visibleUsers = users.filter((user) => user.rank >=4 && user.rank <= 30);
-  const currentUser = users.find((user) => user.id === currentUserId);
+  const currentUser = users.find((user) => user._id === currentUserId);
 
   return (
     <div className="mt-10 mx-auto max-w-5xl min-w-[300px] rounded-2xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 shadow-xl backdrop-blur-lg overflow-hidden">
@@ -24,14 +24,14 @@ const LeaderboardTable = ({ users, currentUserId }) => {
           </thead>
           <tbody>
             {visibleUsers.map((user) => {
-              const isCurrentUser = user.id === currentUserId;
+              const isCurrentUser = user._id === currentUserId;
 
               return (
                 <tr
                   key={user.rank}
                   className={`border-t border-black/5 dark:border-white/5 transition ${
                     isCurrentUser
-                      ? "bg-blue-100/30 dark:bg-blue-400/10"
+                      ? "bg-blue-400/30 dark:bg-blue-700/40"
                       : "hover:bg-black/5 dark:hover:bg-white/5"
                   }`}
                 >
