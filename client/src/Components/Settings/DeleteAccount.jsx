@@ -5,6 +5,7 @@ import { authService } from '../../Services/authService';
 import { setLoading } from '../../Store/loaderSlice';
 import { logout } from '../../Store/authSlice';
 import { toast } from 'react-toastify'; 
+import axios from 'axios';
 const DeleteAccount = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -17,11 +18,12 @@ const DeleteAccount = () => {
       dispatch(setLoading(true));
       try {
         // Call the delete account API
-        const response= await authService.deleteAccont();
+        // const response= await authService.deleteAccont();
+        const response = await axios.delete("http://localhost:8080/api/auth/delete-account", {withCredentials: true});
         console.log('Account deleted:', response.data);
         toast.success('Your account has been deleted successfully.');
-        dispatch(logout()); // Logout the user after deletion
-        navigate('/'); // Redirect to home or login page after deletion
+        dispatch(logout()); 
+        navigate('/');
 
       } catch (error) {
         console.error('Error deleting account:', error);

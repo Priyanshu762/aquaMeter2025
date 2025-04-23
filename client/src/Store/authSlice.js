@@ -30,9 +30,16 @@ const authSlice = createSlice({
       const { eventId } = action.payload;
       state.user.participatedEvents.push(eventId);
       localStorage.setItem('user', JSON.stringify(state.user));
+    },
+    updateUserProfile: (state, action) => {
+      state.user.profile = {
+        ...state.user.profile,
+        ...action.payload,
+      };
+      localStorage.setItem('user', JSON.stringify(state.user));
     }
   }
 });
 
-export const { login, logout,eventParticapted } = authSlice.actions;
+export const { login, logout, eventParticapted, updateUserProfile } = authSlice.actions;
 export default authSlice.reducer;

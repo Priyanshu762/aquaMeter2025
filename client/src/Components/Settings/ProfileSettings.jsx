@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { updateUserProfile } from '../../Store/authSlice';
+import axios from 'axios';
 const ProfileSettings = () => {
   const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
   const [profile, setProfile] = useState({
-    name: user.name || 'John Doe',
+    name: user.name ,
     email: user.email,
     avatar: user.profilePicture || 'https://www.pngitem.com/pimgs/m/146-1468479_transparent-avatar-png-default-avatar-png-transparent-png.png',
   });
@@ -23,9 +27,18 @@ const ProfileSettings = () => {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     console.log('Profile Updated:', profile);
-    alert('Profile updated successfully!');
+    try {
+        const res = await axios.post("http://localhost:8080/api/auth/update-profile", profile, {
+          withCredentials: true
+        });
+        dispatch(updateUserProfile(res.data.profile));
+        console.log("profile data",res.data.profile)
+        toast.success("Profile updated successfully!")
+      } catch (error) {
+        toast.error("Failed to update profile");
+      }
   };
 
   return (

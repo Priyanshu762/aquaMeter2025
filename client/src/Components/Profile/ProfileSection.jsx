@@ -6,21 +6,23 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { authService } from "../../Services/authService";
+import axios from "axios";
+import { updateUserProfile } from "../../Store/authSlice";
 
 const ProfileSection = () => {
   const user = useSelector((state) => state.auth.user);
   const loading = useSelector((state) => state.loader.loading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isNgo, setIsNgo] = useState(false);
+
+  console.log(user.profile)
 
   const [formData, setFormData] = useState({
     name: user.name || "",
     bio: user.profile?.bio || "A passionate content creator",
     email: user.email || "",
     phone: user.profile?.phone || "",
-    address: user.profile?.address || "",  
-    location:   "",
+    address: user.profile?.address || "", 
     occupation: user.profile?.occupation || "",
     linkedIn: user.profile?.linkedIn || "",
     twitter: user.profile?.twitter || "",
@@ -69,9 +71,18 @@ const ProfileSection = () => {
       };
 
       console.log("Profile data to save:", payload);
-      const response = await authService.profileUpdate(payload);
-      console.log("Response from profile update API:", response);
-      // Call your API here to update profile with payload
+      // const response = await authService.profileUpdate(payload);
+      // console.log("Response from profile update API:", response);
+      try {
+        const res = await axios.post("http://localhost:8080/api/auth/update-profile", payload, {
+          withCredentials: true
+        });
+        dispatch(updateUserProfile(res.data.profile));
+        console.log("profile data",res.data.profile)
+        toast.success("Profile updated successfully!")
+      } catch (error) {
+        toast.error("Failed to update profile");
+      }
 
     } catch (error) {
       console.error("Error saving profile:", error);
@@ -167,7 +178,6 @@ const ProfileSection = () => {
           { label: "Email", name: "email", type: "email", disabled: true },
           { label: "Phone", name: "phone", type: "text" },
           { label: "Address", name: "address", type: "text" },
-          { label: "Location", name: "location", type: "text" },
           { label: "Occupation", name: "occupation", type: "text" },
           { label: "LinkedIn", name: "linkedIn", type: "url" },
           { label: "Twitter", name: "twitter", type: "url" },

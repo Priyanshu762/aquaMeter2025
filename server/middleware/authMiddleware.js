@@ -4,7 +4,7 @@ const User = require('../models/User');
 const protect = async (req, res, next) => {
     try {
         // Get token from cookie
-        const token = req.cookies.jwt;
+        const token = req.cookies.jwt || req.headers.authorization;
         console.log('Token from protect middleware:', token);
  
         if (!token) {
