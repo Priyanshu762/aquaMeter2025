@@ -43,7 +43,6 @@ export default function ComplaintModal({ complaint, onClose, onUpdate }) {
       <ToastContainer />
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fadeIn">
         <div className="relative bg-white dark:bg-gray-900 rounded-xl shadow-lg w-full max-w-lg p-6">
-          {/* Close Button */}
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 dark:hover:text-gray-300"
@@ -60,7 +59,6 @@ export default function ComplaintModal({ complaint, onClose, onUpdate }) {
             <p><strong>Location:</strong> {complaint.location}</p>
             <p><strong>Issue:</strong> {complaint.issue}</p>
 
-            {/* Editable Fields */}
             <div>
               <label className="block text-sm font-medium mb-1">Update Status:</label>
               <select
@@ -95,7 +93,6 @@ export default function ComplaintModal({ complaint, onClose, onUpdate }) {
             </div>
           </div>
 
-          {/* Action Buttons */}
           <div className="mt-6 flex justify-end gap-4">
             <button
               onClick={onClose}
