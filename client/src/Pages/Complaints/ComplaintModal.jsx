@@ -19,7 +19,7 @@ export default function ComplaintModal({ complaint, onClose, onUpdate }) {
 
   const handleUpdate = async () => {
     try {
-        const { data } = await axios.put(`/api/complaints/${complaint._id}`, {
+        const { data } = await axios.put(`http:localhost:8080/api/complaints/${complaint._id}`, {
         status,
         action,
         additionalInfo,

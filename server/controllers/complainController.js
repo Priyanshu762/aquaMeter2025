@@ -1,8 +1,10 @@
 const Complaint = require('../models/Complaint');
 const { uploadMultipleToCloudinary } = require('../utils/uploadToCloudinary');
 const fs = require('fs');
-const { customAlphabet } = require('nanoid');
-const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 6);
+const getNanoId = async () => {
+  const { customAlphabet } = await import('nanoid');
+  return customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 6)();
+};
 
 
 const createComplaint = async (req, res) => {
@@ -26,7 +28,7 @@ const createComplaint = async (req, res) => {
     let isUnique = false;
 
     while (!isUnique) {
-      complaintId = nanoid(); // e.g. "A1B2C3"
+      complaintId = getNanoId(); // e.g. "A1B2C3"
       const existing = await Complaint.findOne({ complaintId });
       if (!existing) isUnique = true;
     }
@@ -110,14 +112,15 @@ const getComplaintByUser = async (req,res) => {
 }
 // 📌 Update complaint status / remarks / assignedTo
 const updateComplaintStatus = async (req, res) => {
-  const { status, remarks, assignedTo } = req.body;
+  const { status, action, additionalInfo, assignedTo} = req.body;
 
   try {
     const updated = await Complaint.findByIdAndUpdate(
       req.params.id,
       {
         ...(status && { status }),
-        ...(remarks && { remarks }),
+        ...(action && { action }),
+        ...(additionalInfo && { additionalInfo }),
         ...(assignedTo && { assignedTo }),
         updatedAt: Date.now(),
       },

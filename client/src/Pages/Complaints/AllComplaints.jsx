@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ComplaintModal from "./ComplaintModal";
 import { FaSearch } from "react-icons/fa";
 import { Loader } from "../../Components";
+import axios from 'axios';
 
 export default function AllComplaints() {
   const [complaints, setComplaints] = useState([]);
@@ -15,157 +16,25 @@ export default function AllComplaints() {
   const complaintsPerPage = 5;
 
   useEffect(() => {
-    const mockResponse = {
-      total: 5,
-      complaints: [
-    {
-      "_id": "68076dd815a56fc32e283be7",
-      "name": "Ranjeet Singh",
-      "phone": "9696942692",
-      "complaintId": "T2VE85",
-      "location": "Lucknow, Uttar Pradesh, IND",
-      "issue": "foul smell",
-      "additionalInfo": "Needs cleaning asap",
-      "images": [
-        {
-          "url": "https://res.cloudinary.com/do1uuncsr/image/upload/v1745317335/events/mtduxig43wpjh3jnmt2q.webp",
-          "_id": "68076dd815a56fc32e283be8"
-        },
-        {
-          "url": "https://res.cloudinary.com/do1uuncsr/image/upload/v1745317335/events/hkqmou9e31gwwa4emtgo.jpg",
-          "_id": "68076dd815a56fc32e283be9"
-        }
-      ],
-      "status": "pending",
-      "action": "Pending to Inspection",
-      "createdBy": {
-        "_id": "680005d9b65f25283ba52410",
-        "email": "ranjeet.fb12@gmail.com",
-        "name": "Ranjeet Singh"
-      },
-      "assignedTo": null,
-      "updatedStatus": "pending",
-      "createdAt": "2025-04-22T10:22:16.585Z",
-      "updatedAt": "2025-04-22T10:22:16.586Z",
-      "__v": 0
-    },
-    {
-      "_id": "68076dd615a56fc32e283be2",
-      "name": "Ranjeet Singh",
-      "phone": "9696942692",
-      "complaintId": "9584CL",
-      "location": "Lucknow, Uttar Pradesh, IND",
-      "issue": "foul smell",
-      "additionalInfo": "Needs cleaning asap",
-      "images": [
-        {
-          "url": "https://res.cloudinary.com/do1uuncsr/image/upload/v1745317333/events/cfu3r13xcb193vmjlfsu.webp",
-          "_id": "68076dd615a56fc32e283be3"
-        },
-        {
-          "url": "https://res.cloudinary.com/do1uuncsr/image/upload/v1745317333/events/vqkss9oewtoiz0nf4pdd.jpg",
-          "_id": "68076dd615a56fc32e283be4"
-        }
-      ],
-      "status": "pending",
-      "action": "Pending to Inspection",
-      "createdBy": {
-        "_id": "680005d9b65f25283ba52410",
-        "email": "ranjeet.fb12@gmail.com",
-        "name": "Ranjeet Singh"
-      },
-      "assignedTo": null,
-      "updatedStatus": "pending",
-      "createdAt": "2025-04-22T10:22:14.447Z",
-      "updatedAt": "2025-04-22T10:22:14.454Z",
-      "__v": 0
-    },
-    {
-      "_id": "68076a7b0165c5c59ce77cce",
-      "name": "Testing2",
-      "phone": "9026321074",
-      "complaintId": "X8H7CX",
-      "location": "gomti river",
-      "issue": "foul smell",
-      "additionalInfo": "Repaired",
-      "images": [
-        {
-          "url": "https://res.cloudinary.com/do1uuncsr/image/upload/v1745316475/events/uckwcrmm4mu92yiniy3j.jpg",
-          "_id": "68076a7b0165c5c59ce77ccf"
-        }
-      ],
-      "status": "pending",
-      "action": "Pending to Inspection",
-      "createdBy": {
-        "_id": "67f6d259f23c16047373de45",
-        "email": "kumarpriyanshu762@gmail.com",
-        "name": "Priyanshu Kumar"
-      },
-      "assignedTo": null,
-      "updatedStatus": "pending",
-      "createdAt": "2025-04-22T10:07:56.001Z",
-      "updatedAt": "2025-04-22T10:07:56.006Z",
-      "__v": 0
-    },
-    {
-      "_id": "6803c1617b2ef21ff0936a4b",
-      "name": "Priyanshu",
-      "phone": "9026321076",
-      "location": "Plot 20",
-      "issue": "foul smell",
-      "additionalInfo": "sfwefsdf",
-      "images": [
-        {
-          "url": "https://res.cloudinary.com/do1uuncsr/image/upload/v1745076576/events/ptf2dfzvtzxxfhxae2gr.jpg",
-          "_id": "6803c1617b2ef21ff0936a4c"
-        }
-      ],
-      "status": "pending",
-      "action": "Pending to Inspection",
-      "createdBy": {
-        "_id": "67f6d259f23c16047373de45",
-        "email": "kumarpriyanshu762@gmail.com",
-        "name": "Priyanshu Kumar"
-      },
-      "assignedTo": null,
-      "updatedStatus": "pending",
-      "createdAt": "2025-04-19T15:29:37.241Z",
-      "updatedAt": "2025-04-19T15:29:37.245Z",
-      "__v": 0
-    },
-    {
-      "_id": "6802bb9c6ba384b7158ba3e8",
-      "name": "Priyanshu",
-      "phone": "8855220033",
-      "location": "Plot 20",
-      "issue": "dead aquatic life",
-      "additionalInfo": "sad",
-      "images": [
-        {
-          "url": "/uploads/1745009564465-951891573.png",
-          "_id": "6802bb9c6ba384b7158ba3e9"
-        }
-      ],
-      "status": "resolved",
-      "action": "Pending to Inspection",
-      "createdBy": {
-        "_id": "67f6d259f23c16047373de45",
-        "email": "kumarpriyanshu762@gmail.com",
-        "name": "Priyanshu Kumar"
-      },
-      "assignedTo": null,
-      "updatedStatus": "resolved",
-      "createdAt": "2025-04-18T20:52:44.530Z",
-      "updatedAt": "2025-04-18T20:52:44.534Z",
-      "__v": 0
-    }
-  ]
+    const fetchComplaints = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get("http://localhost:8080/api/complaints", {
+          withCredentials: true
+        });
+        console.log(response);
+        setComplaints(response.data.complaints || []);
+      } catch (error) {
+        console.error("Failed to fetch complaints:", error);
+        // Optional: Show an error message to the user
+      } finally {
+        setLoading(false);
+      }
     };
-    setTimeout(() => {
-      setComplaints(mockResponse.complaints || []);
-      setLoading(false);
-    }, 1000);
+
+    fetchComplaints();
   }, []);
+
 
   useEffect(() => {
     let filtered = complaints;
