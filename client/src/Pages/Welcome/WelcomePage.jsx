@@ -123,7 +123,7 @@ const WelcomePage = () => {
         {role === "ngo" && (
           <>
             <Card icon={<FaUsers size={24} />} title="Ongoing Events" link="/dashboard/ongoing-events" />
-            <Card icon={<FaExclamationTriangle size={24} />} title="Submit Reports" link="/complaints" />
+            <Card icon={<FaExclamationTriangle size={24} />} title="Submit Reports" link="/dashboard/submit-reports" />
           </>
         )}
       </div>

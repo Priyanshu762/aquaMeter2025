@@ -29,6 +29,7 @@ import RoleBasedRoute from "./RoleBasedRoute";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import WelcomePage from "../Pages/Welcome/WelcomePage";
+import SubmitReportsPage from "../Pages/SubmitReports/SubmitReportsPage";
 
 
 const AppRouter = () => {
@@ -67,7 +68,9 @@ const AppRouter = () => {
             path="dashboard"
             element={
               <PrivateRoute>
+              <RoleBasedRoute allowedRoles={['admin', 'ngo']}>
                 <DashboardLayout />
+              </RoleBasedRoute>
               </PrivateRoute>
             }
           >
@@ -76,6 +79,7 @@ const AppRouter = () => {
             <Route path="analytics" element={<Analytics />} />
             <Route path="alerts" element={<AlertsPage />} />
             <Route path="settings" element={<AdminSettingsPage />} />
+            <Route path="submit-reports" element={<SubmitReportsPage />} />
             <Route path="create-event"  
               element={
                 <RoleBasedRoute allowedRoles={['admin', 'ngo']}>
