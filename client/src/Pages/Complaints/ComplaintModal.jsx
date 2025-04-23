@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { MdClose } from "react-icons/md";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast  } from "react-toastify";
 
 export default function ComplaintModal({ complaint, onClose, onUpdate }) {
   const [status, setStatus] = useState(complaint?.status || "");
@@ -11,36 +10,40 @@ export default function ComplaintModal({ complaint, onClose, onUpdate }) {
 
   useEffect(() => {
     if (complaint) {
-      setStatus(complaint.status || "");
-      setAction(complaint.action || "");
-      setAdditionalInfo(complaint.additionalInfo || "");
+      setStatus(complaint?.status || "");
+      setAction(complaint?.action || "");
+      setAdditionalInfo(complaint?.additionalInfo || "");
     }
   }, [complaint]);
 
   const handleUpdate = async () => {
     try {
-        const { data } = await axios.put(`http:localhost:8080/api/complaints/${complaint._id}`, {
-        status,
-        action,
-        additionalInfo,
-        });
+      const { data } = await axios.patch(
+        `http://localhost:8080/api/complaints/${complaint._id}/status`,
+        {
+          status,
+          action,
+          additionalInfo,
+        },
+        { withCredentials: true }
+      );
 
-        console.log("Updated complaint data:", data); // Add this for debugging
-        toast.success("Complaint updated successfully", { autoClose: 3000 });
-        onUpdate(data);
-        onClose();
+      toast.success("Complaint updated successfully");
+      
+      await onUpdate(data.complaint); 
+      onClose();
     } catch (err) {
-        toast.error("Failed to update complaint", { autoClose: 5000 });
-        console.error(err);
+      toast.error("Failed to update complaint");
+      console.error(err);
     }
-    };
+  };
+
 
 
   if (!complaint) return null;
 
   return (
     <>
-      <ToastContainer />
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fadeIn">
         <div className="relative bg-white dark:bg-gray-900 rounded-xl shadow-lg w-full max-w-lg p-6">
           <button

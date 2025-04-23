@@ -63,6 +63,15 @@ export default function AllComplaints() {
     }
   };
 
+  const handleUpdate = (updatedComplaint) => {
+    setComplaints((prev) =>
+      prev.map((c) => (c._id === updatedComplaint._id ? updatedComplaint : c))
+    );
+  };
+
+
+
+
   const paginatedComplaints = filteredComplaints.slice(
     (currentPage - 1) * complaintsPerPage,
     currentPage * complaintsPerPage
@@ -184,12 +193,7 @@ export default function AllComplaints() {
         <ComplaintModal
           complaint={selectedComplaint}
           onClose={() => setSelectedComplaint(null)}
-          onUpdate={(updated) => {
-            setComplaints((prev) =>
-                prev.map((c) => c._id.toString() === updated._id.toString() ? { ...c, ...updated } : c)
-            );
-            setSelectedComplaint(null);
-            }}
+          onUpdate={handleUpdate}
 
         />
       )}
