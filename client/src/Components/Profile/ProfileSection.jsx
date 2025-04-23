@@ -12,6 +12,7 @@ const ProfileSection = () => {
   const loading = useSelector((state) => state.loader.loading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isNgo, setIsNgo] = useState(false);
 
   const [formData, setFormData] = useState({
     name: user.name || "",
@@ -197,18 +198,23 @@ const ProfileSection = () => {
           </div>
         ))}
         {isEditing && (
-          <div className="sm:col-span-2">
-            <button
-              onClick={handleGetLocation}
-              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-full"
-            >
-              Get My Location
-            </button>
-            {formData.latitude && formData.longitude && (
-              <p className="text-sm text-gray-600 mt-2">
-                Latitude: {formData.latitude}, Longitude: {formData.longitude}
-              </p>
-            )}
+          <div className="sm:col-span-2 flex flex-col gap-4">
+              <div className="sm:col-span-2 flex gap-16">
+                <button
+                  onClick={handleGetLocation}
+                  className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-full"
+                  >
+                  Get My Location
+                </button>
+                {formData.latitude && formData.longitude && (
+                  <p className="text-lg font-semibold dark:text-gray-400 text-gray-800 mt-2">
+                    Latitude: {formData.latitude}, Longitude: {formData.longitude}
+                  </p>
+                )}
+              </div>
+               <div>
+                Registering as NGO ? <span onClick={() => (navigate('/ngo-application'))} className="text-md font-semibold cursor-pointer dark:text-indigo-400 text-indigo-600 bg-blue-400/20 py-1 px-2 rounded-full"> Click Here</span>
+               </div>
           </div>
         )}
       </div>

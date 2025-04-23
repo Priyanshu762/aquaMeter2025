@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LeaderboardTable, TopperCard } from '../../Components';
+import { LeaderboardTable, Loader, TopperCard } from '../../Components';
 // import { fetchLeaderboardData } from '../../utils/leaderboardAPI';
 import { addRankToUsers } from '../../utils/rankingUtils';
 import axios from '../../utils/axios'
@@ -30,7 +30,7 @@ const LeaderboardPage = () => {
   }, []);
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return <div className="loading"> <Loader /> </div>;
   }
 
   if (error) {

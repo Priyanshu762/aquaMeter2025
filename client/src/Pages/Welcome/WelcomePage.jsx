@@ -115,7 +115,7 @@ const WelcomePage = () => {
         {role === "admin" && (
           <>
             <Card icon={<FaUsers size={24} />} title="Manage Events" link="/dashboard/create-event" />
-            <Card icon={<HiOutlineCalendar size={24} />} title="View Attendance" link="/events/attendance" />
+            <Card icon={<FaExclamationTriangle size={24} />} title="Submit Reports" link="/dashboard/submit-reports" />
             <Card icon={<FaExclamationTriangle size={24} />} title="View Alerts" link="/dashboard/alerts" />
           </>
         )}

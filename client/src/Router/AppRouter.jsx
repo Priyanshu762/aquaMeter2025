@@ -30,6 +30,9 @@ import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import WelcomePage from "../Pages/Welcome/WelcomePage";
 import SubmitReportsPage from "../Pages/SubmitReports/SubmitReportsPage";
+import NgoApplicationPage from "../Pages/NgoApplication/NgoApplicationPage";
+import VerifyNGOsPage from "../Pages/VerifyNgo/VerifyNGOsPage";
+import AllComplaints from "../Pages/Complaints/AllComplaints";
 
 
 const AppRouter = () => {
@@ -59,6 +62,11 @@ const AppRouter = () => {
               <ProfilePage />
             </PrivateRoute>
           } />
+          <Route path="ngo-application" element={
+            <PrivateRoute>
+              <NgoApplicationPage />
+            </PrivateRoute>
+          } />
           <Route path="leaderboard" element={<LeaderboardPage />} />
           <Route path="previous-events" element={<PreviousEvents />} />
           <Route path="settings" element={<SettingsPage />} />
@@ -80,6 +88,7 @@ const AppRouter = () => {
             <Route path="alerts" element={<AlertsPage />} />
             <Route path="settings" element={<AdminSettingsPage />} />
             <Route path="submit-reports" element={<SubmitReportsPage />} />
+            <Route path="all-complaints" element={<AllComplaints />} />
             <Route path="create-event"  
               element={
                 <RoleBasedRoute allowedRoles={['admin', 'ngo']}>
@@ -91,6 +100,13 @@ const AppRouter = () => {
               element={
                 <RoleBasedRoute allowedRoles={['admin', 'ngo']}>
                   <OngoingEvent />
+                </RoleBasedRoute>
+              }
+            />
+            <Route path="verify-ngos" 
+              element={
+                <RoleBasedRoute allowedRoles={['admin']}>
+                  <VerifyNGOsPage />
                 </RoleBasedRoute>
               }
             />
