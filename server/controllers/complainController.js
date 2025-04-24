@@ -1,11 +1,19 @@
 const Complaint = require('../models/Complaint');
 const { uploadMultipleToCloudinary } = require('../utils/uploadToCloudinary');
 const fs = require('fs');
-const getNanoId = async () => {
-  const { customAlphabet } = await import('nanoid');
-  return customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 6)();
-};
+const { customAlphabet } = require('nanoid');
 
+// Generate a 6-character alphanumeric ID
+const generateComplaintId = () => {
+  const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 6);
+  const id = nanoid();
+
+  if (typeof id !== 'string') {
+    throw new Error("nanoid() did not return a string.");
+  }
+
+  return id;
+};
 
 const createComplaint = async (req, res) => {
   try {
@@ -16,19 +24,26 @@ const createComplaint = async (req, res) => {
       return res.status(400).json({ message: "At least one image is required" });
     }
 
+    // Upload to Cloudinary
     const uploadedImages = await uploadMultipleToCloudinary(files);
 
-    // Remove local files after upload
-    files.forEach(file => fs.unlinkSync(file.path));
+    // Remove local files safely
+    files.forEach(file => {
+      try {
+        fs.unlinkSync(file.path);
+      } catch (err) {
+        console.warn("Failed to delete local file:", file.path, err.message);
+      }
+    });
 
     const imageUrls = uploadedImages.map(result => ({ url: result.secure_url }));
 
-    // Generate a unique 6-character alphanumeric complaint ID
+    // Generate a unique complaint ID
     let complaintId;
     let isUnique = false;
 
     while (!isUnique) {
-      complaintId = getNanoId(); // e.g. "A1B2C3"
+      complaintId = generateComplaintId();
       const existing = await Complaint.findOne({ complaintId });
       if (!existing) isUnique = true;
     }
@@ -41,7 +56,7 @@ const createComplaint = async (req, res) => {
       issue,
       additionalInfo,
       images: imageUrls,
-      createdBy: req.user?._id || null,
+      createdBy: req.user?._id, // assumes middleware added user
     });
 
     await complaint.save();
@@ -112,15 +127,14 @@ const getComplaintByUser = async (req,res) => {
 }
 // 📌 Update complaint status / remarks / assignedTo
 const updateComplaintStatus = async (req, res) => {
-  const { status, action, additionalInfo, assignedTo} = req.body;
+  const { status, remarks, assignedTo } = req.body;
 
   try {
     const updated = await Complaint.findByIdAndUpdate(
       req.params.id,
       {
         ...(status && { status }),
-        ...(action && { action }),
-        ...(additionalInfo && { additionalInfo }),
+        ...(remarks && { remarks }),
         ...(assignedTo && { assignedTo }),
         updatedAt: Date.now(),
       },
