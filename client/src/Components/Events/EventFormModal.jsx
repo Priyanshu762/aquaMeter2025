@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from '../../utils/axios'
-import InputField from "../common/InputField";
 // Validation Schema
 const eventSchema = yup.object().shape({
   name: yup.string().required("Event name is required"),

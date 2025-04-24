@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BsCalendarDateFill } from "react-icons/bs";
-import { MdOutlineAccessTimeFilled } from "react-icons/md";
-import { FaLocationDot, FaCheck } from "react-icons/fa6";
+import { FaCheck } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { SlCalender } from "react-icons/sl";
 import { IoIosPeople } from "react-icons/io";
@@ -9,7 +7,6 @@ import { FaShareSquare } from "react-icons/fa";
 import { WiStars } from "react-icons/wi";
 import axios from "../../utils/axios"
 import { toast } from "react-toastify";
-import { setLoading } from "../../Store/loaderSlice";
 import {eventParticapted} from "../../Store/authSlice"
 import { useDispatch } from "react-redux";
 const EventRegisterCard = ({ event }) => {
