@@ -18,7 +18,7 @@ const ComplaintMainSection = () => {
         </div>
 
         <div className=''>
-          <img src="/complaint.png" alt="Complaint Illustration" className='w-full max-w-md' />
+          <img src="/Complaint.png" alt="Complaint Illustration" className='w-full max-w-md' />
         </div>
       </div>
     </div>
