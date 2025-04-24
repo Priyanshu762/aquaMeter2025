@@ -34,7 +34,7 @@ const LeaderboardPage = () => {
   }
 
   if (error) {
-    return <div className="error">{error}</div>;
+    return <div className="error text-center mt-4 text-2xl">{error}</div>;
   }
 
   return (
