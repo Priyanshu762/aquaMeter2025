@@ -8,11 +8,13 @@ import {
   FaDatabase,
   FaUsers,
 } from "react-icons/fa";
+import { Footer } from "../../Components";
 
 const Home = () => {
   const isAdmin = false;
 
   return (
+    <>
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-950 text-gray-900 dark:text-white px-6 py-10">
       
       <section className="text-center max-w-4xl mx-auto">
@@ -88,6 +90,10 @@ const Home = () => {
         </Link>
       </section>
     </div>
+    <div className="w-full">
+      <Footer />
+      </div>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import { useSelector } from "react-redux";
 import { Loader } from "..";
+import { Footer } from '../index'
 
 const Layout = () => {
   const loading = useSelector((state) => state.loader.loading);

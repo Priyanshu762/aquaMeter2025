@@ -33,6 +33,7 @@ import SubmitReportsPage from "../Pages/SubmitReports/SubmitReportsPage";
 import NgoApplicationPage from "../Pages/NgoApplication/NgoApplicationPage";
 import VerifyNGOsPage from "../Pages/VerifyNgo/VerifyNGOsPage";
 import AllComplaints from "../Pages/Complaints/AllComplaints";
+import { Contact, Policy, Terms } from "../Components";
 
 
 const AppRouter = () => {
@@ -49,6 +50,9 @@ const AppRouter = () => {
           <Route path="" element={<Home />} />
           <Route path="map-view" element={<MapViewPage />} />
           <Route path="events" element={<EventsPage />} />
+          <Route path="privacy-policy" element={<Policy />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="terms" element={<Terms />} />
           <Route path="event/:eventId" element={
             <PrivateRoute>
               <EventDetailsPage />

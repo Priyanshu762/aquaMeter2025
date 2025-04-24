@@ -39,6 +39,10 @@ import StatCard from "./Dashboard/StatCard";
 import DeviceDataTable from "./Dashboard/DeviceDataTable";
 import TopperCard from "./Leaderboard/TopperCard";
 import LeaderboardTable from "./Leaderboard/LeaderboardTable";
+import Footer from './common/Footer';
+import Contact from "./common/Contact";
+import Terms from "./common/Terms";
+import Policy from './common/Policy';
 
 export {
     Navbar,
@@ -82,4 +86,8 @@ export {
     DeviceDataTable,
     TopperCard,
     LeaderboardTable,
+    Footer,
+    Policy,
+    Terms,
+    Contact,
 }
