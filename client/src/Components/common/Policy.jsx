@@ -39,7 +39,7 @@ const Policy = () => (
         <Section title="🎯 Your Rights">
           <li>Update/delete your profile in the <strong>Settings</strong> page.</li>
           <li>Opt out of alerts or communication anytime.</li>
-          <li>For deletion or data inquiries, email: <a href="mailto:support@aquameter.io" className="text-blue-600 dark:text-blue-400 underline">support@aquameter.io</a></li>
+          <li>For deletion or data inquiries, email: <a href="mailto:contact@aquameter.tech" className="text-blue-600 dark:text-blue-400 underline">contact@aquameter.tech</a></li>
         </Section>
 
         <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">

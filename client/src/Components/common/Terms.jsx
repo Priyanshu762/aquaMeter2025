@@ -44,7 +44,7 @@ const Terms = () => (
         </Section>
 
         <p className="mt-8 text-center text-lg font-medium">
-          Questions? Reach us at <span className="text-blue-600 dark:text-blue-400">legal@aquameter.io</span>
+          Questions? Reach us at <a href="mailto:contact@aquameter.tech" className="text-blue-600 dark:text-blue-400 ">contact@aquameter.tech</a>
         </p>
       </div>
     </div>
