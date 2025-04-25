@@ -110,7 +110,13 @@ const UpcomingEventsTable = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get("/api/events/upcoming-events");
+        const token = localStorage.getItem('authToken');
+        const response = await axios.get("/api/events/upcoming-events", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
         const formattedData = formatDatesInArray(response.data);
         setUpcomingEvents(formattedData);
       } catch (error) {

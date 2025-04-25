@@ -18,6 +18,7 @@ export default function ComplaintModal({ complaint, onClose, onUpdate }) {
 
   const handleUpdate = async () => {
     try {
+      const token = localStorage.getItem('authToken');
       const { data } = await axios.patch(
         `http://localhost:8080/api/complaints/${complaint._id}/status`,
         {
@@ -25,7 +26,11 @@ export default function ComplaintModal({ complaint, onClose, onUpdate }) {
           action,
           additionalInfo,
         },
-        { withCredentials: true }
+        { 
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true }
       );
 
       toast.success("Complaint updated successfully");

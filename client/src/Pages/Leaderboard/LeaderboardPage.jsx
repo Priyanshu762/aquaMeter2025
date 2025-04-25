@@ -14,7 +14,12 @@ const LeaderboardPage = () => {
   useEffect(() => {
     const fetchUsersForLeaderBoard = async () => {
       try {
-        const response = await axios.get('/api/auth/userForLeaderBoard')
+        const token = localStorage.getItem('token');
+        const response = await axios.get('/api/auth/userForLeaderBoard', {
+          headers: {
+          Authorization: `Bearer ${token}`,
+          },
+        })
         console.log(response);
         
         setRankedUsers(addRankToUsers(response.data.leaderboard));

@@ -18,8 +18,13 @@ export default function AllComplaints() {
   useEffect(() => {
     const fetchComplaints = async () => {
       setLoading(true);
+      const token = localStorage.getItem('authToken');
+      console.log("Token in allCOmplaints :", token);
       try {
         const response = await axios.get("http://localhost:8080/api/complaints", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           withCredentials: true
         });
         console.log(response);

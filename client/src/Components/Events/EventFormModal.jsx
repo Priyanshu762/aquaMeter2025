@@ -47,12 +47,14 @@ const EventFormModal = ({ isOpen, onClose }) => {
   const onSubmit = async (data) => {
     try {
       data.image = imageFile; // attach actual image file
-
+      const token = localStorage.getItem("token");
       console.log("Submitted Event:", data);
       const response = await axios.post('/api/events', data, {
         headers: {
-          'Content-Type': "multipart/form-data"
-        }
+          'Content-Type': "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
       })
       console.log("Response from create events", response);
 

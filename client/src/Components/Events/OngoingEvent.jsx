@@ -14,7 +14,13 @@ const OngoingEvent = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await axios.get("/api/events/ongoing-events");
+        const token = localStorage.getItem('authToken');
+        const response = await axios.get("/api/events/ongoing-events", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
         setEvent(response.data);
         if (response.data.participants) {
           setParticipants(response.data.participants);

@@ -24,7 +24,13 @@ const PastEventsTable = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('/api/events/past-events');
+        const token = localStorage.getItem('authToken');
+        const response = await axios.get('/api/events/past-events', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
         const formattedData = formatDatesInArray(response.data);
         setPastEvents(formattedData);
       } catch (error) {
