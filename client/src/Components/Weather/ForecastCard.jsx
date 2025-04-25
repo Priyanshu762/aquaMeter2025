@@ -63,17 +63,18 @@ const ForecastCard = ({
   const normalizedTomorrow = normalizeWeather(tomorrowForecast.weather);
 
   return (
-    <div className="w-full max-w-xl h-auto rounded-3xl p-6 flex flex-col gap-4 
-      bg-gradient-to-r from-[#f5f5f5] to-[#e0e0e0] text-gray-900 dark:from-[#5936B4] dark:to-[#362A84] dark:text-white shadow-lg border border-1 border-gray-200 dark:border-none">
+    <div className="w-full max-w-xl h-auto rounded-3xl p-4 md:p-6 flex flex-col gap-4 
+      bg-gradient-to-r from-[#f5f5f5] to-[#e0e0e0] text-gray-900 dark:from-[#5936B4] dark:to-[#362A84] dark:text-white shadow-lg border border-gray-200 dark:border-none">
 
-      <div className='text-gray-900 dark:text-white text-xl font-semibold'>
-        <h3>Today / Week</h3>
-      </div>
+      <h3 className="text-lg sm:text-xl font-semibold">Today / Week</h3>
 
-      <div className='flex justify-between gap-2'>
-        <div className='flex flex-col gap-2 overflow-x-auto'>
-          <div className="w-full h-36 p-2 flex gap-4 
-            bg-gradient-to-r from-gray-100 to-gray-300 text-gray-900 dark:from-[rgba(255,255,255,0.1)] dark:to-[rgba(255,255,255,0.1)] dark:text-white border border-1 border-gray-200 dark:border-none rounded-3xl backdrop-blur-lg">
+      <div className="flex flex-col lg:flex-row gap-4">
+        {/* Left: Forecast list */}
+        <div className="flex flex-col gap-2 w-full lg:w-2/3">
+          {/* Hourly Forecast */}
+          <div className="w-full h-40 sm:h-36 p-2 flex gap-4 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600
+            bg-gradient-to-r from-gray-100 to-gray-300 dark:from-[rgba(255,255,255,0.1)] dark:to-[rgba(255,255,255,0.1)]
+            border border-gray-200 dark:border-none rounded-3xl backdrop-blur-lg">
             {todayForecast.map((item, index) => (
               <ForecastTile
                 key={index}
@@ -85,35 +86,42 @@ const ForecastCard = ({
             ))}
           </div>
 
-          <div className="flex justify-between gap-4 w-full p-4 rounded-3xl 
-            bg-gradient-to-r from-gray-100 to-gray-300 text-gray-900 dark:from-[rgba(255,255,255,0.1)] dark:to-[rgba(255,255,255,0.1)] dark:text-white border border-1 border-gray-200 dark:border-none">
-            <div className='flex flex-col justify-start'>
-              <p>Tomorrow</p>
-              <div className='flex flex-col gap-2'>
-                <h2 className="text-3xl font-bold">{tomorrowForecast.temp}°</h2>
-                <p className="text-sm">{tomorrowForecast.weather}</p>
-              </div>
+          {/* Tomorrow Forecast */}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 w-full p-4 rounded-3xl 
+            bg-gradient-to-r from-gray-100 to-gray-300 dark:from-[rgba(255,255,255,0.1)] dark:to-[rgba(255,255,255,0.1)]
+            border border-gray-200 dark:border-none">
+            <div className="text-center sm:text-left">
+              <p className="text-sm">Tomorrow</p>
+              <h2 className="text-3xl font-bold">{tomorrowForecast.temp}°</h2>
+              <p className="text-sm">{tomorrowForecast.weather}</p>
             </div>
             <div>
-              <span className='text-7xl'>{currentWeatherIcon(normalizedTomorrow)}</span>
+              <span className="text-6xl sm:text-7xl">{currentWeatherIcon(normalizedTomorrow)}</span>
             </div>
           </div>
         </div>
 
-        <div className="w-1/3 p-4 rounded-3xl flex flex-col justify-between items-center bg-gradient-to-r from-gray-100 to-gray-300 text-gray-900 dark:from-[rgba(255,255,255,0.1)] dark:to-[rgba(255,255,255,0.1)] dark:text-white border border-1 border-gray-200 dark:border-none">
-          <div className="text-lg font-medium text-center">
-            <span className='flex justify-center items-center gap-2'>Sunrise <WiSunrise className='text-3xl' /></span>
-            <h2 className="text-2xl font-bold">{sunrise}</h2>
+        {/* Right: Sunrise/Sunset Info */}
+        <div className="w-full lg:w-1/3 p-4 rounded-3xl flex flex-col justify-between items-center
+          bg-gradient-to-r from-gray-100 to-gray-300 dark:from-[rgba(255,255,255,0.1)] dark:to-[rgba(255,255,255,0.1)]
+          border border-gray-200 dark:border-none gap-4">
+          <div className="text-center text-base sm:text-lg font-medium">
+            <span className="flex justify-center items-center gap-1 sm:gap-2">
+              Sunrise <WiSunrise className="text-2xl sm:text-3xl" />
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold">{sunrise}</h2>
           </div>
 
-          <div className="text-lg font-medium text-center mt-2">
-            <span className='flex justify-center items-center gap-2'>Sunset <TbSunset2 className='text-3xl' /></span>
-            <h2 className="text-2xl font-bold">{sunset}</h2>
+          <div className="text-center text-base sm:text-lg font-medium">
+            <span className="flex justify-center items-center gap-1 sm:gap-2">
+              Sunset <TbSunset2 className="text-2xl sm:text-3xl" />
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold">{sunset}</h2>
           </div>
 
-          <div className="text-lg font-medium text-center mt-2">
+          <div className="text-center text-base sm:text-lg font-medium">
             <p>Length of Day</p>
-            <h2 className="text-xl font-bold">{lengthOfDay}</h2>
+            <h2 className="text-lg sm:text-xl font-bold">{lengthOfDay}</h2>
           </div>
         </div>
       </div>

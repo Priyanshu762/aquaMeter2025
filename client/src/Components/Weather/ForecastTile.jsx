@@ -74,12 +74,12 @@ const ForecastTile = ({ temperature, weatherPrediction, humidity, time }) => {
         {getWeatherIcon(normalized)}
 
         <h4 className="font-sans duration-300 absolute left-1/2 -translate-x-1/2 text-xl text-center 
-          group-hover:translate-x-3 group-hover:-translate-y-9 group-hover:scale-100">
+          group-hover:translate-x-3 group-hover:-translate-y-8 group-hover:scale-100">
           {temperature}°
         </h4>
       </div>
 
-      <div className="absolute duration-300 -left-32 group-hover:left-3 mt-2 text-xs font-semibold text-center">
+      <div className="absolute duration-300 -left-32 group-hover:left-4 mt-2 text-xs font-semibold text-center">
         <p>{weatherPrediction}</p>
         <p>{humidity}% humidity</p>
       </div>
