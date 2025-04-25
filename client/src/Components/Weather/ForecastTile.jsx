@@ -79,7 +79,7 @@ const ForecastTile = ({ temperature, weatherPrediction, humidity, time }) => {
         </h4>
       </div>
 
-      <div className="absolute duration-300 -left-32 group-hover:left-4 mt-2 text-xs font-semibold text-center">
+      <div className="absolute duration-300 -left-32 group-hover:left-2 mt-2 text-xs font-semibold text-center">
         <p>{weatherPrediction}</p>
         <p>{humidity}% humidity</p>
       </div>

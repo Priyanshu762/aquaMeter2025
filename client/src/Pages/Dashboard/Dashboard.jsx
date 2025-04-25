@@ -159,10 +159,10 @@ const Dashboard = () => {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 my-6">
-        <StatCard name="Total Devices" icon={FaMicrochip} value="85" color="#3FA2F6" />
-        <StatCard name="Water Bodies Covered" icon={FaWater} value="7" color="#83B4FF" />
-        <StatCard name="Active Devices" icon={FaBolt} value="79" color="#F6E96B" />
-        <StatCard name="Inactive Devices" icon={FaPowerOff} value="6" color="#FF1E00" />
+        <StatCard name="Total Devices" icon={FaMicrochip} value="1" color="#3FA2F6" />
+        <StatCard name="Water Bodies Covered" icon={FaWater} value="0" color="#83B4FF" />
+        <StatCard name="Active Devices" icon={FaBolt} value="1" color="#F6E96B" />
+        <StatCard name="Inactive Devices" icon={FaPowerOff} value="0" color="#FF1E00" />
       </div>
 
       <div className="mt-4">

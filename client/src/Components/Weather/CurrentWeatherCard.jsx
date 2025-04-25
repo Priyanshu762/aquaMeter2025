@@ -59,6 +59,7 @@ const CurrentWeatherCard = ({ data }) => {
           </div>
           <div>
             <p className="text-5xl font-bold">{Math.round(data.temp)}&deg;C</p>
+            <p className="text-md font-semibold sm:text-md text-gray-600 dark:text-gray-300 mt-3">Feels Like: {Math.round(data.feels_like)}&deg;C</p>
           </div>
         </div>
 
@@ -66,7 +67,7 @@ const CurrentWeatherCard = ({ data }) => {
         <div className="flex flex-col items-center text-center">
           <div className="text-8xl sm:text-9xl">{currentWeatherIcon(weatherMain)}</div>
           <p className="text-xl sm:text-2xl font-semibold mt-2">{weatherMain}</p>
-          <p className="text-sm sm:text-md text-gray-600 dark:text-gray-300 mt-1">Feels Like: {Math.round(data.feels_like)}&deg;C</p>
+          
         </div>
       </div>
     </div>

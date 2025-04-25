@@ -59,12 +59,12 @@ const OverviewCards = ({ data }) => {
   const [showAllParameters, setShowAllParameters] = useState(false);
   const latestData = data?.[data.length - 1] || {};
 
-  const displayParams = Object.keys(PARAMETER_RANGES).slice(0, 8);
-  const extraParams = Object.keys(PARAMETER_RANGES).slice(8);
+  const displayParams = Object.keys(PARAMETER_RANGES).slice(0, 4);
+  const extraParams = Object.keys(PARAMETER_RANGES).slice(4);
 
   return (
     <div>
-      <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8'>
+      <div className='mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8'>
         {displayParams.map((param, index) => (
           <DataCards
             key={param}
@@ -77,7 +77,7 @@ const OverviewCards = ({ data }) => {
       </div>
 
       {extraParams.length > 0 && !showAllParameters && (
-        <div className='text-center mb-4'>
+        <div className='text-center mb-16'>
           <button
             className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded flex items-center mx-auto cursor-pointer'
             onClick={() => setShowAllParameters(!showAllParameters)}

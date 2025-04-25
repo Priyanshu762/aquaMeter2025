@@ -72,7 +72,7 @@ const ForecastCard = ({
         {/* Left: Forecast list */}
         <div className="flex flex-col gap-2 w-full lg:w-2/3">
           {/* Hourly Forecast */}
-          <div className="w-full h-40 sm:h-36 p-2 flex gap-4 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600
+          <div className="w-full h-40 sm:h-37 p-2 flex gap-4 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600
             bg-gradient-to-r from-gray-100 to-gray-300 dark:from-[rgba(255,255,255,0.1)] dark:to-[rgba(255,255,255,0.1)]
             border border-gray-200 dark:border-none rounded-3xl backdrop-blur-lg">
             {todayForecast.map((item, index) => (
