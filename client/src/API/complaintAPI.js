@@ -4,10 +4,13 @@ import axios from '../utils/axios';
 
 export const createComplaint = async (formData) => {
   try {
+    const token = localStorage.getItem("authToken");
     const response = await axios.post('/api/complaints', formData,{
       headers: {
         'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
       },
+      withCredentials: true,
     });
     return response;
   } catch (error) {
@@ -29,7 +32,13 @@ export const getComplaintById = async (complaintId) => {
 
 export const getComplaintsByUser = async (userId) => {
       try {
-        const response = await axios.get(`/api/complaints/byUser`);
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(`/api/complaints/byUser`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
         console.log("Response from getComplaintsByUser",response);
         
         return response.data;

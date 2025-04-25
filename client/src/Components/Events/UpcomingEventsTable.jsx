@@ -21,7 +21,13 @@ const UpdateEventModal = ({ isOpen, onClose, eventData, onUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response=await axios.put(`/api/events/${formData._id}`, formData);
+      const token = localStorage.getItem("authToken");
+      const response=await axios.put(`/api/events/${formData._id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+      },
+      withCredentials: true,
+      });
       console.log("Response from update:", response);
       
       toast.success("Event updated!");

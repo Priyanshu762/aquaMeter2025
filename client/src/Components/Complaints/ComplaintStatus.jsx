@@ -88,7 +88,7 @@ if(loading){
             {complaints.map((complaint) => (
               <React.Fragment key={complaint._id}>
                 <tr className="even:bg-gray-50 dark:even:bg-gray-700 text-gray-900 dark:text-white">
-                  <td className="border p-3">{complaint._id}</td>
+                  <td className="border p-3">{complaint.complaintId}</td>
                   <td className="border p-3">{complaint.issue}</td>
                   <td className="border p-3 text-center">
                     <span className={`px-3 py-1 text-sm font-semibold rounded-full ${getStatusClass({status:complaint.status})}`}>

@@ -47,7 +47,7 @@ const EventFormModal = ({ isOpen, onClose }) => {
   const onSubmit = async (data) => {
     try {
       data.image = imageFile; // attach actual image file
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("authToken");
       console.log("Submitted Event:", data);
       const response = await axios.post('/api/events', data, {
         headers: {

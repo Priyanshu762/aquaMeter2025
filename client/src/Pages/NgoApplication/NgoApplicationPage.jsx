@@ -26,7 +26,7 @@ const schema = yup.object().shape({
 
 const NgoApplicationPage = () => {
   const [message, setMessage] = useState('');
-
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -37,9 +37,13 @@ const NgoApplicationPage = () => {
   });
 
   const onSubmit = async (data) => {
+    setLoading(true);
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => formData.append(key, value));
-
+    
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}:`, pair[1]);
+    }
     try {
       const userId = localStorage.getItem('userId');
       await axios.post(`/api/ngo/apply/${userId}`, formData, {
@@ -49,6 +53,8 @@ const NgoApplicationPage = () => {
     } catch (err) {
       console.error(err);
       setMessage('❌ Submission failed. Please try again.');
+    } finally {
+      setLoading(true);
     }
   };
 
@@ -57,7 +63,7 @@ const NgoApplicationPage = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 px-6 py-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl">
+    <div className="max-w-3xl mx-auto mt-10 mb-10 px-6 py-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl">
       <h2 className="text-3xl font-extrabold mb-6 text-center text-gray-900 dark:text-white">
         📝 NGO Verification Form
       </h2>
@@ -104,7 +110,7 @@ const NgoApplicationPage = () => {
             type="file"
             accept="application/pdf,image/*"
             onChange={handleFileChange}
-            className="w-full file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:hover:file:bg-blue-500 dark:file:bg-gray-800 dark:file:text-white"
+            className="w-full file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-indigo-400 file:text-blue-700 hover:file:bg-blue-100 dark:hover:file:bg-blue-500 dark:file:bg-gray-800 dark:file:text-white"
           />
           {errors.document && (
             <p className="text-sm text-red-500 mt-1">{errors.document.message}</p>
@@ -113,9 +119,10 @@ const NgoApplicationPage = () => {
 
         <button
           type="submit"
+          disabled={loading}
           className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-200"
         >
-          📤 Submit Application
+          {loading ? '📤 Submitting' : '📤 Submit Application'}
         </button>
       </form>
 

@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FiPlus } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { complaintService } from "../../Services/complaintService";
 const schema = yup.object().shape({
@@ -29,8 +29,8 @@ const schema = yup.object().shape({
 const ComplaintForm = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   const user = useSelector((state) => state.auth.user);
-  const loading = useSelector((state) => state.loader.loading);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -46,6 +46,7 @@ const ComplaintForm = () => {
       return;
     }
     try {
+      setLoading(true);
       const formData = new FormData();
       formData.append("name", data.name);
       formData.append("phone", data.phone);
@@ -75,6 +76,8 @@ const ComplaintForm = () => {
     } catch (error) {
       console.error(error);
       alert("Error submitting complaint. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
   
@@ -182,7 +185,7 @@ const ComplaintForm = () => {
           className={`w-full text-white p-2 rounded font-semibold transition-colors duration-300 ${isAuthenticated ? 'bg-blue-600 hover:bg-blue-400 cursor-pointer' : 'bg-gray-400 cursor-not-allowed'}`}
           disabled={loading || !isAuthenticated}
         >
-          {isAuthenticated ? 'Submit Complaint' : 'Login to Submit'}
+          {isAuthenticated ? (loading ? 'Submitting' : 'Submit Complaint' ) : 'Login to Submit'}
         </button>
       </form>
     </div>
