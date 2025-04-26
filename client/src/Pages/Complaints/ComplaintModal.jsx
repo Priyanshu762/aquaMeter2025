@@ -20,7 +20,7 @@ export default function ComplaintModal({ complaint, onClose, onUpdate }) {
     try {
       const token = localStorage.getItem('authToken');
       const { data } = await axios.patch(
-        `http://localhost:8080/api/complaints/${complaint._id}/status`,
+        `${import.meta.env.VITE_SERVER_URL}/api/complaints/${complaint._id}/status`,
         {
           status,
           action,

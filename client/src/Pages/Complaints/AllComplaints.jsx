@@ -21,7 +21,7 @@ export default function AllComplaints() {
       const token = localStorage.getItem('authToken');
       console.log("Token in allCOmplaints :", token);
       try {
-        const response = await axios.get("http://localhost:8080/api/complaints", {
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/complaints`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
