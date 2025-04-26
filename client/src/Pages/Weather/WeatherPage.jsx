@@ -75,10 +75,12 @@ const WeatherPage = () => {
             }}
             sunrise={new Date(weatherData.current.sunrise * 1000).toLocaleTimeString([], {
               hour: 'numeric',
+              minute: '2-digit',
               hour12: true,
             })}
             sunset={new Date(weatherData.current.sunset * 1000).toLocaleTimeString([], {
               hour: 'numeric',
+              minute: '2-digit',
               hour12: true,
             })}
             lengthOfDay={calculateLengthOfDay(
